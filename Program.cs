@@ -3,8 +3,7 @@ using Game_Demo;
 using System.Collections.Specialized;
 using System;
 
-World _world = new World();
-Battle _battle = new Battle();
+//I'm not sure why, but you can't have both _world and _battle defined at the same time
 
 Console.WriteLine("------Nobody Demos------");
 Console.WriteLine("\n");
@@ -17,9 +16,11 @@ string option = Console.ReadLine();
 
 if (option == "1")
 {
+    World _world = new World();
     _world.Run();
 }
 else if (option == "2")
 {
+    Battle _battle = new Battle();
     _battle.Run();
 }
