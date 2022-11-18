@@ -164,10 +164,13 @@ namespace Game_Demo
                         player_mp_curr--;
                     if (dragon_hp_curr != 0)   //lower enemy HP and stop at 0
                         dragon_hp_curr = dragon_hp_curr - 20;*/
-                    if (current_character == 1)  //move to next character
-                        current_character = 2;
-                    else if (current_character == 2)
-                        current_character = 1;
+                    if (squad[current_character - 1].mana > 0)
+                    {
+                        if (current_character == 1)  //move to next character
+                            current_character = 2;
+                        else if (current_character == 2)
+                            current_character = 1;
+                    }
                 }
             }
             else if (cat_magic_message)  //if cat magic message activated
@@ -182,8 +185,6 @@ namespace Game_Demo
 
             else if (message_alpha == 0)  //if no messages activated
             {
-                if (current_character == 1)  //if character is Nobody
-                {
                     menu_alpha = 1; //enable action menu
                     if (oldState.IsKeyUp(Keys.Back) && newState.IsKeyDown(Keys.Back))  //check for backspace
                     {
@@ -211,7 +212,10 @@ namespace Game_Demo
                         }
                         else if (selection_index == 2) //magic
                         {
-                            magic_message = true;  //enable magic message
+                            if (current_character == 1)
+                                magic_message = true;  //enable magic message
+                            else
+                                cat_magic_message = true;
                             menu_alpha = 0;    //hide action menu
                             message_alpha = 1;  //show message box
                             alratk = false;
@@ -227,51 +231,7 @@ namespace Game_Demo
                             message_alpha = 1;  //show message box
                         }
                     }
-                }
-                else if (current_character == 2)  //if character is Cat
-                {
-                    menu_alpha = 1; //show action menu
-                    if (oldState.IsKeyUp(Keys.Back) && newState.IsKeyDown(Keys.Back))  //check for backspace
-                    {
-                        if (inventory_alpha == 1)  //if inventory menu activated, hide it
-                            inventory_alpha = 0;
-                    }
-                    if (oldState.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))  //check for up
-                    {
-                        if (selection_index != 1)  //move selection box up (and stop at 1 so we don't go out of bounds)
-                            selection_index--;
-                    }
-                    if (oldState.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))  //check for down
-                    {
-                        if (selection_index != 4)  //move selection box down (and stop at 4 so we don't go out of bounds)
-                            selection_index++;
-                    }
-                    if (oldState.IsKeyUp(Keys.Enter) && newState.IsKeyDown(Keys.Enter))  //check for enter
-                    {
-                        if (selection_index == 1) //attack
-                        {
-                            attack_message = true;  //enable attack message
-                            menu_alpha = 0;    //hide action menu
-                            message_alpha = 1;   //show message box
-                        }
-                        else if (selection_index == 2) //magic
-                        {
-                            cat_magic_message = true;  //enable cat magic message
-                            menu_alpha = 0;    //hide action menu
-                            message_alpha = 1;  //show message box
-                        }
-                        else if (selection_index == 3) //item
-                        {
-                            inventory_alpha = 1;  //open inventory
-                        }
-                        else if (selection_index == 4) //flee
-                        {
-                            flee_message = true;  //enable flee message
-                            menu_alpha = 0;  //hide action menu
-                            message_alpha = 1;  //show message box
-                        }
-                    }
-                }
+                
             }
 
             oldState = newState;
@@ -406,24 +366,35 @@ namespace Game_Demo
                             squad[current_character - 1] = returned[0];
                             enemies[0] = returned[1];
                             alratk = true;
-                            _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                            _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " attacked the dragon!", new Vector2(205, 361), Color.Black);
                         }
+                        _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                        _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " attacked the dragon!", new Vector2(205, 361), Color.Black);
                     }
                     if (magic_message) //when magic message activated, draw it
                     {
-                        if (!alratk)
+                        if (squad[current_character - 1].mana > 0)
                         {
-                            Entity currchar = squad[current_character - 1];
-                            Entity currenemy = enemies[0];
-                            List<Entity> returned = new List<Entity>();
-                            menu_alpha = 0f;
-                            returned = spattack(ref currchar, ref currenemy);
-                            squad[current_character - 1] = returned[0];
-                            enemies[0] = returned[1];
-                            alratk = true;
+                            if (!alratk)
+                            {
+                                Entity currchar = squad[current_character - 1];
+                                Entity currenemy = enemies[0];
+                                List<Entity> returned = new List<Entity>();
+                                menu_alpha = 0f;
+                                returned = spattack(ref currchar, ref currenemy);
+                                squad[current_character - 1] = returned[0];
+                                enemies[0] = returned[1];
+                                alratk = true;
+                            }
+                        }
+                        if (squad[current_character-1].mana>0)
+                        {
                             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                             _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
+                        }
+                        else
+                        {
+                            _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                            _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
                         }
                     }
                     if (cat_magic_message) //when cat message message activated, draw it
@@ -440,12 +411,12 @@ namespace Game_Demo
                 foreach(Entity e in squad)
                 {
                     _spriteBatch.Draw(hp_bar, new Rectangle(609, 361+placediff, 78, 17), Color.White); //entity's HP
-                    _spriteBatch.Draw(bar_fill, new Rectangle(612, 364+placediff, ((int)(e.health / e.mHealth * 72)), 11), Color.Green);
+                    _spriteBatch.Draw(bar_fill, new Rectangle(612, 364+placediff, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green);
                     _spriteBatch.DrawString(small_font, e.health + " / " + e.mHealth, new Vector2(618, 364+placediff), Color.Black);
                     if(e.mMana!=0)
                     {
                         _spriteBatch.Draw(hp_bar, new Rectangle(703, 361, 78, 17), Color.White); //entity's MP
-                        _spriteBatch.Draw(bar_fill, new Rectangle(706, 364, ((int)(e.mana / e.mMana * 72)), 11), Color.MediumBlue);
+                        _spriteBatch.Draw(bar_fill, new Rectangle(706, 364, ((int)((float)e.mana / (float)e.mMana * 72)), 11), Color.MediumBlue);
                         _spriteBatch.DrawString(small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black);
                     }
                     else
@@ -506,7 +477,7 @@ namespace Game_Demo
         List<Entity> spattack(ref Entity a, ref Entity t)
         {
             hpManip(ref t, a.spattack * (75 / 75 + t.spdef));
-            manaManip(ref t, 1);
+            manaManip(ref a, 1);
             menu_alpha = 0f;
             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
             _spriteBatch.DrawString(medium_font, "*" + a.name + " used magic to attack " + t.name + "!", new Vector2(205, 361), Color.Black);
