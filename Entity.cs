@@ -3,16 +3,16 @@ namespace Game_Demo
 {
     public struct Entity
     {
-        public string name;
-        public int health;
-        public int mHealth;
-        public int mana;
-        public int mMana;
-        public int attack;
-        public int spattack;
-        public int def;
-        public int spdef;
-        public int speed;
+        public string name; //entity name
+        public int health; //entity HP
+        public int mHealth; //max HP
+        public int mana; //entity MP
+        public int mMana; //max MP
+        public int attack; //attack stat
+        public int spattack; //magic attack stat
+        public int def; //defense stat
+        public int spdef; //magic defense stat
+        public int speed; //speed stat (current unused)
         public Entity()
         {
             name = "Something's wrong";
@@ -27,6 +27,7 @@ namespace Game_Demo
             speed = 0;
         }
         public Entity(string n, int h, int mh,int m, int mm, int a, int sa, int d, int sd, int s)
+                  //string name, HP, max HP, MP, max MP, attack, magic attack, defense, magic defense, speed
         {
             name = n;
             health = h;
@@ -39,7 +40,7 @@ namespace Game_Demo
             spdef = sd;
             speed = s;
         }
-        public Entity(Entity e)
+        public Entity(Entity e) //Entity entity
         {
             name = e.name;
             health = e.health;

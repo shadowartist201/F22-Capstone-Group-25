@@ -59,7 +59,7 @@ namespace Game_Demo
         private bool magic_message = false;  //message "<chara> used magic!"
         private bool cat_magic_message = false; //message "Cats can't use magic"
         private bool flee_message = false; //message when attempting to flee battle
-        private bool alratk = false;
+        private bool alratk = false; //already attacked
 
         private KeyboardState oldState;
 
@@ -356,34 +356,34 @@ namespace Game_Demo
                     }
                     if (attack_message) //when attack message activated, draw it
                     {
-                        if (!alratk)
+                        if (!alratk) //and not already attacked
                         {
-                            Entity currchar = squad[current_character - 1];
-                            Entity currenemy = enemies[0];
-                            List<Entity> returned = new List<Entity>();
-                            menu_alpha = 0f;
+                            Entity currchar = squad[current_character - 1]; //set current character
+                            Entity currenemy = enemies[0]; //set current enemy
+                            List<Entity> returned = new List<Entity>(); 
+                            menu_alpha = 0f; //hide menu
                             returned = attack(ref currchar, ref currenemy);
                             squad[current_character - 1] = returned[0];
                             enemies[0] = returned[1];
-                            alratk = true;
+                            alratk = true; //set attacked flag to true
                         }
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                         _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " attacked the dragon!", new Vector2(205, 361), Color.Black);
                     }
                     if (magic_message) //when magic message activated, draw it
                     {
-                        if (squad[current_character - 1].mana > 0)
+                        if (squad[current_character - 1].mana > 0) //if current character has MP
                         {
-                            if (!alratk)
+                            if (!alratk) //and not already attacked
                             {
-                                Entity currchar = squad[current_character - 1];
-                                Entity currenemy = enemies[0];
-                                List<Entity> returned = new List<Entity>();
-                                menu_alpha = 0f;
+                                Entity currchar = squad[current_character - 1]; //set current character
+                                Entity currenemy = enemies[0]; //set current enemy
+                                List<Entity> returned = new List<Entity>(); 
+                                menu_alpha = 0f; //hide menu
                                 returned = spattack(ref currchar, ref currenemy);
                                 squad[current_character - 1] = returned[0];
                                 enemies[0] = returned[1];
-                                alratk = true;
+                                alratk = true; //set attacked flag to true
                             }
                         }
                         if (squad[current_character-1].mana>0)
@@ -407,17 +407,17 @@ namespace Game_Demo
                 /// TO DO:
                 /// replace most instances of hp_curr with associated Entity.healh
                 
-                int placediff = 0;
-                foreach(Entity e in squad)
+                int placediff = 0; //placing difference based on current character
+                foreach(Entity e in squad) //Entity entity in party
                 {
-                    _spriteBatch.Draw(hp_bar, new Rectangle(609, 361+placediff, 78, 17), Color.White); //entity's HP
-                    _spriteBatch.Draw(bar_fill, new Rectangle(612, 364+placediff, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green);
-                    _spriteBatch.DrawString(small_font, e.health + " / " + e.mHealth, new Vector2(618, 364+placediff), Color.Black);
-                    if(e.mMana!=0)
+                    _spriteBatch.Draw(hp_bar, new Rectangle(609, 361+placediff, 78, 17), Color.White); //entity's HP, draw based on placediff offset
+                    _spriteBatch.Draw(bar_fill, new Rectangle(612, 364+placediff, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green); //fill based on placediff offset
+                    _spriteBatch.DrawString(small_font, e.health + " / " + e.mHealth, new Vector2(618, 364+placediff), Color.Black); //draw visible value based on placediff offset
+                    if(e.mMana!=0) //if MP not 0
                     {
-                        _spriteBatch.Draw(hp_bar, new Rectangle(703, 361, 78, 17), Color.White); //entity's MP
-                        _spriteBatch.Draw(bar_fill, new Rectangle(706, 364, ((int)((float)e.mana / (float)e.mMana * 72)), 11), Color.MediumBlue);
-                        _spriteBatch.DrawString(small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black);
+                        _spriteBatch.Draw(hp_bar, new Rectangle(703, 361, 78, 17), Color.White); //entity's MP box
+                        _spriteBatch.Draw(bar_fill, new Rectangle(706, 364, ((int)((float)e.mana / (float)e.mMana * 72)), 11), Color.MediumBlue); //entity's MP bar
+                        _spriteBatch.DrawString(small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black); //entity's visible MP value
                     }
                     else
                     {
@@ -461,76 +461,76 @@ namespace Game_Demo
             base.Draw(gameTime);
         }
 
-        List<Entity> attack(ref Entity a, ref Entity t)
+        List<Entity> attack(ref Entity a, ref Entity t) //attack process
         {
-            hpManip(ref t, a.attack * (25 / 25 + t.def));
-            menu_alpha = 0f;
+            hpManip(ref t, a.attack * (25 / 25 + t.def)); //HP decrease by target, attack strength * target's defense
+            menu_alpha = 0f; //hide menu
             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
             _spriteBatch.DrawString(large_font, "*" + a.name + " attacked " + t.name + "!", new Vector2(205, 361), Color.Black);
             _spriteBatch.DrawString(small_font, "*" + t.name + " took " + (a.attack * (25 / (25 + t.def))) + " damage!", new Vector2(205, 401), Color.Black);
-            List<Entity> tr = new List<Entity>();
-            tr.Add(a);
-            tr.Add(t);
+            List<Entity> tr = new List<Entity>(); //to return
+            tr.Add(a); //add attacker
+            tr.Add(t); //add target
             return tr;
         }
 
-        List<Entity> spattack(ref Entity a, ref Entity t)
+        List<Entity> spattack(ref Entity a, ref Entity t) //magic attack process, (ref Entity attacker, ref Entity target)
         {
-            hpManip(ref t, a.spattack * (75 / 75 + t.spdef));
-            manaManip(ref a, 1);
-            menu_alpha = 0f;
+            hpManip(ref t, a.spattack * (75 / 75 + t.spdef)); //MP decrease by target, magic attack strength * target's magic defense
+            manaManip(ref a, 1); //decrease MP of attacker by 1
+            menu_alpha = 0f; //hide menu
             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
             _spriteBatch.DrawString(medium_font, "*" + a.name + " used magic to attack " + t.name + "!", new Vector2(205, 361), Color.Black);
-            List<Entity> tr = new List<Entity>();
-            tr.Add(a);
-            tr.Add(t);
+            List<Entity> tr = new List<Entity>(); //to return
+            tr.Add(a); // add attacker
+            tr.Add(t); //add target
             return tr;
         }
 
-        void hpManip(ref Entity t, int change)
+        void hpManip(ref Entity t, int change) //ref Entity target, int change
         {
-            t.health -= change;
-            if (t.health < 1)
-                t.health = 0;
-            if (t.health > t.mHealth)
-                t.health = t.mHealth;
+            t.health -= change; //decrease target HP
+            if (t.health < 1) //if HP < 1
+                t.health = 0; //set to 0 (and don't go below that)
+            if (t.health > t.mHealth) //if current HP > max HP
+                t.health = t.mHealth; //set current HP = max HP (and don't go over)
         }
 
-        void manaManip(ref Entity t, int change)
+        void manaManip(ref Entity t, int change) //ref Entity target, int change
         {
-            if (t.mana != 0 && change > 0)
+            if (t.mana != 0 && change > 0) //if MP not already 0
+                t.mana -= change; //decrease target MP
+            else if (change < 0) //Michael what does this mean
                 t.mana -= change;
-            else if (change < 0)
-                t.mana -= change;
-            if (t.mana < 1)
-                t.mana = 0;
-            if (t.mana > t.mMana)
-                t.mana = t.mMana;
+            if (t.mana < 1) //if MP < 1
+                t.mana = 0; //set to 0
+            if (t.mana > t.mMana) //if current MP > max MP
+                t.mana = t.mMana; //set current MP = max MP
         }
 
-        Entity healByFlat(ref Entity t, int change)
+        Entity healByFlat(ref Entity t, int change) //ref Entity target, int change
         {
-            hpManip(ref t, change * -1);
-            menu_alpha = 0f;
+            hpManip(ref t, change * -1); //increase HP by flat rate
+            menu_alpha = 0f; //hide menu
             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
             _spriteBatch.DrawString(large_font, "*" + t.name + " was healed for " + change + " HP!", new Vector2(205, 361), Color.Black);
             return t;
         }
 
-        Entity healByPerc(Entity t, int change)
+        Entity healByPerc(Entity t, int change) //ref Entity target, int change
         {
-            hpManip(ref t, (change*t.health) * -1);
-            menu_alpha = 0f;
+            hpManip(ref t, (change*t.health) * -1); //increase HP by percentage of max
+            menu_alpha = 0f; //hide menu
             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
             _spriteBatch.DrawString(large_font, "*" + t.name + " was healed for " + change + "% HP!", new Vector2(205, 361), Color.Black);
             return t;
         }
 
-        Entity itemEffect(ref Entity t, /*Entity a, item i,*/ int hp, int mp)
+        Entity itemEffect(ref Entity t, /*Entity a, item i,*/ int hp, int mp) //ref Entity target, int HP, int MP
         {
-            hpManip(ref t,hp*-1);
-            manaManip(ref t, mp*-1);
-            menu_alpha = 0f;
+            hpManip(ref t,hp*-1); //increase HP by flat rate
+            manaManip(ref t, mp*-1); //increase MP by flat rate
+            menu_alpha = 0f; //hide menu
             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
             _spriteBatch.DrawString(large_font, "*" + /*+ t.name + " is feeling the effects of " + i.name*/" fuck, i can't believe i've done this", new Vector2(205, 361), Color.Black);
             return t;
