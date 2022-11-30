@@ -3,6 +3,7 @@ using Game_Demo;
 using System.Collections.Specialized;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 //I'm not sure why, but you can't have both _world and _battle defined at the same time
 

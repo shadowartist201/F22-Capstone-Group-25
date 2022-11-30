@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:C:\Users\porte\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -213,6 +214,81 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Battle/Small.spritefont
+
+#begin Maps/forest.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/forest.tmx
+
+#begin Maps/home.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/home.tmx
+
+#begin Maps/village.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/village.tmx
+
+#begin Tilesets/Door.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Door.tsx
+
+#begin Tilesets/Inside_A2.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Inside_A2.tsx
+
+#begin Tilesets/Inside_A4.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Inside_A4.tsx
+
+#begin Tilesets/Inside_A5.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Inside_A5.tsx
+
+#begin Tilesets/Inside_B.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Inside_B.tsx
+
+#begin Tilesets/Inside_C.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Inside_C.tsx
+
+#begin Tilesets/Outside_A2.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Outside_A2.tsx
+
+#begin Tilesets/Outside_A3.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Outside_A3.tsx
+
+#begin Tilesets/Outside_A4.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Outside_A4.tsx
+
+#begin Tilesets/Outside_A5.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Outside_A5.tsx
+
+#begin Tilesets/Outside_B.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Outside_B.tsx
+
+#begin Tilesets/Outside_C.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Tilesets/Outside_C.tsx
 
 #begin World/chest.png
 /importer:TextureImporter

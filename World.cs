@@ -2,9 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using MonoGame.Extended;
+using MonoGame.Extended.ViewportAdapters;
+using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Renderers;
+
 
 namespace Game_Demo
 {
@@ -13,145 +15,126 @@ namespace Game_Demo
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;  //batch of sprites
         private Texture2D player;    //player texture
-        private Texture2D monster;   //monster texture
-        private Texture2D chest;     //chest texture
 
-        private SoundEffect soundEffect;
-        private SoundEffectInstance instance;
-        private AudioListener listener = new AudioListener();
-        private AudioEmitter emitter = new AudioEmitter();
+        private Vector2 playerPos; //player position
 
-        /*
-        //circle demo
-        private float angle = 0;
-        private float distance = 5;
-        */
+        KeyboardState oldstate;
 
-        private Point position = new Point(650, 375);   //player start position
-        private Rectangle player_rec = new Rectangle(0, 0, 80, 100);   //player size/hitbox
+        TiledMap _tiledMap; 
+        TiledMapRenderer _tiledMapRenderer;
+        TiledMapTileLayer collision;
+        TiledMapTile? tile = null;
+        private OrthographicCamera _camera;
+
+        int tileCameraOffset_X; //spacer between left and tilemap
+        int tileCameraOffset_Y; //spacer between top and tilemap
+        private Vector2 _cameraPosition;
+        //Default camera position of (0,0) is (400,240) from the top-left edge of the map
+
+        int tileWidth = 48;  //48x48 pixels
+        ushort tileIndex_X;
+        ushort tileIndex_Y;
+
+        //private SoundEffect soundEffect;
+        //private SoundEffectInstance instance;
+        //private AudioListener listener = new AudioListener();
+        //private AudioEmitter emitter = new AudioEmitter();
 
         public World()
         {
             _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content/World";
+            Content.RootDirectory = "Content";
             IsMouseVisible = true;
+        }
+
+        protected override void Initialize()
+        {
+            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480); //rhis must equal the size of the window (800x480)
+            _camera = new OrthographicCamera(viewportadapter);
+            base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);  //initialize the batch
 
-            player = Content.Load<Texture2D>("player");    //load the player texture
-            monster = Content.Load<Texture2D>("monster");  //load the monster texture
-            chest = Content.Load<Texture2D>("chest");      //load the chest texture
+            player = Content.Load<Texture2D>("World/player");    //load the player texture
 
-            soundEffect = Content.Load<SoundEffect>("thunk");
-            instance = soundEffect.CreateInstance();
-            instance.Apply3D(listener, emitter);
+            _tiledMap = Content.Load<TiledMap>("Maps/home");   //load the tilemap
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap); 
+            collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
 
-            /* //circle demo
-            instance.IsLooped = true;
-            instance.Play();
-            */
+            tileCameraOffset_X = 400 - ((_graphics.GraphicsDevice.Viewport.Width - _tiledMap.WidthInPixels) / 2);  //camera thing - ((window width - tilemap width) / 2)
+            tileCameraOffset_Y = 240 - ((_graphics.GraphicsDevice.Viewport.Height - _tiledMap.HeightInPixels) / 2); //camera thing - ((window height - tilemap height) / 2)
+            _cameraPosition = new Vector2(tileCameraOffset_X, tileCameraOffset_Y);
 
-            listener.Position = new Vector3((float)position.X / 400 - 1, listener.Position.Y, (float)position.Y / 400 - 1);
+            playerPos.X = 400 - tileCameraOffset_X + (3*tileWidth); //camera thing - offset + (tile amount * tile width)
+            playerPos.Y = 240 - tileCameraOffset_Y + (3*tileWidth); //camera thing - offset + (tile amount * tile width)
+
+            //soundEffect = Content.Load<SoundEffect>("thunk");
+            //instance = soundEffect.CreateInstance();
+            //instance.Apply3D(listener, emitter);
+            //listener.Position = new Vector3((float)position.X / 400 - 1, listener.Position.Y, (float)position.Y / 400 - 1);
         }
-
-        /*  //circle demo
-        private Vector3 CalculateLocation(float angle, float distance)
-        {
-            return new Vector3(
-                (float)Math.Cos(angle) * distance,
-                0,
-                (float)Math.Sin(angle) * distance);
-        }*/
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            _tiledMapRenderer.Update(gameTime);
+            _camera.LookAt(_cameraPosition); //set camera position
 
-            KeyboardState state = Keyboard.GetState();  //get state of keyboard
+            KeyboardState state = Keyboard.GetState();
 
-            /* //circle demo
-            angle += 0.01f;
-            listener.Position = Vector3.Zero;
-            emitter.Position = CalculateLocation(angle, distance);
-            instance.Apply3D(listener, emitter);
-            */
-
-            if (state.IsKeyDown(Keys.Up))  //if key up, move up
-                position.Y -= 5;
-            if (state.IsKeyDown(Keys.Down))  //if key down, move down
-                position.Y += 5;
-            if (state.IsKeyDown(Keys.Left))  //if key left, move left
-                position.X -= 5;
-            if (state.IsKeyDown(Keys.Right))  //if key right, move right
-                position.X += 5;
-
-            //wall collision
-            if (player_rec.Location.X > 720) { //if too far right, push left
-                position.X -= 5;
-                instance = soundEffect.CreateInstance();
-                emitter.Position = new Vector3(listener.Position.X + 0.1f, listener.Position.Y, listener.Position.Z); //play bump to the right
-                instance.Play();
-                instance.Apply3D(listener, emitter);
+            if (state.IsKeyDown(Keys.Up) && !oldstate.IsKeyDown(Keys.Up))  
+            { 
+                collision.TryGetTile(tileIndex_X, (ushort)(tileIndex_Y-1), out tile); //grab collision value of tile up
+                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile up is free
+                    playerPos.Y -= 48; //move up
             }
-            if (player_rec.Location.X < 0) {   //if too far left, push right
-                position.X += 5;
-                instance = soundEffect.CreateInstance();
-                emitter.Position = new Vector3(listener.Position.X - 0.1f, listener.Position.Y, listener.Position.Z);  //play bump to the left
-                instance.Play();
-                instance.Apply3D(listener, emitter);
-            }
-            if (player_rec.Location.Y > 380) {  //if too far down, push up
-                position.Y -= 5;
-                instance = soundEffect.CreateInstance();
-                emitter.Position = new Vector3(listener.Position.X, listener.Position.Y, listener.Position.Z + 0.1f);  //play bump to the back
-                instance.Play();
-                instance.Apply3D(listener, emitter);
-            }
-            if (player_rec.Location.Y < 0) {  //if too far up, push down
-                position.Y += 5;
-                instance = soundEffect.CreateInstance();
-                emitter.Position = new Vector3(listener.Position.X, listener.Position.Y, listener.Position.Z - 0.1f);  //play bump to the front
-                instance.Play();
-                instance.Apply3D(listener, emitter);
+            if (state.IsKeyDown(Keys.Down) && !oldstate.IsKeyDown(Keys.Down)) 
+            {
+                collision.TryGetTile(tileIndex_X, (ushort)(tileIndex_Y + 1), out tile); //grab collision value of tile down
+                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile down is free
+                    playerPos.Y += 48;  //move down
+            } 
+            if (state.IsKeyDown(Keys.Left) && !oldstate.IsKeyDown(Keys.Left)) 
+            {
+                collision.TryGetTile((ushort)(tileIndex_X - 1), tileIndex_Y, out tile); //grab collision value of tile left
+                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile left is free
+                    playerPos.X -= 48;  //move left
+            } 
+            if (state.IsKeyDown(Keys.Right) && !oldstate.IsKeyDown(Keys.Right)) 
+            {
+                collision.TryGetTile((ushort)(tileIndex_X + 1), tileIndex_Y, out tile); //grab collision value of tile right
+                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile right is free
+                    playerPos.X += 48;  //move right
             } 
 
-            //chest collision
-            if (player_rec.Location.X < 71 && player_rec.Location.Y > 65 && player_rec.Location.Y < 75) //coming from the top
-                position.Y -= 5;
-            if (player_rec.Location.X > 60 && player_rec.Location.X < 71 && player_rec.Location.Y > 60 && player_rec.Location.Y < 209) //coming from the side
-                position.X += 5;
-            if (player_rec.Location.X < 71 && player_rec.Location.Y > 200 && player_rec.Location.Y < 209) //coming from the bottom
-                position.Y += 5;
+            tileIndex_X = (ushort)((tileCameraOffset_X + playerPos.X - 400) / tileWidth);  //get current tile based on player position
+            tileIndex_Y = (ushort)((tileCameraOffset_Y + playerPos.Y - 240) / tileWidth);  
 
-            //monster collision
-            if (player_rec.Location.Y < 81 && player_rec.Location.X > 420 && player_rec.Location.X < 430) //coming from the left
-                position.X -= 5;
-            if (player_rec.Location.Y > 70 && player_rec.Location.Y < 81 && player_rec.Location.X > 430 && player_rec.Location.X < 550) //bottom
-                position.Y += 5;
-            if (player_rec.Location.Y < 81 && player_rec.Location.X < 550 && player_rec.Location.X > 540) //right
-                position.X += 5;
+            oldstate = state;  //for player input handling
 
-            player_rec.Location = position;
-            listener.Position = new Vector3((float)position.X / 400 - 1, (float)position.Y / 400 - 1, listener.Position.Z);
-
-            Debug.WriteLine("Emitter: X:{0:F}, Y:{1:F}, Z:{2:F} - Listener: X:{3:F}, Y:{4:F}, Z:{5:F}", emitter.Position.X, emitter.Position.Y, emitter.Position.Z, listener.Position.X, listener.Position.Y, listener.Position.Z);
+            //if (player_rec.Location.X > 720)
+            //{
+            //    position.X -= 5;
+            //    instance = soundEffect.CreateInstance();
+            //    emitter.Position = new Vector3(listener.Position.X + 0.1f, listener.Position.Y, listener.Position.Z); //play bump to the right
+            //    instance.Play();
+            //    instance.Apply3D(listener, emitter);
+            //}
+            //listener.Position = new Vector3((float)position.X / 400 - 1, (float)position.Y / 400 - 1, listener.Position.Z);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Blue);  //background color
+            GraphicsDevice.Clear(Color.Black);
+            _tiledMapRenderer.Draw( _camera.GetViewMatrix()); //draw the tile map
 
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(player, player_rec, Color.White);   //draw player sprite
-            _spriteBatch.Draw(chest, new Rectangle(1, 135, 70, 74), Color.White);   //draw chest sprite
-            _spriteBatch.Draw(monster, new Rectangle(500, 1, 50, 80), Color.White);  //draw monster sprite
+            _spriteBatch.Draw(player, new Rectangle((int)playerPos.X, (int)playerPos.Y, 48, 48), Color.White);
 
             _spriteBatch.End();
 
