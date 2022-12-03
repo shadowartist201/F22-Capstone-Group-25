@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 
@@ -21,9 +22,14 @@ namespace Game_Demo
             Components.Add(_screenManager);
         }
 
-        private void LoadScreen1()
+        public void LoadScreen1()
         {
             _screenManager.LoadScreen(new World(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadScreen2()
+        {
+            _screenManager.LoadScreen(new Battle(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
         protected override void Initialize()
@@ -39,6 +45,11 @@ namespace Game_Demo
 
         protected override void Update(GameTime gameTime)
         {
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Escape))
+            {
+                LoadScreen2();
+            }
             base.Update(gameTime);
         }
 
