@@ -1,35 +1,37 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
+//using Microsoft.Xna.Framework.Audio;
 using MonoGame.Extended;
-using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
-
+using MonoGame.Extended.Screens;
 
 namespace Game_Demo
 {
-    public class World : Game
+    public class World : GameScreen
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;  //batch of sprites
-        private Texture2D player;    //player texture
+        private Game1 game => (Game1)base.Game;
+        public World(Game1 game) : base(game) { }
 
+        public SpriteBatch _spriteBatch;
+
+        public Texture2D player;    //player texture
         private Vector2 playerPos; //player position
 
-        KeyboardState oldstate;
+        public TiledMap _tiledMap;
+        public TiledMapRenderer _tiledMapRenderer;
+        public TiledMapTileLayer collision;
+        public TiledMapTile? tile = null;
+        public OrthographicCamera _camera;
 
-        TiledMap _tiledMap; 
-        TiledMapRenderer _tiledMapRenderer;
-        TiledMapTileLayer collision;
-        TiledMapTile? tile = null;
-        private OrthographicCamera _camera;
+        private KeyboardState oldstate;
 
-        int tileCameraOffset_X; //spacer between left and tilemap
-        int tileCameraOffset_Y; //spacer between top and tilemap
         private Vector2 _cameraPosition;
         //Default camera position of (0,0) is (400,240) from the top-left edge of the map
+
+        int tileCameraOffset_X;
+        int tileCameraOffset_Y;
 
         int tileWidth = 48;  //48x48 pixels
         ushort tileIndex_X;
@@ -40,44 +42,31 @@ namespace Game_Demo
         //private AudioListener listener = new AudioListener();
         //private AudioEmitter emitter = new AudioEmitter();
 
-        public World()
+        public override void LoadContent()
         {
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-        }
-
-        protected override void Initialize()
-        {
-            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480); //rhis must equal the size of the window (800x480)
-            _camera = new OrthographicCamera(viewportadapter);
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);  //initialize the batch
-
             player = Content.Load<Texture2D>("World/player");    //load the player texture
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _camera = new OrthographicCamera(GraphicsDevice);
 
             _tiledMap = Content.Load<TiledMap>("Maps/home");   //load the tilemap
-            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap); 
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
 
-            tileCameraOffset_X = 400 - ((_graphics.GraphicsDevice.Viewport.Width - _tiledMap.WidthInPixels) / 2);  //camera thing - ((window width - tilemap width) / 2)
-            tileCameraOffset_Y = 240 - ((_graphics.GraphicsDevice.Viewport.Height - _tiledMap.HeightInPixels) / 2); //camera thing - ((window height - tilemap height) / 2)
+            tileCameraOffset_X = 400 - ((game._graphics.GraphicsDevice.Viewport.Width - _tiledMap.WidthInPixels) / 2);  //camera thing - ((window width - tilemap width) / 2)
+            tileCameraOffset_Y = 240 - ((game._graphics.GraphicsDevice.Viewport.Height - _tiledMap.HeightInPixels) / 2); //camera thing - ((window height - tilemap height) / 2)
             _cameraPosition = new Vector2(tileCameraOffset_X, tileCameraOffset_Y);
 
-            playerPos.X = 400 - tileCameraOffset_X + (3*tileWidth); //camera thing - offset + (tile amount * tile width)
-            playerPos.Y = 240 - tileCameraOffset_Y + (3*tileWidth); //camera thing - offset + (tile amount * tile width)
+            playerPos.X = 400 - tileCameraOffset_X + (3 * tileWidth); //camera thing - offset + (tile amount * tile width)
+            playerPos.Y = 240 - tileCameraOffset_Y + (3 * tileWidth); //camera thing - offset + (tile amount * tile width)
 
             //soundEffect = Content.Load<SoundEffect>("thunk");
             //instance = soundEffect.CreateInstance();
             //instance.Apply3D(listener, emitter);
             //listener.Position = new Vector3((float)position.X / 400 - 1, listener.Position.Y, (float)position.Y / 400 - 1);
+            base.LoadContent();
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             _tiledMapRenderer.Update(gameTime);
             _camera.LookAt(_cameraPosition); //set camera position
@@ -124,21 +113,17 @@ namespace Game_Demo
             //}
             //listener.Position = new Vector3((float)position.X / 400 - 1, (float)position.Y / 400 - 1, listener.Position.Z);
 
-            base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-            _tiledMapRenderer.Draw( _camera.GetViewMatrix()); //draw the tile map
+            _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
 
             _spriteBatch.Begin();
 
             _spriteBatch.Draw(player, new Rectangle((int)playerPos.X, (int)playerPos.Y, 48, 48), Color.White);
 
             _spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }

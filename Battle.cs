@@ -1,21 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection.Metadata;
+using MonoGame.Extended.Screens;
 
 namespace Game_Demo
 {
-    public class Battle : Game
+    public class Battle : GameScreen
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;  //batch of sprites
+        private Game1 game => (Game1)base.Game;
+        public Battle(Game1 game) : base(game) { }
 
-        private Texture2D player;    //player texture
-        private Texture2D dragon;   //monster texture
-        private Texture2D cat;      //cat texture
+        public SpriteBatch _spriteBatch;  //batch of sprites
+
+        List<Entity> enemies = new List<Entity>();
+        List<Entity> squad = new List<Entity>();
+
+        private Texture2D player_battle;    //player texture
+        private Texture2D dragon_battle;   //monster texture
+        private Texture2D cat_battle;      //cat texture
 
         private Texture2D battle_message;  //center message box
         private Texture2D inventory_box;   //inventory menu
@@ -37,13 +40,9 @@ namespace Game_Demo
         private Texture2D hp_bar;       //empty bar
         private Texture2D bar_fill;     //that which fills the bar
 
-        List<Entity> enemies = new List<Entity>();
-        List<Entity> squad = new List<Entity>();
-        
         private int player_hp_curr = 100; //current player HP, should be initialized as player's max HP
         private int cat_hp_curr = 50;
         private int player_mp_curr = 10;
-
         private int dragon_hp_curr = 200;
 
         private int selection_index = 1;  //shows which action menu option is selected
@@ -63,49 +62,15 @@ namespace Game_Demo
 
         private KeyboardState oldState;
 
-        public Battle()
+        public override void Initialize()
         {
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content/Battle";
-            IsMouseVisible = true;
-        }
+            //new Entity(name, HP, max HP, MP, max MP, attack, magic attack, defense, magic defense, speed)
+            enemies.Add(new Entity("Dragon", 200, 200, 0, 0, 10, 15, 0, 0, 5));
 
-        public Battle(List<Entity> e, List<Entity> s)
-        {
-            _graphics = new GraphicsDeviceManager(this);
-            enemies = e;
-            squad = s;
-            Content.RootDirectory = "Content/Battle";
-            IsMouseVisible = true;
-        }
+            squad.Add(new Entity("Nobody", 100, 100, 10, 10, 5, 10, 10, 12, 10));
+            squad.Add(new Entity("Cat", 50, 50, 0, 0, 5, 10, 5, 7, 15));
 
-        protected override void LoadContent()
-        {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);  //initialize the batch
-
-            player = Content.Load<Texture2D>("player-battle");    //load the player texture
-            dragon = Content.Load<Texture2D>("dragon-battle");  //load the monster texture
-            cat = Content.Load<Texture2D>("cat-battle");      //load the cat texture
-
-            hp_bar = Content.Load<Texture2D>("hp-bar");
-            bar_fill = Content.Load<Texture2D>("bar-fill");
-
-            battle_message = Content.Load<Texture2D>("battle-message-box");
-            inventory_box = Content.Load<Texture2D>("inventory-box");
-            menu_box = Content.Load<Texture2D>("menu-box");
-            party_info = Content.Load<Texture2D>("party-info-box");
-            enemy_box = Content.Load<Texture2D>("enemy-name-box");
-
-            menu_up = Content.Load<Texture2D>("menu-up");
-            menu_down = Content.Load<Texture2D>("menu-down");
-            item_selection = Content.Load<Texture2D>("item-selection");
-            current_fighter = Content.Load<Texture2D>("current-fighter");
-
-            healing_effect = Content.Load<Texture2D>("cat-battle");
-
-            small_font = Content.Load<SpriteFont>("small");
-            medium_font = Content.Load<SpriteFont>("medium");
-            large_font = Content.Load<SpriteFont>("large");
+            base.Initialize();
         }
 
         /*
@@ -120,10 +85,39 @@ namespace Game_Demo
               in Battle demo by using oldState and newState.
         */
 
-        protected override void Update(GameTime gameTime)
+        public override void LoadContent()
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            player_battle = Content.Load<Texture2D>("Battle/player-battle");    //load the player texture
+            dragon_battle = Content.Load<Texture2D>("Battle/dragon-battle");  //load the monster texture
+            cat_battle = Content.Load<Texture2D>("Battle/cat-battle");      //load the cat texture
+
+            hp_bar = Content.Load<Texture2D>("Battle/hp-bar");
+            bar_fill = Content.Load<Texture2D>("Battle/bar-fill");
+
+            battle_message = Content.Load<Texture2D>("Battle/battle-message-box");
+            inventory_box = Content.Load<Texture2D>("Battle/inventory-box");
+            menu_box = Content.Load<Texture2D>("Battle/menu-box");
+            party_info = Content.Load<Texture2D>("Battle/party-info-box");
+            enemy_box = Content.Load<Texture2D>("Battle/enemy-name-box");
+
+            menu_up = Content.Load<Texture2D>("Battle/menu-up");
+            menu_down = Content.Load<Texture2D>("Battle/menu-down");
+            item_selection = Content.Load<Texture2D>("Battle/item-selection");
+            current_fighter = Content.Load<Texture2D>("Battle/current-fighter");
+
+            healing_effect = Content.Load<Texture2D>("Battle/cat-battle");
+
+            small_font = Content.Load<SpriteFont>("Battle/small");
+            medium_font = Content.Load<SpriteFont>("Battle/medium");
+            large_font = Content.Load<SpriteFont>("Battle/large");
+
+            base.LoadContent();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
 
             KeyboardState newState = Keyboard.GetState();
 
@@ -236,21 +230,23 @@ namespace Game_Demo
 
             oldState = newState;
 
-            base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             if (enemies[0].health == 0)  //if dragon defeated
             {
-                GraphicsDevice.Clear(Color.Black);
+                game.GraphicsDevice.Clear(Color.Black);
                 _spriteBatch.Begin();
                 _spriteBatch.DrawString(large_font, "Congrat, you is winner", new Vector2(300, 226), Color.White);
                 _spriteBatch.End();
+
+                return;
+                
             }
             else  //if battle still going
             {
-                GraphicsDevice.Clear(Color.Green);  //background color
+                game.GraphicsDevice.Clear(Color.Green);  //background color
 
                 _spriteBatch.Begin();
 
@@ -260,9 +256,9 @@ namespace Game_Demo
                 _spriteBatch.DrawString(medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
 
                 //entities
-                _spriteBatch.Draw(player, new Rectangle(630, 60, 54, 77), Color.White);   //draw player sprite
-                _spriteBatch.Draw(dragon, new Rectangle(70, 35, 239, 246), Color.White);   //draw monster sprite
-                _spriteBatch.Draw(cat, new Rectangle(630, 185, 71, 55), Color.White);  //draw cat sprite
+                _spriteBatch.Draw(player_battle, new Rectangle(630, 60, 54, 77), Color.White);   //draw player sprite
+                _spriteBatch.Draw(dragon_battle, new Rectangle(70, 35, 239, 246), Color.White);   //draw monster sprite
+                _spriteBatch.Draw(cat_battle, new Rectangle(630, 185, 71, 55), Color.White);  //draw cat sprite
 
                 //box set 1
                 _spriteBatch.Draw(enemy_box, new Rectangle(14, 336, 160, 128), Color.White);
@@ -362,7 +358,7 @@ namespace Game_Demo
                             Entity currenemy = enemies[0]; //set current enemy
                             List<Entity> returned = new List<Entity>(); 
                             menu_alpha = 0f; //hide menu
-                            returned = attack(ref currchar, ref currenemy);
+                            returned = attack(ref currchar, ref currenemy, _spriteBatch, battle_message, large_font, small_font);
                             squad[current_character - 1] = returned[0];
                             enemies[0] = returned[1];
                             alratk = true; //set attacked flag to true
@@ -380,7 +376,7 @@ namespace Game_Demo
                                 Entity currenemy = enemies[0]; //set current enemy
                                 List<Entity> returned = new List<Entity>(); 
                                 menu_alpha = 0f; //hide menu
-                                returned = spattack(ref currchar, ref currenemy);
+                                returned = spattack(ref currchar, ref currenemy, _spriteBatch, battle_message, medium_font);
                                 squad[current_character - 1] = returned[0];
                                 enemies[0] = returned[1];
                                 alratk = true; //set attacked flag to true
@@ -457,11 +453,9 @@ namespace Game_Demo
                 ///maybe a small hp/mana bar for each enemy on the field?
                 _spriteBatch.End();
             }
-
-            base.Draw(gameTime);
         }
 
-        List<Entity> attack(ref Entity a, ref Entity t) //attack process
+        List<Entity> attack(ref Entity a, ref Entity t, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font, SpriteFont small_font) //attack process
         {
             hpManip(ref t, a.attack * (25 / 25 + t.def)); //HP decrease by target, attack strength * target's defense
             menu_alpha = 0f; //hide menu
@@ -474,7 +468,7 @@ namespace Game_Demo
             return tr;
         }
 
-        List<Entity> spattack(ref Entity a, ref Entity t) //magic attack process, (ref Entity attacker, ref Entity target)
+        List<Entity> spattack(ref Entity a, ref Entity t, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont medium_font) //magic attack process, (ref Entity attacker, ref Entity target)
         {
             hpManip(ref t, a.spattack * (75 / 75 + t.spdef)); //MP decrease by target, magic attack strength * target's magic defense
             manaManip(ref a, 1); //decrease MP of attacker by 1
@@ -508,7 +502,12 @@ namespace Game_Demo
                 t.mana = t.mMana; //set current MP = max MP
         }
 
-        Entity healByFlat(ref Entity t, int change) //ref Entity target, int change
+        bool BattleExit()
+        {
+            return true;
+        }
+
+        Entity healByFlat(ref Entity t, int change, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int change
         {
             hpManip(ref t, change * -1); //increase HP by flat rate
             menu_alpha = 0f; //hide menu
@@ -517,7 +516,7 @@ namespace Game_Demo
             return t;
         }
 
-        Entity healByPerc(Entity t, int change) //ref Entity target, int change
+        Entity healByPerc(Entity t, int change, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int change
         {
             hpManip(ref t, (change*t.health) * -1); //increase HP by percentage of max
             menu_alpha = 0f; //hide menu
@@ -526,7 +525,7 @@ namespace Game_Demo
             return t;
         }
 
-        Entity itemEffect(ref Entity t, /*Entity a, item i,*/ int hp, int mp) //ref Entity target, int HP, int MP
+        Entity itemEffect(ref Entity t, /*Entity a, item i,*/ int hp, int mp, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int HP, int MP
         {
             hpManip(ref t,hp*-1); //increase HP by flat rate
             manaManip(ref t, mp*-1); //increase MP by flat rate
