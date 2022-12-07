@@ -1,0 +1,80 @@
+{
+    "activeFile": "Content/Maps/village.tmx",
+    "expandedProjectPaths": [
+        "Content/Maps",
+        "Content/Images"
+    ],
+    "fileStates": {
+        "Content/Maps/forest.tmx": {
+            "scale": 0.6184895833333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.20210526315793,
+                "y": 240.10105263157902
+            }
+        },
+        "Content/Maps/home.tmx": {
+            "scale": 1.3744212962962963,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 216.0909473684211,
+                "y": 168.43452631578947
+            }
+        },
+        "Content/Maps/village.tmx": {
+            "scale": 0.7276348039215687,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 408.1717894736842,
+                "y": 312.65684210526314
+            }
+        },
+        "Content/Tilesets/Door.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Inside_A2.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Inside_A4.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Inside_A5.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Inside_B.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Inside_C.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Outside_A2.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Outside_A3.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Outside_A4.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Outside_A5.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Outside_B.tsx": {
+            "scaleInDock": 1
+        },
+        "Content/Tilesets/Outside_C.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "openFiles": [
+        "Content/Maps/forest.tmx",
+        "Content/Maps/home.tmx",
+        "Content/Maps/village.tmx"
+    ],
+    "project": "nobody.tiled-project",
+    "recentFiles": [
+        "Content/Maps/forest.tmx",
+        "Content/Maps/home.tmx",
+        "Content/Maps/village.tmx"
+    ]
+}

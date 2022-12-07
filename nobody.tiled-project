@@ -4,9 +4,9 @@
     ],
     "extensionsPath": "extensions",
     "folders": [
-        "../../../source/repos/F22-Capstone-Group-25/Content/Maps",
-        "../../../source/repos/F22-Capstone-Group-25/Content/Tilesets",
-        "../../../source/repos/F22-Capstone-Group-25/Content/Images"
+        "Content/Images",
+        "Content/Tilesets",
+        "Content/Maps"
     ],
     "propertyTypes": [
     ]
