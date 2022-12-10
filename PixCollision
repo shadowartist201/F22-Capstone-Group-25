@@ -1,0 +1,228 @@
+#region Using Statements
+using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Storage;
+#endregion
+
+namespace PerPixelCollision
+{
+        public class PerPixelCollisionGame : Microsoft.Xna.Framework.Game
+    {
+        GraphicsDeviceManager graphics;
+
+        Texture2D personTexture;
+        Texture2D blockTexture;
+        
+        Color[] personTextureData;
+        Color[] blockTextureData;
+
+        
+        SpriteBatch spriteBatch;
+        
+        Vector2 personPosition;
+        const int PersonMoveSpeed = 5;
+
+        List<Vector2> blockPositions = new List<Vector2>();
+        float BlockSpawnProbability = 0.01f;
+        const int BlockFallSpeed = 2;
+
+        Random random = new Random();
+
+        bool personHit = false;
+
+        Rectangle safeBounds;
+        const float SafeAreaPortion = 0.05f;
+
+
+        public PerPixelCollisionGame()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+           
+            Viewport viewport = graphics.GraphicsDevice.Viewport;
+            safeBounds = new Rectangle(
+                (int)(viewport.Width * SafeAreaPortion),
+                (int)(viewport.Height * SafeAreaPortion),
+                (int)(viewport.Width * (1 - 2 * SafeAreaPortion)),
+                (int)(viewport.Height * (1 - 2 * SafeAreaPortion)));
+            // Start the player in the center along the bottom of the screen
+            personPosition.X = (safeBounds.Width - personTexture.Width) / 2;
+            personPosition.Y = safeBounds.Height - personTexture.Height;
+        }
+
+
+        
+        protected override void LoadContent()
+        {
+            
+            blockTexture = Content.Load<Texture2D>("Block");
+            personTexture = Content.Load<Texture2D>("Person");
+
+            
+            blockTextureData =
+                new Color[blockTexture.Width * blockTexture.Height];
+            blockTexture.GetData(blockTextureData);
+            personTextureData =
+                new Color[personTexture.Width * personTexture.Height];
+            personTexture.GetData(personTextureData);
+
+            
+            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+        }
+
+
+        
+        protected override void Update(GameTime gameTime)
+        {
+            
+            KeyboardState keyboard = Keyboard.GetState();
+            GamePadState gamePad = GamePad.GetState(PlayerIndex.One);
+
+            
+            if (gamePad.Buttons.Back == ButtonState.Pressed ||
+                keyboard.IsKeyDown(Keys.Escape))
+            {
+                this.Exit();
+            }
+
+            
+            if (keyboard.IsKeyDown(Keys.Left) ||
+                gamePad.DPad.Left == ButtonState.Pressed)
+            {
+                personPosition.X -= PersonMoveSpeed;
+            }
+            if (keyboard.IsKeyDown(Keys.Right) ||
+                gamePad.DPad.Right == ButtonState.Pressed)
+            {
+                personPosition.X += PersonMoveSpeed;
+            }
+
+            
+            personPosition.X = MathHelper.Clamp(personPosition.X,
+                safeBounds.Left, safeBounds.Right - personTexture.Width);
+
+            
+            if (random.NextDouble() < BlockSpawnProbability)
+            {
+                float x = (float)random.NextDouble() *
+                    (Window.ClientBounds.Width - blockTexture.Width);
+                blockPositions.Add(new Vector2(x, -blockTexture.Height));
+            }
+
+            
+            Rectangle personRectangle =
+                new Rectangle((int)personPosition.X, (int)personPosition.Y,
+                personTexture.Width, personTexture.Height);
+
+            
+            personHit = false;
+            for (int i = 0; i < blockPositions.Count; i++)
+            {
+                
+                blockPositions[i] =
+                    new Vector2(blockPositions[i].X,
+                                blockPositions[i].Y + BlockFallSpeed);
+
+                
+                Rectangle blockRectangle =
+                    new Rectangle((int)blockPositions[i].X, (int)blockPositions[i].Y,
+                    blockTexture.Width, blockTexture.Height);
+
+                
+                if (IntersectPixels(personRectangle, personTextureData,
+                                    blockRectangle, blockTextureData))
+                {
+                    personHit = true;
+                }
+
+                
+                if (blockPositions[i].Y > Window.ClientBounds.Height)
+                {
+                    blockPositions.RemoveAt(i);
+
+                    
+                    i--;
+                }
+            }
+
+            base.Update(gameTime);
+        }
+
+
+        
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice device = graphics.GraphicsDevice;
+
+            
+            if (personHit)
+            {
+                device.Clear(Color.Red);
+            }
+            else
+            {
+                device.Clear(Color.CornflowerBlue);
+            }
+
+
+            spriteBatch.Begin();
+
+            
+            spriteBatch.Draw(personTexture, personPosition, Color.White);
+
+            
+            foreach (Vector2 blockPosition in blockPositions)
+                spriteBatch.Draw(blockTexture, blockPosition, Color.White);
+
+            spriteBatch.End();
+
+
+            base.Draw(gameTime);
+        }
+
+
+        
+        static bool IntersectPixels(Rectangle rectangleA, Color[] dataA,
+                                    Rectangle rectangleB, Color[] dataB)
+        {
+            
+            int top = Math.Max(rectangleA.Top, rectangleB.Top);
+            int bottom = Math.Min(rectangleA.Bottom, rectangleB.Bottom);
+            int left = Math.Max(rectangleA.Left, rectangleB.Left);
+            int right = Math.Min(rectangleA.Right, rectangleB.Right);
+
+            
+            for (int y = top; y < bottom; y++)
+            {
+                for (int x = left; x < right; x++)
+                {
+                    
+                    Color colorA = dataA[(x - rectangleA.Left) +
+                                         (y - rectangleA.Top) * rectangleA.Width];
+                    Color colorB = dataB[(x - rectangleB.Left) +
+                                         (y - rectangleB.Top) * rectangleB.Width];
+
+                    
+                    if (colorA.A != 0 && colorB.A != 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            
+            return false;
+        }
+    }
+}
