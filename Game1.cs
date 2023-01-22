@@ -9,8 +9,6 @@ namespace Game_Demo
     public class Game1 : Game
     {
         public GraphicsDeviceManager _graphics;
-        //public SpriteBatch _spriteBatch;  //batch of sprites
-
         private readonly ScreenManager _screenManager;
 
         public Game1()
@@ -22,33 +20,63 @@ namespace Game_Demo
             Components.Add(_screenManager);
         }
 
-        public void LoadScreen1()
+        public void LoadHome()
         {
-            _screenManager.LoadScreen(new World(this), new FadeTransition(GraphicsDevice, Color.Black));
+            _screenManager.LoadScreen(new Home(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
-        public void LoadScreen2()
+        public void LoadVillage1()
+        {
+            _screenManager.LoadScreen(new Village1(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadForest()
+        {
+            _screenManager.LoadScreen(new Forest(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadCity()
+        {
+            _screenManager.LoadScreen(new City(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadBattle()
         {
             _screenManager.LoadScreen(new Battle(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
         protected override void Initialize()
         {
-            LoadScreen1();
+            LoadHome();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            //_spriteBatch = new SpriteBatch(GraphicsDevice);  //initialize the batch
         }
 
         protected override void Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Escape))
+            if (state.IsKeyDown(Keys.A))
             {
-                LoadScreen2();
+                LoadBattle();
+            }
+            else if (state.IsKeyDown(Keys.S))
+            {
+                LoadHome();
+            }
+            else if (state.IsKeyDown(Keys.D))
+            {
+                LoadVillage1();
+            }
+            else if (state.IsKeyDown(Keys.F))
+            {
+                LoadForest();
+            }
+            else if (state.IsKeyDown(Keys.G))
+            {
+                LoadCity();
             }
             base.Update(gameTime);
         }

@@ -241,7 +241,7 @@ namespace Game_Demo
                 _spriteBatch.DrawString(large_font, "Congrat, you is winner", new Vector2(300, 226), Color.White);
                 _spriteBatch.End();
 
-                game.LoadScreen1();
+                game.LoadHome();
                 
             }
             else  //if battle still going
