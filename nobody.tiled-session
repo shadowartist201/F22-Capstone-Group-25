@@ -1,5 +1,9 @@
 {
-    "activeFile": "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/city.tmx",
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Content/Maps/home.tmx",
     "expandedProjectPaths": [
         "Content/Images",
         "Content/Maps"
@@ -33,8 +37,8 @@
             "scale": 0.1845896147403685,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1167.4546279491833,
-                "y": 1113.280399274047
+                "x": 1216.211433756806,
+                "y": 1232.4637023593466
             }
         },
         "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/forest.tmx": {
@@ -85,10 +89,10 @@
         },
         "Content/Maps/home.tmx": {
             "scale": 1.3744212962962963,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
                 "x": 216.45473684210526,
-                "y": 168.43452631578953
+                "y": 169.16210526315788
             }
         },
         "Content/Maps/village.tmx": {
@@ -137,6 +141,8 @@
         }
     },
     "last.externalTilesetPath": "C:/Users/porte/source/repos/shadowartist201/F22-Capstone-Group-25/Content/Tilesets",
+    "map.tileHeight": 48,
+    "map.tileWidth": 48,
     "openFiles": [
         "Content/Maps/forest.tmx",
         "Content/Maps/home.tmx",
@@ -147,9 +153,9 @@
     "project": "nobody.tiled-project",
     "recentFiles": [
         "Content/Maps/forest.tmx",
-        "Content/Maps/home.tmx",
-        "Content/Maps/village.tmx",
         "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/forest.tmx",
-        "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/city.tmx"
+        "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/city.tmx",
+        "Content/Maps/village.tmx",
+        "Content/Maps/home.tmx"
     ]
 }
