@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
@@ -11,6 +12,8 @@ namespace Game_Demo
         public GraphicsDeviceManager _graphics;
         public int map;
         public Vector2 playerPos;
+        public List<Entity> enemies = new List<Entity>();
+        public List<Entity> squad = new List<Entity>();
         private readonly ScreenManager _screenManager;
 
         public Game1()
