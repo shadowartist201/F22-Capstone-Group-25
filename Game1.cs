@@ -9,6 +9,8 @@ namespace Game_Demo
     public class Game1 : Game
     {
         public GraphicsDeviceManager _graphics;
+        public int map;
+        public Vector2 playerPos;
         private readonly ScreenManager _screenManager;
 
         public Game1()
@@ -22,27 +24,51 @@ namespace Game_Demo
 
         public void LoadHome()
         {
+            map = 1;
             _screenManager.LoadScreen(new Home(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
         public void LoadVillage1()
         {
+            map = 2;
             _screenManager.LoadScreen(new Village1(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
         public void LoadForest()
         {
+            map = 3;
             _screenManager.LoadScreen(new Forest(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
         public void LoadCity()
         {
+            map = 4;
             _screenManager.LoadScreen(new City(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
         public void LoadBattle()
         {
+            //no map change!
             _screenManager.LoadScreen(new Battle(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void BattleReturn()
+        {
+            switch (map)
+            {
+                case 1:
+                    LoadHome();
+                    break;
+                case 2:
+                    LoadVillage1();
+                    break;
+                case 3:
+                    LoadForest();
+                    break;
+                case 4:
+                    LoadCity();
+                    break;
+            }
         }
 
         protected override void Initialize()

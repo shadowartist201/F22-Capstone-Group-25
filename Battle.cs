@@ -73,6 +73,17 @@ namespace Game_Demo
             base.Initialize();
         }
 
+        //public void Initialize(emenies,group,map,x,y)///list of enemies and squad, and the map and position of player
+        /*{
+         * foreach(Entity e in emenies)
+         *  enemies.Add(e);
+         * foreach(Entity e in group)
+         *  squad.Add(e);
+         * map = this.map;
+         * x = this.x;
+         * y = this.y;
+         */
+
         /*
               Because Update() runs multiple times per second, pressing a key can
               keep it in the "activated" state for multiple Update() loops. You
@@ -234,7 +245,26 @@ namespace Game_Demo
 
         public override void Draw(GameTime gameTime)
         {
-            if (enemies[0].health == 0)  //if dragon defeated
+            /*foreach(Entity e in enemies)
+             * {
+             *  if(e.health!=0)
+             *      endFlag = false;
+             * }
+             * if(endFlag)
+             * {
+             *  //do something for win presentation
+             *  switch(map)
+             *  case A:
+             *      game.LoadHome(x,y);
+             *  case B:
+             *      game.LoadVillage1(x,y);
+             *  case C:
+             *      game.LoadForest(x,y);
+             *  case D:
+             *      game.LoadCity(x,y);
+             * 
+             */
+            if (enemies[0].health == 0)
             {
                 game.GraphicsDevice.Clear(Color.Black);
                 _spriteBatch.Begin();
