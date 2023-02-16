@@ -396,7 +396,7 @@ namespace Game_Demo
                             alratk = true; //set attacked flag to true
                         }
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                        _spriteBatch.DrawString(large_font, "*" + characters[current_character-1] + " attacked the " + enemies[target-1] + "!", new Vector2(205,361), Color.Black);
+                        _spriteBatch.DrawString(large_font, "*" + squad[current_character-1].name + " attacked the " + enemies[target-1].name + "!", new Vector2(205,361), Color.Black);
                     }
                     if (magic_message) //when magic message activated, draw it
                     {
@@ -417,12 +417,12 @@ namespace Game_Demo
                         if (squad[current_character-1].mana>0)
                         {
                             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                            _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
+                            _spriteBatch.DrawString(large_font, "*" + squad[current_character].name + " summoned fire!", new Vector2(205, 361), Color.Black);
                         }
                         else
                         {
                             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                            _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
+                            _spriteBatch.DrawString(large_font, "*" + squad[current_character].name + " is out of mana!", new Vector2(205, 361), Color.Black);
                         }
                     }
                     if (cat_magic_message) //when cat message message activated, draw it
