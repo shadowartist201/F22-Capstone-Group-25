@@ -15,7 +15,17 @@ namespace Game_Demo
         public List<Entity> enemies = new List<Entity>();
         public List<Entity> squad = new List<Entity>();
         private readonly ScreenManager _screenManager;
+        SpriteBatch _spriteBatch;
 
+        public KeyboardState _keyboardState { get; private set; }
+        public KeyboardState _previousKeyboardState { get; private set; }
+
+        public SpriteFont DialogFont { get; private set; }
+
+        public Vector2 CenterScreen 
+            => new Vector2(_graphics.GraphicsDevice.Viewport.Width / 2f, _graphics.GraphicsDevice.Viewport.Height / 2f);
+
+        private DialogBox _dialogBox;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -82,6 +92,19 @@ namespace Game_Demo
 
         protected override void LoadContent()
         {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            DialogFont = Content.Load<SpriteFont>("Fonts/dialog");
+
+            _dialogBox = new DialogBox
+            {
+                Text = "Hello World! Press Enter to proceed.\n" +
+                       "I will be on the next pane! " +
+                       "And wordwrap will occur, especially if there are some longer words!\n" +
+                       "Monospace fonts work best but you might not want Courier New.\n" +
+                       "In this code sample, after this dialog box finishes, you can press the O key to open a new one."
+            };
+
+            _dialogBox.Initialize();
         }
 
         protected override void Update(GameTime gameTime)
@@ -107,12 +130,25 @@ namespace Game_Demo
             {
                 LoadCity();
             }
+
+            _dialogBox.Update();
+
+            _previousKeyboardState = _keyboardState;
+            _keyboardState = Keyboard.GetState();
+
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+            _dialogBox.Draw(_spriteBatch);
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

@@ -1,4 +1,4 @@
-﻿using Game_Demo;
+﻿using System;
 
 /*Console.WriteLine("------Nobody Demos------");
 Console.WriteLine("\n");
@@ -8,7 +8,19 @@ Console.WriteLine("\n");
 Console.WriteLine("Your choice: ");
 
 string option = Console.ReadLine();*/
-
-Game1 game1 = new Game1();
-
-game1.Run();
+namespace Game_Demo
+{
+    public static class Program
+    {
+        public static Game1 Game;
+        [STAThread]
+        static void Main()
+        {
+            using (var game = new Game1())
+            {
+                Game = game;
+                Game.Run();
+            }
+        }
+    }
+}
