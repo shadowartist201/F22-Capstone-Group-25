@@ -47,6 +47,7 @@ namespace Game_Demo
 
         private int selection_index = 1;  //shows which action menu option is selected
         private int current_character = 1;  //which character's turn is it, where 1 = Nobody and 2 = Cat
+        private int target = 1;
         private string[] characters = { null, "Nobody", "Cat" };  //array to hold character names
 
         private float menu_alpha = 0.0f;  //action menu visibility, 0 = hidden and 1 = show
@@ -73,6 +74,17 @@ namespace Game_Demo
             base.Initialize();
         }
 
+        //public void Initialize(emenies,group,map,x,y)///list of enemies and squad, and the map and position of player
+        /*{
+         * foreach(Entity e in emenies)
+         *  enemies.Add(e);
+         * foreach(Entity e in group)
+         *  squad.Add(e);
+         * map = this.map;
+         * x = this.x;
+         * y = this.y;
+         */
+
         /*
               Because Update() runs multiple times per second, pressing a key can
               keep it in the "activated" state for multiple Update() loops. You
@@ -87,6 +99,7 @@ namespace Game_Demo
 
         public override void LoadContent()
         {
+            //TO DO: logically separate loading to reduce memory pressure
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             player_battle = Content.Load<Texture2D>("Battle/player-battle");    //load the player texture
@@ -234,14 +247,25 @@ namespace Game_Demo
 
         public override void Draw(GameTime gameTime)
         {
-            if (enemies[0].health == 0)  //if dragon defeated
+            /*foreach(Entity e in enemies)
+             * {
+             *  if(e.health!=0)
+             *      endFlag = false;
+             * }
+             * if(endFlag)
+             * {
+             *  //do something for win presentation
+             *  game.BattleReturn();
+             * }
+             */
+            if (enemies[0].health == 0)
             {
                 game.GraphicsDevice.Clear(Color.Black);
                 _spriteBatch.Begin();
                 _spriteBatch.DrawString(large_font, "Congrat, you is winner", new Vector2(300, 226), Color.White);
                 _spriteBatch.End();
 
-                game.LoadScreen1();
+                game.BattleReturn();
                 
             }
             else  //if battle still going
@@ -265,7 +289,7 @@ namespace Game_Demo
                 _spriteBatch.Draw(party_info, new Rectangle(488, 336, 301, 128), Color.White);
 
                 //enemy info
-                /*
+                /* int i = 0;
                  * foreach(Entity e in enemies)
                  * {
                  *  _spriteBatch.DrawString(medium_font, e.name, new Vector(41, 361+(i*43)), Color.Black);
@@ -274,7 +298,7 @@ namespace Game_Demo
                 _spriteBatch.DrawString(large_font, "Dragon", new Vector2(41, 361), Color.Black);
 
                 //party info
-                /*
+                /* i = 0;
                  * foreach(Entity e in squad)
                  * {
                  *  _spriteBatch.DrawString(medium_font, e.name, new Vector(510, 360+(i*19)), Color.Black);
@@ -295,14 +319,7 @@ namespace Game_Demo
                     _spriteBatch.DrawString(large_font, "Item", new Vector2(139, 390), Color.Black);///TO DO: actually properly implement
                     _spriteBatch.DrawString(large_font, "Flee", new Vector2(139, 417), Color.Black);
 
-                    if (current_character == 1) //if Nobody's turn, put triangle next to their name
-                    {
-                        _spriteBatch.Draw(current_fighter, new Rectangle(495, 360, 12, 14), Color.White);
-                    }
-                    else if (current_character == 2) //if Cat's turn, put triangle next to their name
-                    {
-                        _spriteBatch.Draw(current_fighter, new Rectangle(495, 379, 12, 14), Color.White);
-                    }
+                    _spriteBatch.Draw(current_fighter, new Rectangle(495, 341+(19*current_character), 12, 14),Color.White);
 
                     if (inventory_alpha == 0f) //while inventory menu hidden, enable red selection box
                         _spriteBatch.Draw(item_selection, new Rectangle(130, 304 + (27 * selection_index), 105, 29), Color.White);
@@ -314,6 +331,12 @@ namespace Game_Demo
                     _spriteBatch.Draw(inventory_box, new Rectangle(213, 308, 273, 155), Color.White);
                     _spriteBatch.Draw(menu_up, new Rectangle(254, 313, 13, 11), Color.White);
                     _spriteBatch.Draw(menu_down, new Rectangle(254, 443, 13, 11), Color.White);
+                    /*
+                     * foreach(string s in inventory)
+                     * {
+                     *  _spriteBatch.DrawString(large_font, s, new Vectors(234,334), Color.Black);
+                     * }
+                     */
                     _spriteBatch.DrawString(large_font, "Potion", new Vector2(234, 334), Color.Black);
                     _spriteBatch.DrawString(large_font, "----------", new Vector2(234, 361), Color.Black);
                     _spriteBatch.DrawString(large_font, "----------", new Vector2(234, 390), Color.Black);
@@ -337,7 +360,13 @@ namespace Game_Demo
                     if (initial_message) //when initial message activated, draw it
                     {
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                        _spriteBatch.DrawString(large_font, "*A dragon appeared!", new Vector2(205, 361), Color.Black);
+                        int i = 0;
+                        foreach(Entity e in enemies)
+                        {
+                            _spriteBatch.DrawString(medium_font, "*A(n) " + e.name + " appeared!", new Vector2(205,361+(21*i)),Color.Black);
+                            i+=1;
+                        }
+                        //_spriteBatch.DrawString(large_font, "*A dragon appeared!", new Vector2(205, 361), Color.Black);
                         if (oldState.IsKeyDown(Keys.Enter))  //if enter pressed, hide message
                         {
                             initial_message = false;
@@ -352,6 +381,9 @@ namespace Game_Demo
                     }
                     if (attack_message) //when attack message activated, draw it
                     {
+                        /*
+                         * if(
+                         */
                         if (!alratk) //and not already attacked
                         {
                             Entity currchar = squad[current_character - 1]; //set current character
@@ -364,7 +396,7 @@ namespace Game_Demo
                             alratk = true; //set attacked flag to true
                         }
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                        _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " attacked the dragon!", new Vector2(205, 361), Color.Black);
+                        _spriteBatch.DrawString(large_font, "*" + characters[current_character-1] + " attacked the " + enemies[target-1] + "!", new Vector2(205,361), Color.Black);
                     }
                     if (magic_message) //when magic message activated, draw it
                     {
