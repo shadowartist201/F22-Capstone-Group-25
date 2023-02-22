@@ -102,6 +102,13 @@ namespace Game_Demo
             _spriteBatch.Draw(player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, 48, 48), Color.White);
             Debug.WriteLine(_camera.Center);
 
+            Vector2 test = _camera.ScreenToWorld(10, 10);
+            _spriteBatch.DrawString(game.medium_font, "A - Battle", new Vector2(test.X, test.Y), Color.White);
+            _spriteBatch.DrawString(game.medium_font, "S - Home", new Vector2(test.X, test.Y + 20), Color.White);
+            _spriteBatch.DrawString(game.medium_font, "D - Village", new Vector2(test.X, test.Y + 40), Color.White);
+            _spriteBatch.DrawString(game.medium_font, "F - Forest", new Vector2(test.X, test.Y + 60), Color.White);
+            _spriteBatch.DrawString(game.medium_font, "G - City", new Vector2(test.X, test.Y + 80), Color.White);
+
             _spriteBatch.End();
         }
     }

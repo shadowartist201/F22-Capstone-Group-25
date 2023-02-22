@@ -33,10 +33,6 @@ namespace Game_Demo
 
         private Texture2D healing_effect;
 
-        private SpriteFont small_font;
-        private SpriteFont medium_font;
-        private SpriteFont large_font;
-
         private Texture2D hp_bar;       //empty bar
         private Texture2D bar_fill;     //that which fills the bar
 
@@ -121,10 +117,6 @@ namespace Game_Demo
             current_fighter = Content.Load<Texture2D>("Battle/current-fighter");
 
             healing_effect = Content.Load<Texture2D>("Battle/cat-battle");
-
-            small_font = Content.Load<SpriteFont>("Battle/small");
-            medium_font = Content.Load<SpriteFont>("Battle/medium");
-            large_font = Content.Load<SpriteFont>("Battle/large");
 
             base.LoadContent();
         }
@@ -258,11 +250,14 @@ namespace Game_Demo
              *  game.BattleReturn();
              * }
              */
+
+         
+
             if (enemies[0].health == 0)
             {
                 game.GraphicsDevice.Clear(Color.Black);
                 _spriteBatch.Begin();
-                _spriteBatch.DrawString(large_font, "Congrat, you is winner", new Vector2(300, 226), Color.White);
+                _spriteBatch.DrawString(game.large_font, "Congrat, you is winner", new Vector2(300, 226), Color.White);
                 _spriteBatch.End();
 
                 game.BattleReturn();
@@ -274,10 +269,17 @@ namespace Game_Demo
 
                 _spriteBatch.Begin();
 
+                Vector2 test = new Vector2(10, 10);
+                _spriteBatch.DrawString(game.medium_font, "A - Battle", new Vector2(test.X, test.Y), Color.White);
+                _spriteBatch.DrawString(game.medium_font, "S - Home", new Vector2(test.X, test.Y + 20), Color.White);
+                _spriteBatch.DrawString(game.medium_font, "D - Village", new Vector2(test.X, test.Y + 40), Color.White);
+                _spriteBatch.DrawString(game.medium_font, "F - Forest", new Vector2(test.X, test.Y + 60), Color.White);
+                _spriteBatch.DrawString(game.medium_font, "G - City", new Vector2(test.X, test.Y + 80), Color.White);
+
                 //control text
-                _spriteBatch.DrawString(medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
-                _spriteBatch.DrawString(medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);
-                _spriteBatch.DrawString(medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
+                _spriteBatch.DrawString(game.medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
+                _spriteBatch.DrawString(game.medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);
+                _spriteBatch.DrawString(game.medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
 
                 //entities
                 _spriteBatch.Draw(player_battle, new Rectangle(630, 60, 54, 77), Color.White);   //draw player sprite
@@ -295,7 +297,7 @@ namespace Game_Demo
                  *  _spriteBatch.DrawString(medium_font, e.name, new Vector(41, 361+(i*43)), Color.Black);
                  * }
                  */
-                _spriteBatch.DrawString(large_font, "Dragon", new Vector2(41, 361), Color.Black);
+                _spriteBatch.DrawString(game.large_font, "Dragon", new Vector2(41, 361), Color.Black);
 
                 //party info
                 /* i = 0;
@@ -304,20 +306,20 @@ namespace Game_Demo
                  *  _spriteBatch.DrawString(medium_font, e.name, new Vector(510, 360+(i*19)), Color.Black);
                  * }
                  */
-                _spriteBatch.DrawString(medium_font, "Nobody", new Vector2(510, 360), Color.Black);
-                _spriteBatch.DrawString(medium_font, "Cat", new Vector2(510, 379), Color.Black);
-                _spriteBatch.DrawString(small_font, "NAME", new Vector2(512, 345), Color.Black);
-                _spriteBatch.DrawString(small_font, "HP", new Vector2(612, 345), Color.Black);
-                _spriteBatch.DrawString(small_font, "MP", new Vector2(707, 345), Color.Black);
+                _spriteBatch.DrawString(game.medium_font, "Nobody", new Vector2(510, 360), Color.Black);
+                _spriteBatch.DrawString(game.medium_font, "Cat", new Vector2(510, 379), Color.Black);
+                _spriteBatch.DrawString(game.small_font, "NAME", new Vector2(512, 345), Color.Black);
+                _spriteBatch.DrawString(game.small_font, "HP", new Vector2(612, 345), Color.Black);
+                _spriteBatch.DrawString(game.small_font, "MP", new Vector2(707, 345), Color.Black);
 
                 if (menu_alpha == 1f) //action menu
                 {
                     //draw menu options
                     _spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White);
-                    _spriteBatch.DrawString(large_font, "Attack", new Vector2(139, 334), Color.Black);
-                    _spriteBatch.DrawString(large_font, "Magic", new Vector2(139, 361), Color.Black);
-                    _spriteBatch.DrawString(large_font, "Item", new Vector2(139, 390), Color.Black);///TO DO: actually properly implement
-                    _spriteBatch.DrawString(large_font, "Flee", new Vector2(139, 417), Color.Black);
+                    _spriteBatch.DrawString(game.large_font, "Attack", new Vector2(139, 334), Color.Black);
+                    _spriteBatch.DrawString(game.large_font, "Magic", new Vector2(139, 361), Color.Black);
+                    _spriteBatch.DrawString(game.large_font, "Item", new Vector2(139, 390), Color.Black);///TO DO: actually properly implement
+                    _spriteBatch.DrawString(game.large_font, "Flee", new Vector2(139, 417), Color.Black);
 
                     _spriteBatch.Draw(current_fighter, new Rectangle(495, 341+(19*current_character), 12, 14),Color.White);
 
@@ -337,20 +339,20 @@ namespace Game_Demo
                      *  _spriteBatch.DrawString(large_font, s, new Vectors(234,334), Color.Black);
                      * }
                      */
-                    _spriteBatch.DrawString(large_font, "Potion", new Vector2(234, 334), Color.Black);
-                    _spriteBatch.DrawString(large_font, "----------", new Vector2(234, 361), Color.Black);
-                    _spriteBatch.DrawString(large_font, "----------", new Vector2(234, 390), Color.Black);
-                    _spriteBatch.DrawString(large_font, "----------", new Vector2(234, 417), Color.Black);
-                    _spriteBatch.DrawString(small_font, "DETAILS", new Vector2(343, 314), Color.Black);
+                    _spriteBatch.DrawString(game.large_font, "Potion", new Vector2(234, 334), Color.Black);
+                    _spriteBatch.DrawString(game.large_font, "----------", new Vector2(234, 361), Color.Black);
+                    _spriteBatch.DrawString(game.large_font, "----------", new Vector2(234, 390), Color.Black);
+                    _spriteBatch.DrawString(game.large_font, "----------", new Vector2(234, 417), Color.Black);
+                    _spriteBatch.DrawString(game.small_font, "DETAILS", new Vector2(343, 314), Color.Black);
 
                     if (selection_index == 1) //change info text based on item
-                        _spriteBatch.DrawString(medium_font, "Example text potion", new Vector2(342, 335), Color.Black);
+                        _spriteBatch.DrawString(game.medium_font, "Example text potion", new Vector2(342, 335), Color.Black);
                     else if (selection_index == 2)
-                        _spriteBatch.DrawString(medium_font, "Blank 1", new Vector2(342, 335), Color.Black);
+                        _spriteBatch.DrawString(game.medium_font, "Blank 1", new Vector2(342, 335), Color.Black);
                     else if (selection_index == 3)
-                        _spriteBatch.DrawString(medium_font, "Blank 2", new Vector2(342, 335), Color.Black);
+                        _spriteBatch.DrawString(game.medium_font, "Blank 2", new Vector2(342, 335), Color.Black);
                     else if (selection_index == 4)
-                        _spriteBatch.DrawString(medium_font, "Blank 3", new Vector2(342, 335), Color.Black);
+                        _spriteBatch.DrawString(game.medium_font, "Blank 3", new Vector2(342, 335), Color.Black);
 
                     _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * selection_index), 105, 29), Color.White);  //red selection box
                 }
@@ -363,7 +365,7 @@ namespace Game_Demo
                         int i = 0;
                         foreach(Entity e in enemies)
                         {
-                            _spriteBatch.DrawString(medium_font, "*A(n) " + e.name + " appeared!", new Vector2(205,361+(21*i)),Color.Black);
+                            _spriteBatch.DrawString(game.medium_font, "*A(n) " + e.name + " appeared!", new Vector2(205,361+(21*i)),Color.Black);
                             i+=1;
                         }
                         //_spriteBatch.DrawString(large_font, "*A dragon appeared!", new Vector2(205, 361), Color.Black);
@@ -377,7 +379,7 @@ namespace Game_Demo
                     {
                         menu_alpha = 0f;
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                        _spriteBatch.DrawString(large_font, "*You can't stop now!", new Vector2(205, 361), Color.Black);
+                        _spriteBatch.DrawString(game.large_font, "*You can't stop now!", new Vector2(205, 361), Color.Black);
                     }
                     if (attack_message) //when attack message activated, draw it
                     {
@@ -390,13 +392,13 @@ namespace Game_Demo
                             Entity currenemy = enemies[0]; //set current enemy
                             List<Entity> returned = new List<Entity>(); 
                             menu_alpha = 0f; //hide menu
-                            returned = attack(ref currchar, ref currenemy, _spriteBatch, battle_message, large_font, small_font);
+                            returned = attack(ref currchar, ref currenemy, _spriteBatch, battle_message, game.large_font, game.small_font);
                             squad[current_character - 1] = returned[0];
                             enemies[0] = returned[1];
                             alratk = true; //set attacked flag to true
                         }
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                        _spriteBatch.DrawString(large_font, "*" + characters[current_character-1] + " attacked the " + enemies[target-1] + "!", new Vector2(205,361), Color.Black);
+                        _spriteBatch.DrawString(game.large_font, "*" + characters[current_character-1] + " attacked the " + enemies[target-1] + "!", new Vector2(205,361), Color.Black);
                     }
                     if (magic_message) //when magic message activated, draw it
                     {
@@ -408,7 +410,7 @@ namespace Game_Demo
                                 Entity currenemy = enemies[0]; //set current enemy
                                 List<Entity> returned = new List<Entity>(); 
                                 menu_alpha = 0f; //hide menu
-                                returned = spattack(ref currchar, ref currenemy, _spriteBatch, battle_message, medium_font);
+                                returned = spattack(ref currchar, ref currenemy, _spriteBatch, battle_message, game.medium_font);
                                 squad[current_character - 1] = returned[0];
                                 enemies[0] = returned[1];
                                 alratk = true; //set attacked flag to true
@@ -417,19 +419,19 @@ namespace Game_Demo
                         if (squad[current_character-1].mana>0)
                         {
                             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                            _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
+                            _spriteBatch.DrawString(game.large_font, "*" + characters[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
                         }
                         else
                         {
                             _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                            _spriteBatch.DrawString(large_font, "*" + characters[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
+                            _spriteBatch.DrawString(game.large_font, "*" + characters[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
                         }
                     }
                     if (cat_magic_message) //when cat message message activated, draw it
                     {
                         menu_alpha = 0f;
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                        _spriteBatch.DrawString(large_font, "*Cats can't do magic, silly!", new Vector2(205, 361), Color.Black);
+                        _spriteBatch.DrawString(game.large_font, "*Cats can't do magic, silly!", new Vector2(205, 361), Color.Black);
                     }
                 }
                 /// TO DO:
@@ -440,18 +442,18 @@ namespace Game_Demo
                 {
                     _spriteBatch.Draw(hp_bar, new Rectangle(609, 361+placediff, 78, 17), Color.White); //entity's HP, draw based on placediff offset
                     _spriteBatch.Draw(bar_fill, new Rectangle(612, 364+placediff, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green); //fill based on placediff offset
-                    _spriteBatch.DrawString(small_font, e.health + " / " + e.mHealth, new Vector2(618, 364+placediff), Color.Black); //draw visible value based on placediff offset
+                    _spriteBatch.DrawString(game.small_font, e.health + " / " + e.mHealth, new Vector2(618, 364+placediff), Color.Black); //draw visible value based on placediff offset
                     if(e.mMana!=0) //if MP not 0
                     {
                         _spriteBatch.Draw(hp_bar, new Rectangle(703, 361, 78, 17), Color.White); //entity's MP box
                         _spriteBatch.Draw(bar_fill, new Rectangle(706, 364, ((int)((float)e.mana / (float)e.mMana * 72)), 11), Color.MediumBlue); //entity's MP bar
-                        _spriteBatch.DrawString(small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black); //entity's visible MP value
+                        _spriteBatch.DrawString(game.small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black); //entity's visible MP value
                     }
                     else
                     {
                         _spriteBatch.Draw(hp_bar, new Rectangle(703, 380, 78, 17), Color.White); //entity's MP, manaless
                         _spriteBatch.Draw(bar_fill, new Rectangle(706, 383, 72, 11), Color.DarkGray);
-                        _spriteBatch.DrawString(small_font, "XX", new Vector2(758, 383), Color.Black);
+                        _spriteBatch.DrawString(game.small_font, "XX", new Vector2(758, 383), Color.Black);
                     }
                     placediff+=19;
                 }
@@ -480,7 +482,7 @@ namespace Game_Demo
                 _spriteBatch.DrawString(small_font, "XX", new Vector2(758, 383), Color.Black);*/
 
                 //dragon hp
-                _spriteBatch.DrawString(medium_font, "Debug HP: " + enemies[0].health + " / " + enemies[0].mHealth, new Vector2(325, 217), Color.Cyan);
+                _spriteBatch.DrawString(game.medium_font, "Debug HP: " + enemies[0].health + " / " + enemies[0].mHealth, new Vector2(325, 217), Color.Cyan);
                 ///TO DO:
                 ///maybe a small hp/mana bar for each enemy on the field?
                 _spriteBatch.End();

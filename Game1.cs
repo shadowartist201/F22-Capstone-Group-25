@@ -16,6 +16,10 @@ namespace Game_Demo
         public List<Entity> squad = new List<Entity>();
         private readonly ScreenManager _screenManager;
 
+        public SpriteFont small_font;
+        public SpriteFont medium_font;
+        public SpriteFont large_font;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -82,6 +86,9 @@ namespace Game_Demo
 
         protected override void LoadContent()
         {
+            small_font = Content.Load<SpriteFont>("Battle/small");
+            medium_font = Content.Load<SpriteFont>("Battle/medium");
+            large_font = Content.Load<SpriteFont>("Battle/large");
         }
 
         protected override void Update(GameTime gameTime)
