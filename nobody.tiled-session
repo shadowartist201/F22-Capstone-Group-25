@@ -5,8 +5,8 @@
     },
     "activeFile": "Content/Maps/home.tmx",
     "expandedProjectPaths": [
-        "Content/Images",
-        "Content/Maps"
+        "Content/Maps",
+        "Content/Images"
     ],
     "fileStates": {
         "C:/Users/porte/Source/OneDrive/Documents/Projects/Tiled/Tilesets/Door.tsx": {
@@ -91,7 +91,7 @@
             "scale": 1.3744212962962963,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 216.45473684210526,
+                "x": 138.24,
                 "y": 169.16210526315788
             }
         },

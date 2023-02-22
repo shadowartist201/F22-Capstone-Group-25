@@ -19,7 +19,6 @@ namespace Game_Demo
         public SpriteBatch _spriteBatch;
 
         public Texture2D player;    //player texture
-        private Vector2 playerPos; //player position
 
         public TiledMap _tiledMap;
         public TiledMapRenderer _tiledMapRenderer;
@@ -27,14 +26,11 @@ namespace Game_Demo
         public TiledMapTile? tile = null;
         public OrthographicCamera _camera;
 
-        private KeyboardState oldstate;
-
-        private Vector2 _cameraPosition;
-        //Default camera position of (0,0) is (400,240) from the top-left edge of the map
-
         int tileWidth = 48;  //48x48 pixels
         ushort tileIndex_X;
         ushort tileIndex_Y;
+
+        private Vector2 movementDirection;
 
         //private SoundEffect soundEffect;
         //private SoundEffectInstance instance;
@@ -51,8 +47,7 @@ namespace Game_Demo
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
 
-            _cameraPosition = new Vector2(2 * tileWidth, 2 * tileWidth);
-            playerPos = Vector2.Zero;
+            _camera.LookAt(new Vector2(_tiledMap.WidthInPixels / 2, _tiledMap.HeightInPixels / 2));
 
             //soundEffect = Content.Load<SoundEffect>("thunk");
             //instance = soundEffect.CreateInstance();
@@ -64,49 +59,48 @@ namespace Game_Demo
         public override void Update(GameTime gameTime)
         {
             _tiledMapRenderer.Update(gameTime);
-            _camera.LookAt(_cameraPosition); //set camera position
 
             KeyboardState state = Keyboard.GetState();
+            movementDirection = Vector2.Zero;
 
-            Debug.WriteLine("Camera: (" + _cameraPosition + ", " + _cameraPosition + "), Tile: (" + tileIndex_X + ", " + tileIndex_Y + ")");
-
-            if (state.IsKeyDown(Keys.Up))  //&& !oldstate.IsKeyDown(Keys.Up)
+            if (state.IsKeyDown(Keys.Up))
             {
                 collision.TryGetTile(tileIndex_X, tileIndex_Y, out tile); //grab collision value of tile up
                 if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile up is free
-                    _cameraPosition.Y -= 2;
+                    movementDirection.Y -= 1;
                 else
-                    _cameraPosition.Y += 2;
+                    movementDirection.Y += 1;
             }
-            if (state.IsKeyDown(Keys.Down)) // && !oldstate.IsKeyDown(Keys.Down)
+            if (state.IsKeyDown(Keys.Down))
             {
                 collision.TryGetTile(tileIndex_X, tileIndex_Y, out tile); //grab collision value of tile down
                 if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile down is free
-                    _cameraPosition.Y += 2;
+                    movementDirection.Y += 1;
                 else
-                    _cameraPosition.Y -= 2;
+                    movementDirection.Y -= 1;
             }
-            if (state.IsKeyDown(Keys.Left)) // && !oldstate.IsKeyDown(Keys.Left)
+            if (state.IsKeyDown(Keys.Left))
             {
                 collision.TryGetTile((ushort)(tileIndex_X - 1), tileIndex_Y, out tile); //grab collision value of tile left
                 if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile left is free
-                    _cameraPosition.X -= 2;
+                    movementDirection.X -= 1;
                 else
-                    _cameraPosition.X += 2;
+                    movementDirection.X += 1;
             }
-            if (state.IsKeyDown(Keys.Right)) // && !oldstate.IsKeyDown(Keys.Right)
+            if (state.IsKeyDown(Keys.Right))
             {
                 collision.TryGetTile((ushort)(tileIndex_X + 1), tileIndex_Y, out tile); //grab collision value of tile right
                 if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile right is free
-                    _cameraPosition.X += 2;
+                    movementDirection.X += 1;
                 else
-                    _cameraPosition.X -= 2;
+                    movementDirection.X -= 1;
             }
 
-            tileIndex_X = (ushort)((_cameraPosition.X) / tileWidth);  //get current tile based on player position
-            tileIndex_Y = (ushort)((_cameraPosition.Y) / tileWidth);
+            const float movementSpeed = 150;
+            _camera.Move(movementDirection * movementSpeed * gameTime.GetElapsedSeconds());
 
-            //oldstate = state;  //for player input handling
+            tileIndex_X = (ushort)((_camera.Center.X) / tileWidth);  //get current tile based on player position
+            tileIndex_Y = (ushort)((_camera.Center.Y) / tileWidth);
 
             //if (player_rec.Location.X > 720)
             //{
@@ -124,9 +118,11 @@ namespace Game_Demo
         {
             _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
 
-            _spriteBatch.Begin();
+            var transformMatrix = _camera.GetViewMatrix();
+            _spriteBatch.Begin(transformMatrix: transformMatrix);
 
-            _spriteBatch.Draw(player, new Rectangle((int)(playerPos.X + _camera.Origin.X), (int)(playerPos.Y + _camera.Origin.Y), 48, 48), Color.White);
+            _spriteBatch.Draw(player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, 48, 48), Color.White);
+            Debug.WriteLine(_camera.Center);
 
             _spriteBatch.End();
         }
