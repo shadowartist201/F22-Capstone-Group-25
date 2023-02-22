@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
@@ -10,10 +9,8 @@ namespace Game_Demo
     public class Game1 : Game
     {
         public GraphicsDeviceManager _graphics;
-        public int map;
-        public Vector2 playerPos;
-        public List<Entity> enemies = new List<Entity>();
-        public List<Entity> squad = new List<Entity>();
+        //public SpriteBatch _spriteBatch;  //batch of sprites
+
         private readonly ScreenManager _screenManager;
 
         public Game1()
@@ -25,87 +22,33 @@ namespace Game_Demo
             Components.Add(_screenManager);
         }
 
-        public void LoadHome()
+        public void LoadScreen1()
         {
-            map = 1;
-            _screenManager.LoadScreen(new Home(this), new FadeTransition(GraphicsDevice, Color.Black));
+            _screenManager.LoadScreen(new World(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
-        public void LoadVillage1()
+        public void LoadScreen2()
         {
-            map = 2;
-            _screenManager.LoadScreen(new Village1(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        public void LoadForest()
-        {
-            map = 3;
-            _screenManager.LoadScreen(new Forest(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        public void LoadCity()
-        {
-            map = 4;
-            _screenManager.LoadScreen(new City(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        public void LoadBattle()
-        {
-            //no map change!
             _screenManager.LoadScreen(new Battle(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        public void BattleReturn()
-        {
-            switch (map)
-            {
-                case 1:
-                    LoadHome();
-                    break;
-                case 2:
-                    LoadVillage1();
-                    break;
-                case 3:
-                    LoadForest();
-                    break;
-                case 4:
-                    LoadCity();
-                    break;
-            }
         }
 
         protected override void Initialize()
         {
-            LoadHome();
+            LoadScreen1();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            //_spriteBatch = new SpriteBatch(GraphicsDevice);  //initialize the batch
         }
 
         protected override void Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.A))
+            if (state.IsKeyDown(Keys.Escape))
             {
-                LoadBattle();
-            }
-            else if (state.IsKeyDown(Keys.S))
-            {
-                LoadHome();
-            }
-            else if (state.IsKeyDown(Keys.D))
-            {
-                LoadVillage1();
-            }
-            else if (state.IsKeyDown(Keys.F))
-            {
-                LoadForest();
-            }
-            else if (state.IsKeyDown(Keys.G))
-            {
-                LoadCity();
+                LoadScreen2();
             }
             base.Update(gameTime);
         }
