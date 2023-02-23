@@ -9,16 +9,15 @@ namespace Game_Demo
 {
     public class Game1 : Game
     {
-        public GraphicsDeviceManager _graphics;
-        public int map;
-        public Vector2 playerPos;
-        public List<Entity> enemies = new List<Entity>();
-        public List<Entity> squad = new List<Entity>();
-        private readonly ScreenManager _screenManager;
+        public static GraphicsDeviceManager _graphics;
+        public static List<Entity> enemies = new();
+        public static List<Entity> squad = new();
 
-        public SpriteFont small_font;
-        public SpriteFont medium_font;
-        public SpriteFont large_font;
+        public static SpriteFont small_font;
+        public static SpriteFont medium_font;
+        public static SpriteFont large_font;
+
+        public static ScreenManager _screenManager = new();
 
         public Game1()
         {
@@ -29,30 +28,6 @@ namespace Game_Demo
             Components.Add(_screenManager);
         }
 
-        public void LoadHome()
-        {
-            map = 1;
-            _screenManager.LoadScreen(new Home(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        public void LoadVillage1()
-        {
-            map = 2;
-            _screenManager.LoadScreen(new Village1(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        public void LoadForest()
-        {
-            map = 3;
-            _screenManager.LoadScreen(new Forest(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        public void LoadCity()
-        {
-            map = 4;
-            _screenManager.LoadScreen(new City(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
         public void LoadBattle()
         {
             //no map change!
@@ -61,7 +36,7 @@ namespace Game_Demo
 
         public void BattleReturn()
         {
-            switch (map)
+            switch (Tiled.map)
             {
                 case 1:
                     LoadHome();
@@ -89,10 +64,12 @@ namespace Game_Demo
             small_font = Content.Load<SpriteFont>("Battle/small");
             medium_font = Content.Load<SpriteFont>("Battle/medium");
             large_font = Content.Load<SpriteFont>("Battle/large");
+            World.player = Content.Load<Texture2D>("World/player");
         }
 
         protected override void Update(GameTime gameTime)
         {
+            
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.A))
             {
@@ -114,14 +91,42 @@ namespace Game_Demo
             {
                 LoadCity();
             }
+            else if (Tiled.BattleReturn)
+            {
+                BattleReturn();
+            }
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
             base.Draw(gameTime);
+        }
+
+        public void LoadHome()
+        {
+            Tiled.map = 1;
+            _screenManager.LoadScreen(new Home(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadVillage1()
+        {
+            Tiled.map = 2;
+            _screenManager.LoadScreen(new Village1(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadForest()
+        {
+            Tiled.map = 3;
+            _screenManager.LoadScreen(new Forest(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadCity()
+        {
+            Tiled.map = 4;
+            _screenManager.LoadScreen(new City(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
     }
 }

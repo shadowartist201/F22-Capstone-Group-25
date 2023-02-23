@@ -1,36 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 //using Microsoft.Xna.Framework.Audio;
 using MonoGame.Extended;
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.Screens;
-using System.Collections.Specialized;
-using System.Diagnostics;
 
 namespace Game_Demo
 {
     public class Home : GameScreen
     {
-        private Game1 game => (Game1)base.Game;
+        private new Game1 Game => (Game1)base.Game;
         public Home(Game1 game) : base(game) { }
 
-        public SpriteBatch _spriteBatch;
-
-        public Texture2D player;    //player texture
-
-        public TiledMap _tiledMap;
-        public TiledMapRenderer _tiledMapRenderer;
-        public TiledMapTileLayer collision;
-        public TiledMapTile? tile = null;
-        public OrthographicCamera _camera;
-
-        int tileWidth = 48;  //48x48 pixels
-        ushort tileIndex_X;
-        ushort tileIndex_Y;
-
-        private Vector2 movementDirection;
+        private SpriteBatch _spriteBatch;
+        private OrthographicCamera _camera;
 
         //private SoundEffect soundEffect;
         //private SoundEffectInstance instance;
@@ -39,15 +21,11 @@ namespace Game_Demo
 
         public override void LoadContent()
         {
-            player = Content.Load<Texture2D>("World/player");    //load the player texture
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new OrthographicCamera(GraphicsDevice);
 
-            _tiledMap = Content.Load<TiledMap>("Maps/home");   //load the tilemap
-            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-            collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
-
-            _camera.LookAt(new Vector2(_tiledMap.WidthInPixels / 2, _tiledMap.HeightInPixels / 2));
+            Tiled.LoadMap("home", Content, GraphicsDevice);
+            _camera.LookAt(Tiled.startingPosition);
 
             //soundEffect = Content.Load<SoundEffect>("thunk");
             //instance = soundEffect.CreateInstance();
@@ -58,49 +36,11 @@ namespace Game_Demo
 
         public override void Update(GameTime gameTime)
         {
-            _tiledMapRenderer.Update(gameTime);
+            Tiled.Update_(gameTime);
+            Tiled.currentPosition = _camera.Center;
 
-            KeyboardState state = Keyboard.GetState();
-            movementDirection = Vector2.Zero;
-
-            if (state.IsKeyDown(Keys.Up))
-            {
-                collision.TryGetTile(tileIndex_X, tileIndex_Y, out tile); //grab collision value of tile up
-                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile up is free
-                    movementDirection.Y -= 1;
-                else
-                    movementDirection.Y += 1;
-            }
-            if (state.IsKeyDown(Keys.Down))
-            {
-                collision.TryGetTile(tileIndex_X, tileIndex_Y, out tile); //grab collision value of tile down
-                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile down is free
-                    movementDirection.Y += 1;
-                else
-                    movementDirection.Y -= 1;
-            }
-            if (state.IsKeyDown(Keys.Left))
-            {
-                collision.TryGetTile((ushort)(tileIndex_X - 1), tileIndex_Y, out tile); //grab collision value of tile left
-                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile left is free
-                    movementDirection.X -= 1;
-                else
-                    movementDirection.X += 1;
-            }
-            if (state.IsKeyDown(Keys.Right))
-            {
-                collision.TryGetTile((ushort)(tileIndex_X + 1), tileIndex_Y, out tile); //grab collision value of tile right
-                if (tile.ToString() == "GlobalIdentifier: 0, Flags: None") //if tile right is free
-                    movementDirection.X += 1;
-                else
-                    movementDirection.X -= 1;
-            }
-
-            const float movementSpeed = 150;
-            _camera.Move(movementDirection * movementSpeed * gameTime.GetElapsedSeconds());
-
-            tileIndex_X = (ushort)((_camera.Center.X) / tileWidth);  //get current tile based on player position
-            tileIndex_Y = (ushort)((_camera.Center.Y) / tileWidth);
+            Vector2 movementDirection = World.Movement();
+            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds());
 
             //if (player_rec.Location.X > 720)
             //{
@@ -116,22 +56,12 @@ namespace Game_Demo
 
         public override void Draw(GameTime gameTime)
         {
-            _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
+            Tiled.Draw(_camera);
 
             var transformMatrix = _camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
-            Battle battle = new Battle(game);
 
-            _spriteBatch.Draw(player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, 48, 48), Color.White);
-
-            Vector2 test = _camera.ScreenToWorld(10, 10);
-            _spriteBatch.DrawString(game.medium_font, "A - Battle", new Vector2(test.X, test.Y), Color.White);
-            _spriteBatch.DrawString(game.medium_font, "S - Home", new Vector2(test.X, test.Y+20), Color.White);
-            _spriteBatch.DrawString(game.medium_font, "D - Village", new Vector2(test.X, test.Y+40), Color.White);
-            _spriteBatch.DrawString(game.medium_font, "F - Forest", new Vector2(test.X, test.Y+60), Color.White);
-            _spriteBatch.DrawString(game.medium_font, "G - City", new Vector2(test.X, test.Y+80), Color.White);
-
-            Debug.WriteLine(_camera.Center);
+            _spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
 
             _spriteBatch.End();
         }
