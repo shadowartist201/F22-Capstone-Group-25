@@ -79,7 +79,9 @@ namespace Game_Demo
         public static void Draw(OrthographicCamera _camera)
         {
             _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
-            _tiledMapRenderer.Draw(collision, _camera.GetViewMatrix(), null, mapEffect);
+            _tiledMapRenderer.Draw(_tiledMap.GetLayer("Foreground"), _camera.GetViewMatrix());
+            if (map == 1)
+                _tiledMapRenderer.Draw(_tiledMap.GetLayer("Foreground2"), _camera.GetViewMatrix());
         }
     }
 }
