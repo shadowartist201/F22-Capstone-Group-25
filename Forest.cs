@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
+using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -28,6 +29,11 @@ namespace Game_Demo
         {
             Tiled.Update_(gameTime);
             Tiled.currentPosition = _camera.Center;
+
+            if (Collision.CollisionCheck() == Color.Green)
+            {
+                return;
+            }
 
             Vector2 movementDirection = World.Movement();
             _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds());

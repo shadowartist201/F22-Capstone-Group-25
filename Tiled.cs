@@ -80,8 +80,6 @@ namespace Game_Demo
         {
             _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
             _tiledMapRenderer.Draw(collision, _camera.GetViewMatrix(), null, mapEffect);
-
-            Debug.WriteLine(BattleReturn);
         }
     }
 }

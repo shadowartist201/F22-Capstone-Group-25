@@ -2,7 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 //using Microsoft.Xna.Framework.Audio;
 using MonoGame.Extended;
+using MonoGame.Extended.Collisions;
 using MonoGame.Extended.Screens;
+using System.Collections.Generic;
+using System;
+using MonoGame.Extended.Tiled;
+using System.Reflection.Emit;
+using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -40,6 +46,12 @@ namespace Game_Demo
             Tiled.currentPosition = _camera.Center;
 
             Vector2 movementDirection = World.Movement();
+
+            if (Collision.CollisionCheck() == Color.Green)
+            {
+                return;
+            }
+            
             _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds());
 
             //if (player_rec.Location.X > 720)
