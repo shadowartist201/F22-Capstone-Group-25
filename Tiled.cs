@@ -17,11 +17,14 @@ namespace Game_Demo
         public static TiledMapRenderer _tiledMapRenderer;
         public static TiledMapTileLayer collision;
         public static TiledMapTile? tile = null;
+        public static Effect effect;
 
         public static int map = 0;
         public static int tileWidth = 48;
         public static Vector2 startingPosition = Vector2.Zero;
         public static Vector2 currentPosition;
+
+        public static TiledMapEffect mapEffect;
 
         public static bool BattleReturn;
 
@@ -30,6 +33,8 @@ namespace Game_Demo
             _tiledMap = content.Load<TiledMap>("Maps/" + tilemap);   //load the tilemap
             _tiledMapRenderer = new TiledMapRenderer(graphicsDevice, _tiledMap);
             collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
+
+            mapEffect = new TiledMapEffect(content.Load<Effect>("MapEffect"));
 
             switch (tilemap)
             {
@@ -74,6 +79,8 @@ namespace Game_Demo
         public static void Draw(OrthographicCamera _camera)
         {
             _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
+            _tiledMapRenderer.Draw(collision, _camera.GetViewMatrix(), null, mapEffect);
+
             Debug.WriteLine(BattleReturn);
         }
     }

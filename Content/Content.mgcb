@@ -217,10 +217,14 @@
 /processorParam:TextureFormat=Compressed
 /build:Battle/Small.spritefont
 
-#begin Maps/city.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/city.tmx
+#begin Macros.fxh
+/copy:Macros.fxh
+
+#begin mapEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:mapEffect.fx
 
 #begin Maps/city.tmx
 /importer:TiledMapImporter
@@ -232,16 +236,6 @@
 /processor:TiledMapProcessor
 /build:Maps/forest.tmx
 
-#begin Maps/forest.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/forest.tmx
-
-#begin Maps/home.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/home.tmx
-
 #begin Maps/home.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
@@ -252,10 +246,8 @@
 /processor:TiledMapProcessor
 /build:Maps/village.tmx
 
-#begin Maps/village.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/village.tmx
+#begin Structures.fxh
+/copy:Structures.fxh
 
 #begin Tilesets/Door.tsx
 /importer:TiledMapTilesetImporter
