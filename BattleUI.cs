@@ -6,32 +6,32 @@ namespace Game_Demo
 {
     internal class BattleUI : Game
     {
-        public static Texture2D battle_message;  //center message box
-        public static Texture2D inventory_box;   //inventory menu
-        public static Texture2D menu_box;        //action menu
-        public static Texture2D party_info;      //holds names and HP
-        public static Texture2D enemy_box;       //holds enemy name
+        public static Texture2D battle_message;       //center message box
+        public static Texture2D inventory_box;        //inventory menu
+        public static Texture2D menu_box;             //action menu
+        public static Texture2D party_info;           //holds names and HP
+        public static Texture2D enemy_box;            //holds enemy name
 
-        public static Texture2D menu_up;         //action menu up arrow
-        public static Texture2D menu_down;       //action menu down arrow
-        public static Texture2D item_selection;  //red selection box
-        public static Texture2D current_fighter; //blue triangle to show current turn
+        public static Texture2D menu_up;              //action menu up arrow
+        public static Texture2D menu_down;            //action menu down arrow
+        public static Texture2D item_selection;       //red selection box
+        public static Texture2D current_fighter;      //blue triangle to show current turn
 
-        public static Texture2D hp_bar;       //empty bar
-        public static Texture2D bar_fill;     //that which fills the bar
+        public static Texture2D hp_bar;               //empty bar
+        public static Texture2D bar_fill;             //that which fills the bar
 
-        public static int selection_index = 1;  //shows which action menu option is selected
-        public static int current_character = 1;  //which character's turn is it, where 1 = Nobody and 2 = Cat
+        public static int selection_index = 1;        //shows which action menu option is selected
+        public static int current_character = 1;      //which character's turn is it, where 1 = Nobody and 2 = Cat
 
-        public static float menu_alpha = 0.0f;  //action menu visibility, 0 = hidden and 1 = show
-        public static float inventory_alpha = 0.0f; //inventory menu visibility
-        public static float message_alpha = 1.0f;  //message box visibility, initialized to 1 for initial message
+        public static float menu_alpha = 0.0f;        //action menu visibility, 0 = hidden and 1 = show
+        public static float inventory_alpha = 0.0f;   //inventory menu visibility
+        public static float message_alpha = 1.0f;     //message box visibility, initialized to 1 for initial message
 
-        public static bool initial_message = true; //initial message "A <thing> appeared!"
-        public static bool attack_message = false; //message "<chara> attacked!"
-        public static bool magic_message = false;  //message "<chara> used magic!"
+        public static bool initial_message = true;    //initial message "A <thing> appeared!"
+        public static bool attack_message = false;    //message "<chara> attacked!"
+        public static bool magic_message = false;     //message "<chara> used magic!"
         public static bool cat_magic_message = false; //message "Cats can't use magic"
-        public static bool flee_message = false; //message when attempting to flee battle
+        public static bool flee_message = false;      //message when attempting to flee battle
 
         ///TO DO: maybe a small hp/mana bar for each enemy on the field?
 
@@ -56,7 +56,7 @@ namespace Game_Demo
         {
             if (flee_message)  //if flee message activated
             {
-                if (Input.SinglePress() == "enter")  //check for enter pressed
+                if (Input.SinglePress() == "enter")  //check for enter
                 {
                     flee_message = false;  //disable flee message
                     message_alpha = 0;    //hide message box
@@ -84,7 +84,7 @@ namespace Game_Demo
                 {
                     magic_message = false;  //disable message
                     message_alpha = 0;      //hide box
-                    if (Game1.squad[current_character - 1].mana > 0)
+                    if (Game1.squad[current_character - 1].mana > 0) //if have mana
                     {
                         if (current_character == 1)  //move to next character
                             current_character = 2;
@@ -122,7 +122,7 @@ namespace Game_Demo
                 }
                 else if (output == "enter")  //check for enter
                 {
-                    if (inventory_alpha == 1)
+                    if (inventory_alpha == 1) //if inventory showing
                     {
                         //nothing right now
                     }
@@ -171,21 +171,21 @@ namespace Game_Demo
 
         public static void DrawBoxes(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(enemy_box, new Rectangle(14, 336, 160, 128), Color.White);
-            _spriteBatch.Draw(party_info, new Rectangle(488, 336, 301, 128), Color.White);
+            _spriteBatch.Draw(enemy_box, new Rectangle(14, 336, 160, 128), Color.White); //enemy info box
+            _spriteBatch.Draw(party_info, new Rectangle(488, 336, 301, 128), Color.White); //party info box
 
             if (menu_alpha == 1f) //action menu
             {
-                _spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White);
-                _spriteBatch.Draw(current_fighter, new Rectangle(495, 341 + (19 * current_character), 12, 14), Color.White);
+                _spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White); //options menu
+                _spriteBatch.Draw(current_fighter, new Rectangle(495, 341 + (19 * current_character), 12, 14), Color.White); //point to current fighter
                 if (inventory_alpha == 0f) //while inventory menu hidden, enable red selection box
                     _spriteBatch.Draw(item_selection, new Rectangle(130, 304 + (27 * selection_index), 105, 29), Color.White);
             }
             if (inventory_alpha == 1f) //inventory menu
             {
-                _spriteBatch.Draw(inventory_box, new Rectangle(213, 308, 273, 155), Color.White);
-                _spriteBatch.Draw(menu_up, new Rectangle(254, 313, 13, 11), Color.White);
-                _spriteBatch.Draw(menu_down, new Rectangle(254, 443, 13, 11), Color.White);
+                _spriteBatch.Draw(inventory_box, new Rectangle(213, 308, 273, 155), Color.White); //box
+                _spriteBatch.Draw(menu_up, new Rectangle(254, 313, 13, 11), Color.White); //up arrow
+                _spriteBatch.Draw(menu_down, new Rectangle(254, 443, 13, 11), Color.White); //down arrow
                 _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * selection_index), 105, 29), Color.White);  //red selection box
             }
 
@@ -222,32 +222,34 @@ namespace Game_Demo
                     _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                 }
             }
-            for (int placediff = 0; placediff / 19 < Game1.squad.Count; placediff += 19)
+            for (int placediff = 0; placediff / 19 < Game1.squad.Count; placediff += 19) //placement for HP and MP bars
             {
                 Entity e = Game1.squad[placediff / 19];
 
-                _spriteBatch.Draw(hp_bar, new Rectangle(609, 361 + placediff, 78, 17), Color.White); //entity's HP, draw based on placediff offset
-                _spriteBatch.Draw(bar_fill, new Rectangle(612, 364 + placediff, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green); //fill based on placediff offset
+                _spriteBatch.Draw(hp_bar, new Rectangle(609, 361 + placediff, 78, 17), Color.White); //empty HP bar
+                _spriteBatch.Draw(bar_fill, new Rectangle(612, 364 + placediff, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green); //HP bar fill
                 if (e.mMana != 0) //if MP not 0
                 {
-                    _spriteBatch.Draw(hp_bar, new Rectangle(703, 361, 78, 17), Color.White); //entity's MP box
-                    _spriteBatch.Draw(bar_fill, new Rectangle(706, 364, ((int)((float)e.mana / (float)e.mMana * 72)), 11), Color.MediumBlue); //entity's MP bar
+                    _spriteBatch.Draw(hp_bar, new Rectangle(703, 361, 78, 17), Color.White); //empty MP bar
+                    _spriteBatch.Draw(bar_fill, new Rectangle(706, 364, ((int)((float)e.mana / (float)e.mMana * 72)), 11), Color.MediumBlue); //MP bar fill
                 }
                 else
                 {
-                    _spriteBatch.Draw(hp_bar, new Rectangle(703, 380, 78, 17), Color.White); //entity's MP, manaless
-                    _spriteBatch.Draw(bar_fill, new Rectangle(706, 383, 72, 11), Color.DarkGray);
+                    _spriteBatch.Draw(hp_bar, new Rectangle(703, 380, 78, 17), Color.White); //empty MP bar
+                    _spriteBatch.Draw(bar_fill, new Rectangle(706, 383, 72, 11), Color.DarkGray); //"MP bar disabled" fill
                 }
             }
         }
 
         public static void DrawText(SpriteBatch _spriteBatch)
         {
+            //debug text
             _spriteBatch.DrawString(Game1.medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Num 1 - End Battle", new Vector2(310, 132), Color.White);
 
+            //labels
             _spriteBatch.DrawString(Game1.large_font, "Dragon", new Vector2(41, 361), Color.Black);
             _spriteBatch.DrawString(Game1.medium_font, "Nobody", new Vector2(510, 360), Color.Black);
             _spriteBatch.DrawString(Game1.medium_font, "Cat", new Vector2(510, 379), Color.Black);
@@ -315,17 +317,17 @@ namespace Game_Demo
                     _spriteBatch.DrawString(Game1.large_font, "*Cats can't do magic, silly!", new Vector2(205, 361), Color.Black);
                 }
             }
-            for (int placediff = 0; placediff / 19 < Game1.squad.Count; placediff += 19)
+            for (int placediff = 0; placediff / 19 < Game1.squad.Count; placediff += 19) //placement for HP and MP labels
             {
                 Entity e = Game1.squad[placediff / 19];
 
-                _spriteBatch.DrawString(Game1.small_font, e.health + " / " + e.mHealth, new Vector2(618, 364 + placediff), Color.Black); //draw visible value based on placediff offset
+                _spriteBatch.DrawString(Game1.small_font, e.health + " / " + e.mHealth, new Vector2(618, 364 + placediff), Color.Black); //HP labels
                 if (e.mMana != 0) //if MP not 0
-                    _spriteBatch.DrawString(Game1.small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black); //entity's visible MP value
+                    _spriteBatch.DrawString(Game1.small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black); //MP labels
                 else
-                    _spriteBatch.DrawString(Game1.small_font, "XX", new Vector2(758, 383), Color.Black);
+                    _spriteBatch.DrawString(Game1.small_font, "XX", new Vector2(758, 383), Color.Black); //MP disabled
             }
-            _spriteBatch.DrawString(Game1.medium_font, "Debug HP: " + Game1.enemies[0].health + " / " + Game1.enemies[0].mHealth, new Vector2(325, 217), Color.Cyan);
+            _spriteBatch.DrawString(Game1.medium_font, "Debug HP: " + Game1.enemies[0].health + " / " + Game1.enemies[0].mHealth, new Vector2(325, 217), Color.Cyan); //debug enemy HP
         }
     }
 }

@@ -49,21 +49,21 @@ namespace Game_Demo
             cat_battle = Content.Load<Texture2D>("Battle/cat-battle");      //load the cat texture
             healing_effect = Content.Load<Texture2D>("Battle/cat-battle");
 
-            BattleUI.LoadUI(Content);
+            BattleUI.LoadUI(Content); //load UI textures
 
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            BattleUI.Update_();
+            BattleUI.Update_(); //logic for UI
         }
 
         public override void Draw(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
 
-            if (Game1.enemies[0].health == 0 || state.IsKeyDown(Keys.D1))
+            if (Game1.enemies[0].health == 0 || state.IsKeyDown(Keys.D1)) //if battle over
             {
                 Entity thing = Game1.enemies[0];
                 thing.health = 0;
@@ -79,19 +79,19 @@ namespace Game_Demo
             }
             else  //if battle still going
             {
-                GraphicsDevice.Clear(Color.Green);  //background color
+                GraphicsDevice.Clear(Color.Green);
                 _spriteBatch.Begin();
 
-                BattleUI.DrawBoxes(_spriteBatch);
-                BattleUI.DrawText(_spriteBatch);
+                BattleUI.DrawBoxes(_spriteBatch); //draw UI boxes
+                BattleUI.DrawText(_spriteBatch); //draw UI text
 
                 _spriteBatch.Draw(player_battle, new Rectangle(630, 60, 54, 77), Color.White);   //draw player sprite
                 _spriteBatch.Draw(dragon_battle, new Rectangle(70, 35, 239, 246), Color.White);   //draw monster sprite
                 _spriteBatch.Draw(cat_battle, new Rectangle(630, 185, 71, 55), Color.White);  //draw cat sprite
 
-                if (BattleUI.message_alpha == 1f) //message box
+                if (BattleUI.message_alpha == 1f) //if message box active
                 {
-                    if (BattleUI.attack_message) //when attack message activated, draw it
+                    if (BattleUI.attack_message) //when attack message activated
                     {
                         if (!alratk) //and not already attacked
                         {
@@ -105,7 +105,7 @@ namespace Game_Demo
                             alratk = true; //set attacked flag to true
                         }
                     }
-                    if (BattleUI.magic_message) //when magic message activated, draw it
+                    if (BattleUI.magic_message) //when magic message activated
                     {
                         if (Game1.squad[BattleUI.current_character - 1].mana > 0) //if current character has MP
                         {

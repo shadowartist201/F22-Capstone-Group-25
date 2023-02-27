@@ -14,14 +14,14 @@ namespace Game_Demo
         public static TiledMapTileLayer collision;
         public static TiledMapTile? tile = null;
 
-        public static int map = 0;
+        public static int map = 0; //map index
         public static int tileWidth = 48;
-        public static Vector2 startingPosition = Vector2.Zero;
-        public static Vector2 currentPosition;
+        public static Vector2 startingPosition = Vector2.Zero; //player and camera starting position
+        public static Vector2 currentPosition; //player and camera current position
 
-        public static TiledMapEffect mapEffect;
+        public static TiledMapEffect mapEffect; //map highlight
 
-        public static bool BattleReturn;
+        public static bool BattleReturn; //"returned from battle" flag
 
         public static void LoadMap(string tilemap, ContentManager content, GraphicsDevice graphicsDevice)
         {
@@ -29,14 +29,14 @@ namespace Game_Demo
             _tiledMapRenderer = new TiledMapRenderer(graphicsDevice, _tiledMap);
             collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
 
-            mapEffect = new TiledMapEffect(content.Load<Effect>("MapEffect"));
+            mapEffect = new TiledMapEffect(content.Load<Effect>("MapEffect")); //load highlight effect (just in case)
 
-            switch (tilemap)
+            switch (tilemap) //switch based on map name
             {
                 case "home":
-                    if (!BattleReturn)
+                    if (!BattleReturn) //if normal
                         startingPosition = new Vector2(_tiledMap.WidthInPixels / 2, _tiledMap.HeightInPixels / 2);
-                    else
+                    else //if returned from battle
                         startingPosition = currentPosition;
                         BattleReturn = false;
                     break;
@@ -74,9 +74,7 @@ namespace Game_Demo
         public static void Draw(OrthographicCamera _camera)
         {
             _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
-            _tiledMapRenderer.Draw(_tiledMap.GetLayer("Foreground"), _camera.GetViewMatrix());
-            if (map == 1)
-                _tiledMapRenderer.Draw(_tiledMap.GetLayer("Foreground2"), _camera.GetViewMatrix());
+            //_tiledMapRenderer.Draw(collision, _camera.GetViewMatrix(), mapEffect); //draw map with highlighted collision layer
         }
     }
 }

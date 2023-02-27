@@ -37,7 +37,7 @@ float4 PixelShaderFunctionPositionTexture(VertexShaderOutputPositionTexture inpu
 {
 	float4 textureColor = SAMPLE_TEXTURE(Texture, input.TextureCoordinate) * DiffuseColor;
 	if (textureColor.a) {
-		textureColor.rgb = textureColor.gbr;
+		textureColor.rgb = textureColor.gbr; //change color effect here
 	}
 	return textureColor;
 }

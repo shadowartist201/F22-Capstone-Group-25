@@ -18,29 +18,29 @@ namespace Game_Demo
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new OrthographicCamera(GraphicsDevice);
 
-            Tiled.LoadMap("city", Content, GraphicsDevice);
-            _camera.LookAt(Tiled.startingPosition);
+            Tiled.LoadMap("city", Content, GraphicsDevice); //load map
+            _camera.LookAt(Tiled.startingPosition); //set camera position
 
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            Tiled.Update_(gameTime);
-            Tiled.currentPosition = _camera.Center;
+            Tiled.Update_(gameTime); //tiledMapRenderer update
+            Tiled.currentPosition = _camera.Center; 
 
-            if (Collision.CollisionCheck() == Color.Green)
+            if (Collision.CollisionCheck() == Color.Green) //if collided
             {
                 return;
             }
 
-            Vector2 movementDirection = World.Movement();
-            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds());
+            Vector2 movementDirection = World.Movement(); //get movement direction
+            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Tiled.Draw(_camera);
+            Tiled.Draw(_camera); //map drawing
             var transformMatrix = _camera.GetViewMatrix();
 
             _spriteBatch.Begin(transformMatrix: transformMatrix);

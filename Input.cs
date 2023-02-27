@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
 
 namespace Game_Demo
 {
     public class Input
     {
-        static bool up, down, left, right, enter, back;
-        public static string Hold()
+        static bool up, down, left, right, enter, back; //flags for single press
+        public static string Hold() //constant press
         {
             KeyboardState state = Keyboard.GetState();
 
@@ -40,19 +39,18 @@ namespace Game_Demo
             }
         }
 
-        public static string SinglePress()
+        public static string SinglePress() //only one press
         {
             KeyboardState state = Keyboard.GetState();
-            Debug.WriteLine(enter);
             string output = "none";
 
-            if (state.IsKeyDown(Keys.Up) && !up)
+            if (state.IsKeyDown(Keys.Up) && !up) //if key pressed and flag = false
             {
-                up = true;
+                up = true; //set flag to true
                 output = "up";
             }
-            if (state.IsKeyUp(Keys.Up) && up)
-                up = false;
+            if (state.IsKeyUp(Keys.Up) && up) //if key not pressed and flag = true
+                up = false; //set flag to false
             //---------------------------------------
             if (state.IsKeyDown(Keys.Down) && !down)
             {

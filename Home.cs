@@ -2,13 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 //using Microsoft.Xna.Framework.Audio;
 using MonoGame.Extended;
-using MonoGame.Extended.Collisions;
 using MonoGame.Extended.Screens;
-using System.Collections.Generic;
-using System;
-using MonoGame.Extended.Tiled;
-using System.Reflection.Emit;
-using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -20,55 +14,61 @@ namespace Game_Demo
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
 
-        //private SoundEffect soundEffect;
-        //private SoundEffectInstance instance;
-        //private AudioListener listener = new AudioListener();
-        //private AudioEmitter emitter = new AudioEmitter();
+        /* 
+         * private SoundEffect soundEffect;
+         * private SoundEffectInstance instance;
+         * private AudioListener listener = new AudioListener();
+         * private AudioEmitter emitter = new AudioEmitter();
+         */
 
         public override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new OrthographicCamera(GraphicsDevice);
 
-            Tiled.LoadMap("home", Content, GraphicsDevice);
-            _camera.LookAt(Tiled.startingPosition);
+            Tiled.LoadMap("home", Content, GraphicsDevice); //load map
+            _camera.LookAt(Tiled.startingPosition); //set starting position
 
-            //soundEffect = Content.Load<SoundEffect>("thunk");
-            //instance = soundEffect.CreateInstance();
-            //instance.Apply3D(listener, emitter);
-            //listener.Position = new Vector3((float)position.X / 400 - 1, listener.Position.Y, (float)position.Y / 400 - 1);
+            /* 
+             * soundEffect = Content.Load<SoundEffect>("thunk");
+             * instance = soundEffect.CreateInstance();
+             * instance.Apply3D(listener, emitter);
+             * listener.Position = new Vector3((float)position.X / 400 - 1, listener.Position.Y, (float)position.Y / 400 - 1);
+             */
+
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            Tiled.Update_(gameTime);
+            Tiled.Update_(gameTime); //tiledMapRenderer update
             Tiled.currentPosition = _camera.Center;
 
-            Vector2 movementDirection = World.Movement();
-
-            if (Collision.CollisionCheck() == Color.Green)
+            if (Collision.CollisionCheck() == Color.Green) //if collided
             {
                 return;
             }
-            
-            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds());
 
-            //if (player_rec.Location.X > 720)
-            //{
-            //    position.X -= 5;
-            //    instance = soundEffect.CreateInstance();
-            //    emitter.Position = new Vector3(listener.Position.X + 0.1f, listener.Position.Y, listener.Position.Z); //play bump to the right
-            //    instance.Play();
-            //    instance.Apply3D(listener, emitter);
-            //}
-            //listener.Position = new Vector3((float)position.X / 400 - 1, (float)position.Y / 400 - 1, listener.Position.Z);
+            Vector2 movementDirection = World.Movement(); //get movement direction
+            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
+
+            /*
+             * if (player_rec.Location.X > 720)
+             * {
+             *     position.X -= 5;
+             *     instance = soundEffect.CreateInstance();
+             *     emitter.Position = new Vector3(listener.Position.X + 0.1f, listener.Position.Y, listener.Position.Z); //play bump to the right
+             *      instance.Play();
+             *      instance.Apply3D(listener, emitter);
+             *  }
+             *  listener.Position = new Vector3((float)position.X / 400 - 1, (float)position.Y / 400 - 1, listener.Position.Z);
+             */
 
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Tiled.Draw(_camera);
+            Tiled.Draw(_camera); //map drawing
 
             var transformMatrix = _camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
