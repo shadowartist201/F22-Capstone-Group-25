@@ -12,7 +12,7 @@ namespace Game_Demo
 
         public static Vector2 Movement()
         {
-            return Input.Direction() switch
+            return Input.Hold() switch
             {
                 "up" => new Vector2(0, -1),
                 "down" => new Vector2(0, 1),

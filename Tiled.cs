@@ -4,10 +4,6 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Autofac.Features.Indexed;
-using System;
 
 namespace Game_Demo
 {
@@ -17,7 +13,6 @@ namespace Game_Demo
         public static TiledMapRenderer _tiledMapRenderer;
         public static TiledMapTileLayer collision;
         public static TiledMapTile? tile = null;
-        public static Effect effect;
 
         public static int map = 0;
         public static int tileWidth = 48;

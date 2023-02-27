@@ -40,13 +40,13 @@ namespace Game_Demo
             if (!top_tile.IsBlank || !bottom_tile.IsBlank || !left_tile.IsBlank || !right_tile.IsBlank || OutOfBounds(hitbox)) //if collided
             {
                 color = Color.Blue;
-                if ((!left_tile.IsBlank || hitbox.Left < 0) && Input.Direction() == "left")
+                if ((!left_tile.IsBlank || hitbox.Left < 0) && Input.Hold() == "left")
                     color = Color.Green;
-                if ((!right_tile.IsBlank || hitbox.Right > Tiled._tiledMap.WidthInPixels-1) && Input.Direction() == "right")
+                if ((!right_tile.IsBlank || hitbox.Right > Tiled._tiledMap.WidthInPixels-1) && Input.Hold() == "right")
                     color = Color.Green;
-                if ((!top_tile.IsBlank || hitbox.Top < 0) && Input.Direction() == "up")
+                if ((!top_tile.IsBlank || hitbox.Top < 0) && Input.Hold() == "up")
                     color = Color.Green;
-                if ((!bottom_tile.IsBlank || hitbox.Bottom > Tiled._tiledMap.HeightInPixels-1) && Input.Direction() == "down")
+                if ((!bottom_tile.IsBlank || hitbox.Bottom > Tiled._tiledMap.HeightInPixels-1) && Input.Hold() == "down")
                     color = Color.Green;
                 return color;
             }
