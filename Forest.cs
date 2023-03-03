@@ -19,6 +19,7 @@ namespace Game_Demo
             _camera = new OrthographicCamera(GraphicsDevice);
 
             Tiled.LoadMap("forest", Content, GraphicsDevice); //load map
+            Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set starting position
 
             base.LoadContent();
@@ -28,6 +29,7 @@ namespace Game_Demo
         {
             Tiled.Update_(gameTime); //tiledMapRenderer update
             Tiled.currentPosition = _camera.Center;
+            Transition.TransitionCheck();
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
             {

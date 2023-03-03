@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="9" height="7" tilewidth="48" tileheight="48" infinite="0" nextlayerid="6" nextobjectid="5">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="9" height="7" tilewidth="48" tileheight="48" infinite="0" nextlayerid="7" nextobjectid="6">
  <tileset firstgid="1" source="../Tilesets/Inside_A2.tsx"/>
  <tileset firstgid="193" source="../Tilesets/Inside_A5.tsx"/>
  <tileset firstgid="321" source="../Tilesets/Inside_A4.tsx"/>
@@ -50,4 +50,7 @@
 0,0,0,0,1073,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="6" name="Transitions">
+  <object id="5" name="ToVillage" x="192.081" y="240.101" width="47.2926" height="45.1099"/>
+ </objectgroup>
 </map>

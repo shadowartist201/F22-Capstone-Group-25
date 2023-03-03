@@ -7,6 +7,7 @@ namespace Game_Demo
     internal class Collision
     {
         public static Color color;
+        public static Rectangle hitbox;
 
         private static bool OutOfBounds(Rectangle hitbox)
         {
@@ -22,7 +23,7 @@ namespace Game_Demo
 
         public static Color CollisionCheck()
         {
-            Rectangle hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
+            hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
             TiledMapTile top_tile = new();
             TiledMapTile bottom_tile = new();
             TiledMapTile right_tile = new();

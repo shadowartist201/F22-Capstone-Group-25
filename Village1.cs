@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
+using MonoGame.Extended.VectorDraw;
+using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -19,6 +21,7 @@ namespace Game_Demo
             _camera = new OrthographicCamera(GraphicsDevice);
 
             Tiled.LoadMap("village", Content, GraphicsDevice); //load map
+            Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set starting position
 
             base.LoadContent();
@@ -28,6 +31,7 @@ namespace Game_Demo
         {
             Tiled.Update_(gameTime); //tiledMapRenderer update
             Tiled.currentPosition = _camera.Center;
+            Transition.TransitionCheck();
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
             {

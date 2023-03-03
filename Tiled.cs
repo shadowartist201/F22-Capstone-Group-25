@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -34,33 +35,53 @@ namespace Game_Demo
             switch (tilemap) //switch based on map name
             {
                 case "home":
-                    if (!BattleReturn) //if normal
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn) //if returned from battle
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
                         startingPosition = new Vector2(_tiledMap.WidthInPixels / 2, _tiledMap.HeightInPixels / 2);
-                    else //if returned from battle
-                        startingPosition = currentPosition;
-                        BattleReturn = false;
                     break;
+
                 case "village":
-                    if (!BattleReturn)
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn) 
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
                         startingPosition = new Vector2(190, 240);
-                    else
-                        startingPosition = currentPosition;
-                        BattleReturn = false;
                     break;
+
                 case "forest":
-                    if (!BattleReturn)
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn) 
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
                         startingPosition = new Vector2(95, 195);
-                    else
-                        startingPosition = currentPosition;
-                        BattleReturn = false;
                     break;
+
                 case "city":
-                    if (!BattleReturn)
-                        startingPosition = new Vector2(900, 1880);
-                    else
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
                         startingPosition = currentPosition;
                         BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(900, 1880);
                     break;
+
                 default:
                     break;
             }

@@ -19,6 +19,8 @@ namespace Game_Demo
 
         public static ScreenManager _screenManager = new();
 
+        public static bool SwitchHome, SwitchVillage, SwitchForest, SwitchCity;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -75,20 +77,24 @@ namespace Game_Demo
             {
                 LoadBattle();
             }
-            else if (state.IsKeyDown(Keys.S))
+            else if (state.IsKeyDown(Keys.S) || SwitchHome)
             {
+                SwitchHome = false;
                 LoadHome();
             }
-            else if (state.IsKeyDown(Keys.D))
+            else if (state.IsKeyDown(Keys.D) || SwitchVillage)
             {
+                SwitchVillage = false;
                 LoadVillage1();
             }
-            else if (state.IsKeyDown(Keys.F))
+            else if (state.IsKeyDown(Keys.F) || SwitchForest)
             {
+                SwitchForest = false;
                 LoadForest();
             }
-            else if (state.IsKeyDown(Keys.G))
+            else if (state.IsKeyDown(Keys.G) || SwitchCity)
             {
+                SwitchCity = false;
                 LoadCity();
             }
             else if (Tiled.BattleReturn)

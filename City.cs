@@ -19,6 +19,7 @@ namespace Game_Demo
             _camera = new OrthographicCamera(GraphicsDevice);
 
             Tiled.LoadMap("city", Content, GraphicsDevice); //load map
+            Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set camera position
 
             base.LoadContent();
@@ -27,7 +28,8 @@ namespace Game_Demo
         public override void Update(GameTime gameTime)
         {
             Tiled.Update_(gameTime); //tiledMapRenderer update
-            Tiled.currentPosition = _camera.Center; 
+            Tiled.currentPosition = _camera.Center;
+            Transition.TransitionCheck();
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
             {
