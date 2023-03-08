@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="43" height="37" tilewidth="48" tileheight="48" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="43" height="37" tilewidth="48" tileheight="48" infinite="0" nextlayerid="5" nextobjectid="6">
  <tileset firstgid="1" source="../Tilesets/Outside_A5.tsx"/>
  <tileset firstgid="129" source="../Tilesets/Door.tsx"/>
  <tileset firstgid="225" source="../Tilesets/Outside_A3.tsx"/>
@@ -131,4 +131,9 @@
 550,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="Transitions">
+  <object id="1" name="ToForestPath2" x="0" y="720" width="48" height="192"/>
+  <object id="2" name="ToForestPath1" x="2016" y="96" width="48" height="144"/>
+  <object id="3" x="2507.33" y="696.667" width="18" height="8"/>
+ </objectgroup>
 </map>
