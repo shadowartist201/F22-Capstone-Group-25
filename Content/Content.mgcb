@@ -246,6 +246,21 @@
 /processor:TiledMapProcessor
 /build:Maps/village.tmx
 
+#begin Maps/middlevillage.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/middlevillage.tmx
+
+#begin Maps/forestpath1.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/forestpath1.tmx
+
+#begin Maps/forestpath2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/forestpath2.tmx
+
 #begin Structures.fxh
 /copy:Structures.fxh
 
