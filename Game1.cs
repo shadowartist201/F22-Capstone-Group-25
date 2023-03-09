@@ -19,7 +19,7 @@ namespace Game_Demo
 
         public static ScreenManager _screenManager = new();
 
-        public static bool SwitchHome, SwitchVillage, SwitchForest, SwitchCity;
+        public static bool SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage;
 
         public Game1()
         {
@@ -51,6 +51,15 @@ namespace Game_Demo
                     break;
                 case 4:
                     LoadCity();
+                    break;
+                case 5:
+                    LoadForestPath1();
+                    break;
+                case 6:
+                    LoadForestPath2();
+                    break;
+                case 7:
+                    LoadMiddleVillage();
                     break;
             }
         }
@@ -97,6 +106,21 @@ namespace Game_Demo
                 SwitchCity = false;
                 LoadCity();
             }
+            else if (state.IsKeyDown(Keys.M) || SwitchForestPath1)
+            {
+                SwitchForestPath1 = false;
+                LoadForestPath1();
+            }
+            else if (state.IsKeyDown(Keys.N) || SwitchForestPath2)
+            {
+                SwitchForestPath2 = false;
+                LoadForestPath2();
+            }
+            else if (state.IsKeyDown(Keys.B) || SwitchMiddleVillage)
+            {
+                SwitchMiddleVillage = false;
+                LoadMiddleVillage();
+            }
             else if (Tiled.BattleReturn)
             {
                 BattleReturn();
@@ -133,6 +157,24 @@ namespace Game_Demo
         {
             Tiled.map = 4;
             _screenManager.LoadScreen(new City(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+        
+        public void LoadForestPath1()
+        {
+            Tiled.map = 5;
+            _screenManager.LoadScreen(new ForestPath1(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+        
+        public void LoadForestPath2()
+        {
+            Tiled.map = 6;
+            _screenManager.LoadScreen(new ForestPath2(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+        
+        public void LoadMiddleVillage()
+        {
+            Tiled.map = 7;
+            _screenManager.LoadScreen(new MiddleVillage(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
     }
 }

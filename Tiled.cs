@@ -82,6 +82,42 @@ namespace Game_Demo
                         startingPosition = new Vector2(900, 1880);
                     break;
 
+                case "forestpath1":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(100, 480);
+                    break;
+                    
+                case "forestpath2":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(100, 480);
+                    break;
+
+                case "middlevillage":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(96, 864);
+                    break;
+
                 default:
                     break;
             }
