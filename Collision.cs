@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Tiled;
-using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -24,19 +23,21 @@ namespace Game_Demo
         public static Color CollisionCheck()
         {
             hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
+
             TiledMapTile top_tile = new();
             TiledMapTile bottom_tile = new();
-            TiledMapTile right_tile = new();
             TiledMapTile left_tile = new();
+            TiledMapTile right_tile = new();
 
             // Get next tile based on player position
-            if (!OutOfBounds(hitbox))
-            {
+            if (hitbox.Top >= 0)
                 top_tile = Tiled.collision.GetTile((ushort)(hitbox.Center.X / Tiled.tileWidth), (ushort)(hitbox.Top / Tiled.tileWidth));
+            if (hitbox.Bottom <= Tiled._tiledMap.HeightInPixels-1)
                 bottom_tile = Tiled.collision.GetTile((ushort)(hitbox.Center.X / Tiled.tileWidth), (ushort)(hitbox.Bottom / Tiled.tileWidth));
+            if (hitbox.Left >= 0)
                 left_tile = Tiled.collision.GetTile((ushort)(hitbox.Left / Tiled.tileWidth), (ushort)(hitbox.Center.Y / Tiled.tileWidth));
+            if (hitbox.Right <= Tiled._tiledMap.WidthInPixels-1)
                 right_tile = Tiled.collision.GetTile((ushort)(hitbox.Right / Tiled.tileWidth), (ushort)(hitbox.Center.Y / Tiled.tileWidth));
-            }
 
             if (!top_tile.IsBlank || !bottom_tile.IsBlank || !left_tile.IsBlank || !right_tile.IsBlank || OutOfBounds(hitbox)) //if collided
             {
