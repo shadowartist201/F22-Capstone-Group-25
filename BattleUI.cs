@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Text;
 
 namespace Game_Demo
 {
@@ -20,23 +21,34 @@ namespace Game_Demo
         public static Texture2D hp_bar;               //empty bar
         public static Texture2D bar_fill;             //that which fills the bar
 
-        public static int selection_index = 1;        //shows which action menu option is selected
-        public static int current_character = 1;      //which character's turn is it, where 1 = Nobody and 2 = Cat
+        public static int selection_index;            //shows which action menu option is selected
+        public static int current_character;          //which character's turn is it, where 1 = Nobody and 2 = Cat
 
-        public static float menu_alpha = 0.0f;        //action menu visibility, 0 = hidden and 1 = show
-        public static float inventory_alpha = 0.0f;   //inventory menu visibility
-        public static float message_alpha = 1.0f;     //message box visibility, initialized to 1 for initial message
+        public static float menu_alpha;               //action menu visibility, 0 = hidden and 1 = show
+        public static float inventory_alpha;          //inventory menu visibility
+        public static float message_alpha;            //message box visibility, initialized to 1 for initial message
 
-        public static bool initial_message = true;    //initial message "A <thing> appeared!"
-        public static bool attack_message = false;    //message "<chara> attacked!"
-        public static bool magic_message = false;     //message "<chara> used magic!"
-        public static bool cat_magic_message = false; //message "Cats can't use magic"
-        public static bool flee_message = false;      //message when attempting to flee battle
+        public static bool initial_message;           //initial message "A <thing> appeared!"
+        public static bool attack_message;            //message "<chara> attacked!"
+        public static bool magic_message;             //message "<chara> used magic!"
+        public static bool cat_magic_message;         //message "Cats can't use magic"
+        public static bool flee_message;              //message when attempting to flee battle
 
         ///TO DO: maybe a small hp/mana bar for each enemy on the field?
 
         public static void LoadUI(ContentManager Content)
         {
+            selection_index = 1;
+            current_character = 1;
+            menu_alpha = 0.0f;
+            inventory_alpha = 0.0f;
+            message_alpha = 1.0f;
+            initial_message = true;
+            attack_message = false;
+            magic_message = false;
+            cat_magic_message = false;
+            flee_message = false;
+
             hp_bar = Content.Load<Texture2D>("Battle/hp-bar");
             bar_fill = Content.Load<Texture2D>("Battle/bar-fill");
 

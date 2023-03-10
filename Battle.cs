@@ -31,10 +31,10 @@ namespace Game_Demo
         public override void Initialize()
         {
             //new Entity(name, HP, max HP, MP, max MP, attack, magic attack, defense, magic defense, speed)
-            Game1.enemies.Add(new Entity("Dragon", 200, 200, 0, 0, 10, 15, 0, 0, 5));
+            Game1.enemies[0] = (new Entity("Dragon", 200, 200, 0, 0, 10, 15, 0, 0, 5));
 
-            Game1.squad.Add(new Entity("Nobody", 100, 100, 10, 10, 5, 10, 10, 12, 10));
-            Game1.squad.Add(new Entity("Cat", 50, 50, 0, 0, 5, 10, 5, 7, 15));
+            Game1.squad[0] = (new Entity("Nobody", 100, 100, 10, 10, 5, 10, 10, 12, 10));
+            Game1.squad[1] = (new Entity("Cat", 50, 50, 0, 0, 5, 10, 5, 7, 15));
 
             base.Initialize();
         }

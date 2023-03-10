@@ -10,8 +10,8 @@ namespace Game_Demo
     public class Game1 : Game
     {
         public static GraphicsDeviceManager _graphics;
-        public static List<Entity> enemies = new();
-        public static List<Entity> squad = new();
+        public static List<Entity> enemies = new List<Entity> {new Entity()};
+        public static List<Entity> squad = new List<Entity> {new Entity(), new Entity()};
 
         public static SpriteFont small_font;
         public static SpriteFont medium_font;
