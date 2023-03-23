@@ -5,6 +5,7 @@ using MonoGame.Extended;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+using System.IO;
 
 namespace Game_Demo
 {
@@ -30,7 +31,9 @@ namespace Game_Demo
             _tiledMapRenderer = new TiledMapRenderer(graphicsDevice, _tiledMap);
             collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
 
-            mapEffect = new TiledMapEffect(content.Load<Effect>("MapEffect")); //load highlight effect (just in case)
+            //mapEffect = new TiledMapEffect(content.Load<Effect>("MapEffect")); //load highlight effect (just in case)
+            byte[] bytecode = File.ReadAllBytes("Content/mapEffect2.mgfx");
+            mapEffect = new TiledMapEffect(new Effect(graphicsDevice, bytecode));
 
             switch (tilemap) //switch based on map name
             {
@@ -131,7 +134,7 @@ namespace Game_Demo
         public static void Draw(OrthographicCamera _camera)
         {
             _tiledMapRenderer.Draw(_camera.GetViewMatrix()); //draw the tile map
-            //_tiledMapRenderer.Draw(collision, _camera.GetViewMatrix(), mapEffect); //draw map with highlighted collision layer
+            //_tiledMapRenderer.Draw(collision, _camera.GetViewMatrix(), null, mapEffect); //draw map with highlighted collision layer
         }
     }
 }
