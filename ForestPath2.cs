@@ -5,10 +5,10 @@ using MonoGame.Extended.Screens;
 
 namespace Game_Demo
 {
-    public class Forest : GameScreen
+    public class ForestPath2 : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
-        public Forest(Game1 game) : base(game) { }
+        public ForestPath2(Game1 game) : base(game) { }
 
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
@@ -18,9 +18,9 @@ namespace Game_Demo
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new OrthographicCamera(GraphicsDevice);
 
-            Tiled.LoadMap("forest", Content, GraphicsDevice); //load map
+            Tiled.LoadMap("forestpath2", Content, GraphicsDevice); //load map
             Transition.LoadTransition();
-            _camera.LookAt(Tiled.startingPosition); //set starting position
+            _camera.LookAt(Tiled.startingPosition); //set camera position
 
             base.LoadContent();
         }

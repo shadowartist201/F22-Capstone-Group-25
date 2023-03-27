@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿/*using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -6,10 +6,10 @@ using MonoGame.Extended.Screens;
 
 namespace Game_Demo
 {
-    public class Battle : GameScreen
+    public class Battleref : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
-        public Battle(Game1 game) : base(game) { }
+        public Battleref(Game1 game) : base(game) { }
 
         public SpriteBatch _spriteBatch;  //batch of sprites
         //TO DO: adjust this for a list of 6 enemies and the three player textures
@@ -60,18 +60,16 @@ namespace Game_Demo
         public override void Draw(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-            endBattle = false;
-            int totH = 0;
+            endBattle = true;
             foreach (Entity e in Game1.enemies)
             {
-                totH += e.health;
-            }
-            if (totH < 1) //if battle over
-            {
-                endBattle = true;
+                if (e.health != 0) //if battle over
+                {
+                    endBattle = false;
+                }
             }
 
-            if (endBattle)
+            if(endBattle || state.IsKeyDown(Keys.D1))
             {
                 Entity thing = Game1.enemies[0];
                 thing.health = 0;
@@ -113,36 +111,23 @@ namespace Game_Demo
                             else
                             {
                                 currchar = Game1.enemies[BattleUI.current_character];
-                                currenemy = Game1.squad[Game1.squad.Count - 1];
-                                //attack last if not dead, then move up, idk yet
-                                int i = 1;
-                                if (Game1.squad[0].health > 0)
-                                {
-                                    while (currenemy.health < 1)
-                                    {
-                                        currenemy = Game1.squad[Game1.squad.Count - i];
-                                        i++;
-                                    }
-                                }
+                                if (Game1.squad[Game1.squad.Count - 1].health > 0)
+                                    currenemy = Game1.squad[Game1.squad.Count - 1];
+                                else if (Game1.squad[Game1.squad.Count-1].health<1 && Game1.squad[Game1.squad.Count - 2].health > 0)
+                                    currenemy = Game1.squad[Game1.squad.Count - 2];
+                                else
+                                    currenemy = Game1.squad[Game1.squad.Count - 3];
                             }
                             List<Entity> returned = new List<Entity>();
                             BattleUI.menu_alpha = 0f; //hide menu
                             returned = attack(ref currchar, ref currenemy, _spriteBatch, BattleUI.battle_message, Game1.large_font, Game1.small_font);
-                            if (BattleUI.squadTurn)
-                            {
-                                Game1.squad[BattleUI.current_character] = returned[0];
-                                Game1.enemies[target] = returned[1];
-                            }
-                            else
-                            {
-                                Game1.squad[target] = returned[1];
-                                Game1.enemies[BattleUI.current_character] = returned[0];
-                            }
+                            Game1.squad[BattleUI.current_character] = returned[0];
+                            Game1.enemies[target] = returned[1];
                             alratk = true; //set attacked flag to true
                         }
                         _spriteBatch.Draw(BattleUI.battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                         if (BattleUI.squadTurn)
-                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " attacked the " + Game1.enemies[target].name + "!", new Vector2(205, 361), Color.Black);
+                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " attacked the " + Game1.enemies[target - 1].name + "!", new Vector2(205, 361), Color.Black);
                         else
                             _spriteBatch.DrawString(Game1.large_font, "*" + Game1.enemies[BattleUI.current_character].name + " attacked " + Game1.squad[target].name + "!", new Vector2(205, 361), Color.Black);
                     }
@@ -157,20 +142,12 @@ namespace Game_Demo
                                 List<Entity> returned = new List<Entity>();
                                 BattleUI.menu_alpha = 0f; //hide menu
                                 returned = spattack(ref currchar, ref currenemy, _spriteBatch, BattleUI.battle_message, Game1.medium_font);
-                                if (BattleUI.squadTurn)
-                                {
-                                    Game1.squad[BattleUI.current_character] = returned[0];
-                                    Game1.enemies[target] = returned[1];
-                                }
-                                else
-                                {
-                                    Game1.squad[target] = returned[1];
-                                    Game1.enemies[BattleUI.current_character] = returned[0];
-                                }
+                                Game1.squad[BattleUI.current_character] = returned[0];
+                                Game1.enemies[0] = returned[1];
                                 alratk = true; //set attacked flag to true
                             }
                         }
-                        if (Game1.squad[BattleUI.current_character].mana > 0)
+                        if (Game1.squad[BattleUI.current_character].mana>0)
                         {
                             _spriteBatch.Draw(BattleUI.battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                             _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " summoned fire!", new Vector2(205, 361), Color.Black);
@@ -261,15 +238,15 @@ namespace Game_Demo
                 return t;
             }
 
-            Entity itemEffect(ref Entity t, /*Entity a, item i,*/ int hp, int mp, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int HP, int MP
+            Entity itemEffect(ref Entity t, /*Entity a, item i, int hp, int mp, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int HP, int MP
             {
                 hpManip(ref t, hp * -1); //increase HP by flat rate
                 manaManip(ref t, mp * -1); //increase MP by flat rate
                 BattleUI.menu_alpha = 0f; //hide menu
                 _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                _spriteBatch.DrawString(large_font, "*" + /*+ t.name + " is feeling the effects of " + i.name*/" wow, I can't believe I've done this", new Vector2(205, 361), Color.Black);
+                _spriteBatch.DrawString(large_font, "*" + /*+ t.name + " is feeling the effects of " + i.name" wow, I can't believe I've done this", new Vector2(205, 361), Color.Black);
                 return t;
             }
         }
     }
-}
+}*/

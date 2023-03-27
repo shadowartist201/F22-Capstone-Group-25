@@ -11,6 +11,9 @@
 #-------------------------------- References --------------------------------#
 
 /reference:/Users/michaellaufer/.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
+/reference:..\..\..\..\..\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
+/reference:../../../.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
+/reference:\Users\thijm\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -215,10 +218,8 @@
 /processorParam:TextureFormat=Compressed
 /build:Battle/Small.spritefont
 
-#begin Maps/city.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/city.tmx
+#begin Macros.fxh
+/copy:Macros.fxh
 
 #begin Maps/city.tmx
 /importer:TiledMapImporter
@@ -230,30 +231,33 @@
 /processor:TiledMapProcessor
 /build:Maps/forest.tmx
 
-#begin Maps/forest.tmx
+#begin Maps/forestpath1.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:Maps/forest.tmx
+/build:Maps/forestpath1.tmx
+
+#begin Maps/forestpath2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/forestpath2.tmx
 
 #begin Maps/home.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:Maps/home.tmx
 
-#begin Maps/home.tmx
+#begin Maps/middlevillage.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:Maps/home.tmx
+/build:Maps/middlevillage.tmx
 
 #begin Maps/village.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:Maps/village.tmx
 
-#begin Maps/village.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/village.tmx
+#begin Structures.fxh
+/copy:Structures.fxh
 
 #begin Tilesets/Door.tsx
 /importer:TiledMapTilesetImporter
