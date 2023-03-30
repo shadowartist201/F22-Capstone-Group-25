@@ -1,16 +1,19 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 
 namespace Game_Demo
 {
     public class DialogBox
     {
+
         /// <summary>
         /// All text contained in this dialog box
         /// </summary>
@@ -74,7 +77,7 @@ namespace Game_Demo
         /// <summary>
         /// Size (in pixels) of a wide alphabet letter (W is the widest letter in almost every font) 
         /// </summary>
-        private Vector2 _characterSize = Program.Game.DialogFont.MeasureString(new StringBuilder("W", 1));
+        private Vector2 _characterSize = Game1.dialog.MeasureString(new StringBuilder("W", 1));
 
         /// <summary>
         /// The amount of characters allowed on a given line
@@ -136,7 +139,7 @@ namespace Game_Demo
         /// <summary>
         /// Default constructor
         /// </summary>
-        public DialogBox()
+        public DialogBox(GraphicsDevice _graphicsDevice, OrthographicCamera _camera)
         {
             BorderWidth = 2;
             DialogColor = Color.Black;
@@ -145,22 +148,22 @@ namespace Game_Demo
 
             BorderColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 
-            _fillTexture = new Texture2D(Program.Game.GraphicsDevice, 1, 1);
+            _fillTexture = new Texture2D(_graphicsDevice, 1, 1);
             _fillTexture.SetData(new[] { FillColor });
 
-            _borderTexture = new Texture2D(Program.Game.GraphicsDevice, 1, 1);
+            _borderTexture = new Texture2D(_graphicsDevice, 1, 1);
             _borderTexture.SetData(new[] { BorderColor });
 
             _pages = new List<string>();
             _currentPage = 0;
 
-            var sizeX = (int)(Program.Game.GraphicsDevice.Viewport.Width * 0.5);
-            var sizeY = (int)(Program.Game.GraphicsDevice.Viewport.Height * 0.2);
+            var sizeX = (int)(_graphicsDevice.Viewport.Width * 0.5);
+            var sizeY = (int)(_graphicsDevice.Viewport.Height * 0.2);
 
             Size = new Vector2(sizeX, sizeY);
 
-            var posX = Program.Game.CenterScreen.X - (Size.X / 2f);
-            var posY = Program.Game.GraphicsDevice.Viewport.Height - Size.Y - 30;
+            var posX = _camera.Center.X - (Size.X / 2f);
+            var posY = _graphicsDevice.Viewport.Height - Size.Y - 30;
 
             Position = new Vector2(posX, posY);
         }
@@ -255,7 +258,7 @@ namespace Game_Demo
                 spriteBatch.Draw(_fillTexture, TextRectangle, FillColor);
 
                 // Draw the current page onto the dialog box
-                spriteBatch.DrawString(Program.Game.DialogFont, _pages[_currentPage], TextPosition, DialogColor);
+                spriteBatch.DrawString(Game1.dialog, _pages[_currentPage], TextPosition, DialogColor);
 
                 // Draw a blinking indicator to guide the player through to the next page
                 // This stops blinking on the last page
@@ -265,7 +268,7 @@ namespace Game_Demo
                     var indicatorPosition = new Vector2(TextRectangle.X + TextRectangle.Width - (_characterSize.X) - 4,
                         TextRectangle.Y + TextRectangle.Height - (_characterSize.Y));
 
-                    spriteBatch.DrawString(Program.Game.DialogFont, ">", indicatorPosition, Color.Red);
+                    spriteBatch.DrawString(Game1.dialog, ">", indicatorPosition, Color.Red);
                 }
             }
         }
