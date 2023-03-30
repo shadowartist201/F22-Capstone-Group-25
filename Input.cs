@@ -4,7 +4,7 @@ namespace Game_Demo
 {
     public class Input
     {
-        static bool up, down, left, right, enter, back; //flags for single press
+        static bool up, down, left, right, enter, back, o, x; //flags for single press
         public static string Hold() //constant press
         {
             KeyboardState state = Keyboard.GetState();
@@ -32,6 +32,14 @@ namespace Game_Demo
             if (state.IsKeyDown(Keys.Back))
             {
                 return "backspace";
+            }
+            if (state.IsKeyDown(Keys.O))
+            {
+                return "o";
+            }
+            if (state.IsKeyDown(Keys.X))
+            {
+                return "x";
             }
             else
             {
@@ -90,6 +98,22 @@ namespace Game_Demo
                 output = "backspace";
             }
             if (state.IsKeyUp(Keys.Back) && back)
+                back = false;
+            //---------------------------------------
+            if (state.IsKeyDown(Keys.O) && !o)
+            {
+                back = true;
+                output = "o";
+            }
+            if (state.IsKeyUp(Keys.O) && o)
+                back = false;
+            //---------------------------------------
+            if (state.IsKeyDown(Keys.X) && !x)
+            {
+                back = true;
+                output = "x";
+            }
+            if (state.IsKeyUp(Keys.X) && x)
                 back = false;
             //---------------------------------------
             return output;

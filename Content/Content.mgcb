@@ -218,6 +218,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Battle/Small.spritefont
 
+#begin Fonts/dialog.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/dialog.spritefont
+
 #begin Macros.fxh
 /copy:Macros.fxh
 

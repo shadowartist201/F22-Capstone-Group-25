@@ -14,6 +14,8 @@ namespace Game_Demo
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
 
+        private Dialog _dialog = new();
+
         /* 
          * private SoundEffect soundEffect;
          * private SoundEffectInstance instance;
@@ -29,6 +31,8 @@ namespace Game_Demo
             Tiled.LoadMap("home", Content, GraphicsDevice); //load map
             Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set starting position
+
+            _dialog.MakeBox(DialogText.Demo, Game1.DialogFont, GraphicsDevice, new OrthographicCamera(GraphicsDevice));
 
             /* 
              * soundEffect = Content.Load<SoundEffect>("thunk");
@@ -54,6 +58,8 @@ namespace Game_Demo
             Vector2 movementDirection = World.Movement(); //get movement direction
             _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
 
+            _dialog.Update();
+
             /*
              * if (player_rec.Location.X > 720)
              * {
@@ -74,9 +80,11 @@ namespace Game_Demo
 
             var transformMatrix = _camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
-
             _spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+            _spriteBatch.End();
 
+            _spriteBatch.Begin();
+            _dialog.Draw(_spriteBatch);
             _spriteBatch.End();
         }
     }

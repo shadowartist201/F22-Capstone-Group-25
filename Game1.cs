@@ -16,6 +16,7 @@ namespace Game_Demo
         public static SpriteFont small_font;
         public static SpriteFont medium_font;
         public static SpriteFont large_font;
+        public static SpriteFont DialogFont;
 
         public static ScreenManager _screenManager = new();
 
@@ -75,6 +76,7 @@ namespace Game_Demo
             small_font = Content.Load<SpriteFont>("Battle/small");
             medium_font = Content.Load<SpriteFont>("Battle/medium");
             large_font = Content.Load<SpriteFont>("Battle/large");
+            DialogFont = Content.Load<SpriteFont>("Fonts/dialog");
             World.player = Content.Load<Texture2D>("World/player");
         }
 
