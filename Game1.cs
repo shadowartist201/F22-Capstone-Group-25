@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
 
@@ -20,7 +21,7 @@ namespace Game_Demo
         public KeyboardState _keyboardState { get; private set; }
         public KeyboardState _previousKeyboardState { get; private set; }
 
-        public SpriteFont DialogFont { get; private set; }
+        public OrthographicCamera _camera;
 
         public Vector2 CenterScreen 
             => new Vector2(_graphics.GraphicsDevice.Viewport.Width / 2f, _graphics.GraphicsDevice.Viewport.Height / 2f);
@@ -84,18 +85,9 @@ namespace Game_Demo
             }
         }
 
-        protected override void Initialize()
+        public void MakeBox()
         {
-            LoadHome();
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            DialogFont = Content.Load<SpriteFont>("Fonts/dialog");
-
-            _dialogBox = new DialogBox
+            _dialogBox = new DialogBox(GraphicsDevice, _camera)
             {
                 Text = "Hello World! Press Enter to proceed.\n" +
                        "I will be on the next pane! " +
@@ -104,7 +96,23 @@ namespace Game_Demo
                        "In this code sample, after this dialog box finishes, you can press the O key to open a new one."
             };
 
+            _dialogBox.DialogFont = Content.Load<SpriteFont>("Fonts/dialog");
+
             _dialogBox.Initialize();
+        }
+
+        protected override void Initialize()
+        {
+            //LoadHome();
+            _camera = new OrthographicCamera(GraphicsDevice);
+            MakeBox();
+            base.Initialize();
+        }
+
+
+        protected override void LoadContent()
+        {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
@@ -129,6 +137,10 @@ namespace Game_Demo
             else if (state.IsKeyDown(Keys.G))
             {
                 LoadCity();
+            }
+            else if (state.IsKeyDown(Keys.O))
+            {
+                MakeBox();
             }
 
             _dialogBox.Update();

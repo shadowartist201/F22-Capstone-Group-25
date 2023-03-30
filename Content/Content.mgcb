@@ -11,6 +11,9 @@
 #-------------------------------- References --------------------------------#
 
 /reference:/Users/michaellaufer/.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
+/reference:..\..\..\..\..\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
+/reference:../../../.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
+/reference:\Users\thijm\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -215,10 +218,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Battle/Small.spritefont
 
-#begin Maps/city.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/city.tmx
+#begin Fonts/dialog.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/dialog.spritefont
 
 #begin Maps/city.tmx
 /importer:TiledMapImporter
@@ -230,25 +235,10 @@
 /processor:TiledMapProcessor
 /build:Maps/forest.tmx
 
-#begin Maps/forest.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/forest.tmx
-
 #begin Maps/home.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:Maps/home.tmx
-
-#begin Maps/home.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/home.tmx
-
-#begin Maps/village.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/village.tmx
 
 #begin Maps/village.tmx
 /importer:TiledMapImporter

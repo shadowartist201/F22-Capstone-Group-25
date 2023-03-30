@@ -75,9 +75,14 @@ namespace Game_Demo
         private const float DialogBoxMargin = 24f;
 
         /// <summary>
+        /// SpriteFont for dialog box font
+        /// </summary>
+        public SpriteFont DialogFont;
+
+        /// <summary>
         /// Size (in pixels) of a wide alphabet letter (W is the widest letter in almost every font) 
         /// </summary>
-        private Vector2 _characterSize = Game1.dialog.MeasureString(new StringBuilder("W", 1));
+        private Vector2 _characterSize;
 
         /// <summary>
         /// The amount of characters allowed on a given line
@@ -144,7 +149,7 @@ namespace Game_Demo
             BorderWidth = 2;
             DialogColor = Color.Black;
 
-            FillColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+            FillColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
             BorderColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -176,6 +181,8 @@ namespace Game_Demo
         public void Initialize(string text = null)
         {
             Text = text ?? Text;
+
+            _characterSize = DialogFont.MeasureString(new StringBuilder("W", 1));
 
             _currentPage = 0;
 
@@ -213,13 +220,17 @@ namespace Game_Demo
         /// <summary>
         /// Process input for dialog box
         /// </summary>
+
+        private KeyboardState oldState = new();
+        private KeyboardState newState = new();
+
         public void Update()
         {
-            KeyboardState state = Keyboard.GetState();
+            newState = Keyboard.GetState();
             if (Active)
             {
                 // Button press will proceed to the next page of the dialog box
-                if (state.IsKeyDown(Keys.Enter) && state.IsKeyUp(Keys.Enter))
+                if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
                 {
                     if (_currentPage >= _pages.Count - 1)
                     {
@@ -233,11 +244,12 @@ namespace Game_Demo
                 }
 
                 // Shortcut button to skip entire dialog box
-                if (state.IsKeyDown(Keys.X) && state.IsKeyUp(Keys.X))
+                if (newState.IsKeyDown(Keys.X) && oldState.IsKeyUp(Keys.X))
                 {
                     Hide();
                 }
             }
+            oldState = newState;
         }
 
         /// <summary>
@@ -254,11 +266,11 @@ namespace Game_Demo
                     spriteBatch.Draw(_borderTexture, side, BorderColor);
                 }
 
-                // Draw background fill texture (in this example, it's 50% transparent white)
+                // Draw background fill texture (in this example, it's 0% transparent white)
                 spriteBatch.Draw(_fillTexture, TextRectangle, FillColor);
 
                 // Draw the current page onto the dialog box
-                spriteBatch.DrawString(Game1.dialog, _pages[_currentPage], TextPosition, DialogColor);
+                spriteBatch.DrawString(DialogFont, _pages[_currentPage], TextPosition, DialogColor);
 
                 // Draw a blinking indicator to guide the player through to the next page
                 // This stops blinking on the last page
@@ -268,7 +280,7 @@ namespace Game_Demo
                     var indicatorPosition = new Vector2(TextRectangle.X + TextRectangle.Width - (_characterSize.X) - 4,
                         TextRectangle.Y + TextRectangle.Height - (_characterSize.Y));
 
-                    spriteBatch.DrawString(Game1.dialog, ">", indicatorPosition, Color.Red);
+                    spriteBatch.DrawString(DialogFont, ">", indicatorPosition, Color.Red);
                 }
             }
         }
