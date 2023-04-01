@@ -120,10 +120,11 @@ namespace Game_Demo
                                 {
                                     while (currenemy.health < 1)
                                     {
-                                        currenemy = Game1.squad[Game1.squad.Count - i];
                                         i++;
+                                        currenemy = Game1.squad[Game1.squad.Count - i];
                                     }
                                 }
+                                target = Game1.squad.Count - i;
                             }
                             List<Entity> returned = new List<Entity>();
                             BattleUI.menu_alpha = 0f; //hide menu
@@ -193,7 +194,8 @@ namespace Game_Demo
 
             List<Entity> attack(ref Entity a, ref Entity t, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font, SpriteFont small_font) //attack process
             {
-                hpManip(ref t, a.attack * (25 / 25 + t.def)); //HP decrease by target, attack strength * target's defense
+                int delta = (int)(a.attack * (float)(25 / (float)(25 + t.def)));
+                hpManip(ref t, delta); //HP decrease by target, attack strength * target's defense
                 BattleUI.menu_alpha = 0f; //hide menu
                 _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                 _spriteBatch.DrawString(large_font, "*" + a.name + " attacked " + t.name + "!", new Vector2(205, 361), Color.Black);
@@ -206,7 +208,8 @@ namespace Game_Demo
 
             List<Entity> spattack(ref Entity a, ref Entity t, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont medium_font) //magic attack process, (ref Entity attacker, ref Entity target)
             {
-                hpManip(ref t, a.spattack * (75 / 75 + t.spdef)); //MP decrease by target, magic attack strength * target's magic defense
+                int delta = (int)(a.spattack * (float)(75 / (float)(75 + t.spdef)));
+                hpManip(ref t, delta); //MP decrease by target, magic attack strength * target's magic defense
                 manaManip(ref a, 1); //decrease MP of attacker by 1
                 BattleUI.menu_alpha = 0f; //hide menu
                 _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);

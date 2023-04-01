@@ -398,11 +398,13 @@ namespace Game_Demo
             {
                 current_character = 0;
                 squadTurn = false;
+                Battle.target = 0;
             }
             else if (current_character > Game1.enemies.Count-1 && !squadTurn)
             {
                 current_character = 0;
                 squadTurn = true;
+                Battle.target = 0;
             }
         }
     }
