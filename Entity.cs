@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+
 namespace Game_Demo
 {
     public struct Entity
@@ -48,6 +50,45 @@ namespace Game_Demo
             spattack = e.spattack;
             def = e.def;
             spdef = e.spdef;
+        }
+    }
+    public struct EntityTest
+    {
+        public string name;
+        public Texture2D sprite;
+        public string dialogID;
+        public Vector2 position;
+        public bool isShopKeep;
+        public bool isStory;
+
+        public EntityTest()
+        {
+            name = string.Empty;
+            sprite = null;
+            dialogID = string.Empty;
+            position = Vector2.Zero;
+            isShopKeep = false;
+            isStory = false;
+        }
+
+        public EntityTest(string Name, Texture2D Sprite, string DialogID, Vector2 Position, bool IsShopKeep, bool IsStory)
+        {
+            name = Name;
+            sprite = Sprite;
+            dialogID = DialogID;
+            position = Position;
+            isShopKeep = IsShopKeep;
+            isStory = IsStory;
+        }
+
+        public EntityTest(EntityTest entity)
+        {
+            name = entity.name;
+            sprite = entity.sprite;
+            dialogID = entity.dialogID;
+            position = entity.position;
+            isShopKeep = entity.isShopKeep;
+            isStory = entity.isStory;
         }
     }
 }

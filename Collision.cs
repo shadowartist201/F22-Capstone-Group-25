@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Graphics;
+using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -7,6 +9,7 @@ namespace Game_Demo
     {
         public static Color color;
         public static Rectangle hitbox;
+        public static Rectangle entitybox;
 
         private static bool OutOfBounds(Rectangle hitbox)
         {
@@ -53,6 +56,31 @@ namespace Game_Demo
                 return color;
             }
             else //not collided
+            {
+                color = Color.White;
+                return color;
+            }
+        }
+
+        public static Color CollisionCheck_Entity(EntityTest entity)
+        {
+            hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
+            entitybox = new((int)entity.position.X, (int)entity.position.Y, 48, 48);
+
+            if (hitbox.Intersects(entitybox))
+            {
+                color = Color.Blue;
+                if (hitbox.Left < entitybox.Right && entitybox.Right - hitbox.Left < 10 && Input.Hold() == "left")
+                    color = Color.Green;
+                if (hitbox.Right > entitybox.Left && hitbox.Right - entitybox.Left < 10 && Input.Hold() == "right")
+                    color = Color.Green;
+                if (hitbox.Top < entitybox.Bottom && entitybox.Bottom - hitbox.Top < 10 && Input.Hold() == "up")
+                    color = Color.Green;
+                if (hitbox.Bottom > entitybox.Top && hitbox.Bottom - entitybox.Top < 10 && Input.Hold() == "down")
+                    color = Color.Green;
+                return color;
+            }
+            else
             {
                 color = Color.White;
                 return color;
