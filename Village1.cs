@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
-using MonoGame.Extended.VectorDraw;
-using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -14,8 +12,10 @@ namespace Game_Demo
 
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
-        private EntityTest NPC1 = new();
-        private EntityTest NPC2 = new();
+        private EntityTest NPC1 = new(null, new Vector2(100,100), false, false);
+        private EntityTest NPC2 = new(null, new Vector2(300,300), false, false);
+        private bool talkToNPC1 = false;
+        private bool talkToNPC2 = false;
 
         public override void LoadContent()
         {
@@ -28,8 +28,6 @@ namespace Game_Demo
 
             NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1");
             NPC2.sprite = Content.Load<Texture2D>("World/Village1_NPC2");
-            NPC1.position = new Vector2(100, 100);
-            NPC2.position = new Vector2(300, 300);
 
             base.LoadContent();
         }
@@ -40,6 +38,30 @@ namespace Game_Demo
             Tiled.currentPosition = _camera.Center;
             Transition.TransitionCheck();
 
+            if (Collision.CollisionCheck_Entity(NPC1) == Color.Blue && talkToNPC1 == false)
+                if (Input.SinglePress() == "enter")
+                {
+                    talkToNPC1 = true;
+                    NPC1.MakeDialogBox(DialogText.Village1_NPC1, GraphicsDevice);
+                }
+            if (talkToNPC1)
+                if (NPC1.DialogUpdate() == "hidden")
+                    talkToNPC1 = false;
+                else
+                    NPC1.DialogUpdate();
+
+            if (Collision.CollisionCheck_Entity(NPC2) == Color.Blue && talkToNPC2 == false)
+                if (Input.SinglePress() == "enter")
+                {
+                    talkToNPC2 = true;
+                    NPC2.MakeDialogBox(DialogText.Village1_NPC2, GraphicsDevice);
+                }
+            if (talkToNPC2)
+                if (NPC2.DialogUpdate() == "hidden")
+                    talkToNPC2 = false;
+                else
+                    NPC2.DialogUpdate();
+
             if (Collision.CollisionCheck() == Color.Green) //if collided
                 return;
             if (Collision.CollisionCheck_Entity(NPC1) == Color.Green)
@@ -47,8 +69,11 @@ namespace Game_Demo
             if (Collision.CollisionCheck_Entity(NPC2) == Color.Green)
                 return;
 
-            Vector2 movementDirection = World.Movement(); //get movement direction
-            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
+            if (!talkToNPC1 && !talkToNPC2)
+            {
+                Vector2 movementDirection = World.Movement(); //get movement direction
+                _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -59,9 +84,17 @@ namespace Game_Demo
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
             _spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
-
             _spriteBatch.Draw(NPC1.sprite, new Rectangle((int)NPC1.position.X, (int)NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC2.sprite, new Rectangle((int)NPC2.position.X, (int)NPC2.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+
+            _spriteBatch.End();
+            //-----------------------------
+            _spriteBatch.Begin();
+
+            if (talkToNPC1)
+                NPC1.DialogDraw(_spriteBatch);
+            if (talkToNPC2)
+                NPC2.DialogDraw(_spriteBatch);
 
             _spriteBatch.End();
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 
 namespace Game_Demo
 {
@@ -52,30 +53,25 @@ namespace Game_Demo
             spdef = e.spdef;
         }
     }
-    public struct EntityTest
+    public class EntityTest
     {
-        public string name;
         public Texture2D sprite;
-        public string dialogID;
         public Vector2 position;
         public bool isShopKeep;
         public bool isStory;
+        private Dialog dialog = new();
 
         public EntityTest()
         {
-            name = string.Empty;
             sprite = null;
-            dialogID = string.Empty;
             position = Vector2.Zero;
             isShopKeep = false;
             isStory = false;
         }
 
-        public EntityTest(string Name, Texture2D Sprite, string DialogID, Vector2 Position, bool IsShopKeep, bool IsStory)
+        public EntityTest(Texture2D Sprite, Vector2 Position, bool IsShopKeep, bool IsStory)
         {
-            name = Name;
             sprite = Sprite;
-            dialogID = DialogID;
             position = Position;
             isShopKeep = IsShopKeep;
             isStory = IsStory;
@@ -83,12 +79,26 @@ namespace Game_Demo
 
         public EntityTest(EntityTest entity)
         {
-            name = entity.name;
             sprite = entity.sprite;
-            dialogID = entity.dialogID;
             position = entity.position;
             isShopKeep = entity.isShopKeep;
             isStory = entity.isStory;
+        }
+
+        public void MakeDialogBox (string text, GraphicsDevice graphicsDevice)
+        {
+            dialog.MakeBox(text, Game1.DialogFont, graphicsDevice, new OrthographicCamera(graphicsDevice));
+        }
+        public string DialogUpdate ()
+        {
+            string status;
+            status = dialog.Update();
+            return status;
+        }
+
+        public void DialogDraw (SpriteBatch spriteBatch)
+        {
+            dialog.Draw(spriteBatch);
         }
     }
 }

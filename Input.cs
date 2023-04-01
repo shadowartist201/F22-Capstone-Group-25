@@ -4,7 +4,7 @@ namespace Game_Demo
 {
     public class Input
     {
-        static bool up, down, left, right, enter, back, o, x; //flags for single press
+        public static bool up, down, left, right, enter, back, o, x; //flags for single press
         public static string Hold() //constant press
         {
             KeyboardState state = Keyboard.GetState();

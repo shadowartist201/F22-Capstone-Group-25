@@ -20,9 +20,11 @@ namespace Game_Demo
             };
             dialogBox.Initialize();
         }
-        public void Update()
+        public string Update()
         {
-            dialogBox.Update();
+            string status;
+            status = dialogBox.Update();
+            return status;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -239,8 +241,9 @@ namespace Game_Demo
         /// Process input for dialog box
         /// </summary>
 
-        public void Update()
+        public string Update()
         {
+            string status = "null";
             if (Active)
             {
                 // Button press will proceed to the next page of the dialog box
@@ -249,6 +252,7 @@ namespace Game_Demo
                     if (_currentPage >= _pages.Count - 1)
                     {
                         Hide();
+                        status = "hidden";
                     }
                     else
                     {
@@ -261,8 +265,10 @@ namespace Game_Demo
                 if (Input.SinglePress() == "x")
                 {
                     Hide();
+                    status = "hidden";
                 }
             }
+            return status;
         }
 
         /// <summary>
@@ -383,5 +389,8 @@ namespace Game_Demo
                       "And wordwrap will occur, especially if there are some longer words!\n" +
                       "Monospace fonts work best but you might not want Courier New.\n" +
                       "In this code sample, after this dialog box finishes, you can press the O key to open a new one.";
+
+        public static string Village1_NPC1 = "This is a test for NPC1. I am a square made in MS Paint and I like to eat cake.";
+        public static string Village1_NPC2 = "This is a test for NPC2. I am a friendly square, so please add me on Instagram :)";
     }
 }
