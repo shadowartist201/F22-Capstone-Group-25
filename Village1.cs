@@ -1,7 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using MonoGame.Extended.Animations;
 using MonoGame.Extended.Screens;
+using MonoGame.Extended.Serialization;
+using MonoGame.Extended.Content;
+using MonoGame.Extended.Sprites;
 
 namespace Game_Demo
 {
@@ -17,6 +21,8 @@ namespace Game_Demo
         private bool talkToNPC1 = false;
         private bool talkToNPC2 = false;
 
+        private MonoGame.Extended.Sprites.AnimatedSprite _playerSprite;
+
         public override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -28,6 +34,13 @@ namespace Game_Demo
 
             NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1");
             NPC2.sprite = Content.Load<Texture2D>("World/Village1_NPC2");
+
+            /*
+            var spriteSheet = Content.Load<SpriteSheet>("player.sf", new JsonContentLoader());
+            var sprite = new MonoGame.Extended.Sprites.AnimatedSprite(spriteSheet);
+            sprite.Play("idle");
+            _playerSprite = sprite;
+            */
 
             base.LoadContent();
         }
@@ -69,6 +82,18 @@ namespace Game_Demo
             if (Collision.CollisionCheck_Entity(NPC2) == Color.Green)
                 return;
 
+            /*
+            if (Input.Hold() == "down")
+                _playerSprite.Play("walk_down");
+            if (Input.Hold() == "up")
+                _playerSprite.Play("walk_up");
+            if (Input.Hold() == "left")
+                _playerSprite.Play("walk_left");
+            if (Input.Hold() == "right")
+                _playerSprite.Play("walk_right");
+            _playerSprite.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            */
+
             if (!talkToNPC1 && !talkToNPC2)
             {
                 Vector2 movementDirection = World.Movement(); //get movement direction
@@ -86,6 +111,8 @@ namespace Game_Demo
             _spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC1.sprite, new Rectangle((int)NPC1.position.X, (int)NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC2.sprite, new Rectangle((int)NPC2.position.X, (int)NPC2.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+
+            //_spriteBatch.Draw(_playerSprite, Tiled.currentPosition);
 
             _spriteBatch.End();
             //-----------------------------
