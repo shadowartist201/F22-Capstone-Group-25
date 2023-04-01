@@ -14,6 +14,7 @@ namespace Game_Demo
         public static TiledMap _tiledMap;
         public static TiledMapRenderer _tiledMapRenderer;
         public static TiledMapTileLayer collision;
+        public static TiledMapTileLayer grass;
         public static TiledMapTile? tile = null;
 
         public static int map = 0; //map index
@@ -30,6 +31,7 @@ namespace Game_Demo
             _tiledMap = content.Load<TiledMap>("Maps/" + tilemap);   //load the tilemap
             _tiledMapRenderer = new TiledMapRenderer(graphicsDevice, _tiledMap);
             collision = _tiledMap.GetLayer<TiledMapTileLayer>("Collision");  //load collision layer
+            grass = _tiledMap.GetLayer<TiledMapTileLayer>("Grass");
 
             //mapEffect = new TiledMapEffect(content.Load<Effect>("MapEffect")); //load highlight effect (just in case)
             byte[] bytecode = File.ReadAllBytes("Content/mapEffect2.mgfx");

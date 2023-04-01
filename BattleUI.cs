@@ -303,7 +303,7 @@ namespace Game_Demo
             _spriteBatch.DrawString(Game1.medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
-            _spriteBatch.DrawString(Game1.medium_font, "Num 1 - End Battle", new Vector2(310, 132), Color.White);
+            _spriteBatch.DrawString(Game1.medium_font, "X - End Battle", new Vector2(310, 132), Color.White);
 
             //labels
             _spriteBatch.DrawString(Game1.large_font, "Dragon", new Vector2(41, 361), Color.Black);

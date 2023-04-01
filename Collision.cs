@@ -2,6 +2,7 @@
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Graphics;
 using System.Diagnostics;
+using System;
 
 namespace Game_Demo
 {
@@ -10,6 +11,7 @@ namespace Game_Demo
         public static Color color;
         public static Rectangle hitbox;
         public static Rectangle entitybox;
+        private static TiledMapTile previous_tile = new();
 
         private static bool OutOfBounds(Rectangle hitbox)
         {
@@ -85,6 +87,26 @@ namespace Game_Demo
                 color = Color.White;
                 return color;
             }
+        }
+
+        public static void RandomBattle()
+        {
+            hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
+            int num = 0;
+            var random = new Random();
+            TiledMapTile current_tile = Tiled.grass.GetTile((ushort)(hitbox.Center.X / Tiled.tileWidth), (ushort)(hitbox.Center.Y / Tiled.tileWidth));
+
+            if (!current_tile.Equals(previous_tile))
+            {
+                num = random.Next(1, 11); //between 1 and 10
+                Debug.WriteLine("Random Battle Chance: " + num);
+                if (num < 3) //20% chance
+                {
+                    Game1.SwitchBattle = true;
+                }
+            }
+
+            previous_tile = current_tile;
         }
     }
 }

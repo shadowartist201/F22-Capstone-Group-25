@@ -31,6 +31,8 @@ namespace Game_Demo
             Tiled.currentPosition = _camera.Center;
             Transition.TransitionCheck();
 
+            Collision.RandomBattle();
+
             if (Collision.CollisionCheck() == Color.Green) //if collided
             {
                 return;

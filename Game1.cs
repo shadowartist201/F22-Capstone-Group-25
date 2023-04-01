@@ -20,7 +20,7 @@ namespace Game_Demo
 
         public static ScreenManager _screenManager = new();
 
-        public static bool SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage;
+        public static bool SwitchBattle, SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage;
 
         public Game1()
         {
@@ -84,8 +84,9 @@ namespace Game_Demo
         {
             KeyboardState state = Keyboard.GetState();
 
-            if (state.IsKeyDown(Keys.A))
+            if (state.IsKeyDown(Keys.A) || SwitchBattle)
             {
+                SwitchBattle = false;
                 LoadBattle();
             }
             else if (state.IsKeyDown(Keys.S) || SwitchHome)
