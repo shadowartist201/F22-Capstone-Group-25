@@ -222,7 +222,7 @@ namespace Game_Demo
             if (menu_alpha == 1f) //action menu
             {
                 _spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White); //options menu
-                _spriteBatch.Draw(current_fighter, new Rectangle(495, 341 + (19 * current_character), 12, 14), Color.White); //point to current fighter
+                _spriteBatch.Draw(current_fighter, new Rectangle(495, 360 + (19 * current_character), 12, 14), Color.White); //point to current fighter
                 if (inventory_alpha == 0f) //while inventory menu hidden, enable red selection box
                     _spriteBatch.Draw(item_selection, new Rectangle(130, 304 + (27 * selection_index), 105, 29), Color.White);
             }
@@ -405,6 +405,20 @@ namespace Game_Demo
                 current_character = 0;
                 squadTurn = true;
                 Battle.target = 0;
+            }
+            if (squadTurn)
+            {
+                if (Game1.squad[current_character].health < 1)
+                {
+                    advanceTurn();
+                }
+            }
+            else
+            {
+                if (Game1.enemies[current_character].health<1)
+                {
+                    advanceTurn();
+                }
             }
         }
     }
