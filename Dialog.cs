@@ -8,7 +8,7 @@ using MonoGame.Extended;
 
 namespace Game_Demo
 {
-    public class Dialog
+    public class Dialog //master class
     {
         DialogBox dialogBox;
         public void MakeBox(string text, SpriteFont dialogFont, GraphicsDevice graphicsDevice, OrthographicCamera _camera)
@@ -31,7 +31,7 @@ namespace Game_Demo
             dialogBox.Draw(spriteBatch);
         }
     }
-    public class DialogBox
+    public class DialogBox //handles dialog box
     {
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Game_Demo
         }
     }
 
-    public class DialogText
+    public class DialogText //handles dialog text for the box
     {
         public static string Demo = "Hello World! Press Enter to proceed.\n" +
                       "I will be on the next pane! " +

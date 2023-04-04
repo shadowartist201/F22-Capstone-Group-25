@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 using System.IO;
 
 namespace Game_Demo

@@ -53,12 +53,12 @@ namespace Game_Demo
             spdef = e.spdef;
         }
     }
-    public class EntityTest
+    public class EntityTest //for NPCs
     {
         public Texture2D sprite;
         public Vector2 position;
-        public bool isShopKeep;
-        public bool isStory;
+        public bool isShopKeep; //is NPC a shopkeep (potions/equipment)
+        public bool isStory; //is NPC in a story event
         private Dialog dialog = new();
 
         public EntityTest()
