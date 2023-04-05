@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="48" tileheight="48" infinite="0" nextlayerid="5" nextobjectid="2">
+ <tileset firstgid="1" source="../Tilesets/Inside_A2.tsx"/>
+ <tileset firstgid="193" source="../Tilesets/Inside_A4.tsx"/>
+ <tileset firstgid="433" source="../Tilesets/Inside_A5.tsx"/>
+ <tileset firstgid="561" source="../Tilesets/Door.tsx"/>
+ <tileset firstgid="657" source="../Tilesets/Inside_B.tsx"/>
+ <layer id="1" name="Background" width="10" height="10">
+  <data encoding="csv">
+321,321,321,321,321,321,321,321,321,322,
+337,337,337,337,337,337,337,337,337,338,
+33,34,33,34,33,34,33,34,33,34,
+1,2,1,2,1,2,1,2,1,2,
+17,18,17,18,17,18,17,18,17,18,
+33,34,33,34,33,34,33,34,33,34,
+1,2,1,2,1,2,1,2,1,2,
+17,18,17,18,17,18,17,18,17,18,
+33,34,33,34,33,34,33,34,33,34,
+1,2,1,2,1,2,1,2,1,2
+</data>
+ </layer>
+ <layer id="2" name="Collision" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,791,792,0,0,0,790,791,792,
+0,0,807,808,0,0,0,806,807,808,
+0,0,0,0,0,0,0,0,0,0,
+769,770,769,770,769,770,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+769,770,769,770,769,770,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+433,433,433,433,433,433,0,0,433,433,
+433,433,433,433,433,433,591,596,433,433
+</data>
+ </layer>
+ <layer id="3" name="Foreground" width="10" height="10">
+  <data encoding="csv">
+900,689,0,794,730,689,729,795,793,795,
+0,705,0,0,746,705,745,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="4" name="Transitions">
+  <object id="1" name="ToMiddleVillage" x="288" y="384" width="96" height="48"/>
+ </objectgroup>
+</map>

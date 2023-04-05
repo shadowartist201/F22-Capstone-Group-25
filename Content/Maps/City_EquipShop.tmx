@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="48" tileheight="48" infinite="0" nextlayerid="5" nextobjectid="10">
+ <tileset firstgid="1" source="../Tilesets/Inside_C.tsx"/>
+ <tileset firstgid="257" source="../Tilesets/Inside_A2.tsx"/>
+ <tileset firstgid="449" source="../Tilesets/Inside_B.tsx"/>
+ <tileset firstgid="705" source="../Tilesets/Door.tsx"/>
+ <tileset firstgid="801" source="../Tilesets/Inside_A4.tsx"/>
+ <layer id="1" name="Background" width="10" height="10">
+  <data encoding="csv">
+307,308,307,308,307,308,307,308,307,308,
+323,324,323,324,323,324,323,324,323,324,
+339,340,339,340,339,340,339,340,339,340,
+307,308,307,308,307,308,307,308,307,308,
+323,324,323,324,323,324,323,324,323,324,
+339,340,339,340,339,340,339,340,339,340,
+307,308,307,308,307,308,307,308,307,308,
+323,324,323,324,323,324,323,324,323,324,
+339,340,339,340,339,340,339,340,339,340,
+307,308,307,308,307,308,307,308,307,308
+</data>
+ </layer>
+ <layer id="2" name="Collision" width="10" height="10">
+  <data encoding="csv">
+929,929,930,930,930,930,930,930,930,930,
+577,549,946,946,579,580,946,946,583,584,
+593,565,0,0,595,596,0,0,599,600,
+0,0,0,0,0,0,0,0,0,0,
+561,562,561,562,0,0,561,562,561,562,
+0,0,0,0,0,0,0,0,0,0,
+561,562,561,562,0,0,561,562,561,562,
+0,0,0,0,0,0,0,0,0,0,
+442,442,442,442,0,0,442,442,442,442,
+442,442,442,442,735,740,442,442,442,442
+</data>
+ </layer>
+ <layer id="4" name="Foreground" width="10" height="10">
+  <data encoding="csv">
+525,526,516,586,587,585,521,516,527,528,
+0,0,532,0,0,0,537,532,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="3" name="Transtition">
+  <object id="5" x="358.667" y="972.667"/>
+  <object id="7" name="ToCity" x="192" y="384" width="96" height="48"/>
+ </objectgroup>
+</map>
