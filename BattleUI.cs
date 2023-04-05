@@ -137,7 +137,10 @@ namespace Game_Demo
                             }
                             else if (output == "enter")
                             {
-                                attack_message = true;  //enable attack message
+                                if (selection_index == 1)
+                                    attack_message = true;  //enable attack message
+                                if (selection_index == 2)
+                                    magic_message = true;
                                 menu_alpha = 0;    //hide action menu
                                 message_alpha = 1;   //show message box
                                 Battle.alratk = false;
@@ -152,35 +155,16 @@ namespace Game_Demo
                             }
                             else if (selection_index == 2) //magic
                             {
-                                if (current_character == 1)
+                                if (current_character == 0)
                                 {
                                     Battle.selection = true;
-                                    string output2 = Input.SinglePress();
-                                    if (output2 == "backspace")  //check for backspace
-                                    {
-                                        Battle.selection = false;
-                                    }
-                                    else if (output2 == "up")  //check for up
-                                    {
-                                        if (Battle.target != 0)  //move selection box up (and stop at 1 so we don't go out of bounds)
-                                            Battle.target--;
-                                    }
-                                    else if (output2 == "down")  //check for down
-                                    {
-                                        if (Battle.target != Game1.enemies.Count - 1)  //move selection box down (and stop at 4 so we don't go out of bounds)
-                                            Battle.target++;
-                                    }
-                                    else if (output2 == "enter")
-                                    {
-                                        magic_message = true;  //enable magic message
-                                        Battle.selection = false;
-                                    }
                                 }
                                 else
+                                {
                                     cat_magic_message = true;
-                                menu_alpha = 0;    //hide action menu
-                                message_alpha = 1;  //show message box
-                                Battle.alratk = false;
+                                    menu_alpha = 0;
+                                    message_alpha = 1;
+                                }
                             }
                             else if (selection_index == 3) //item
                             {
@@ -256,7 +240,7 @@ namespace Game_Demo
                 }
                 if (magic_message) //when magic message activated, draw it
                 {
-                    if (Game1.squad[current_character - 1].mana > 0)
+                    if (Game1.squad[current_character].mana > 0)
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                     else
                         _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
@@ -362,7 +346,7 @@ namespace Game_Demo
                 }
                 if (magic_message) //when magic message activated, draw it
                 {
-                    if (Game1.squad[current_character - 1].mana > 0)
+                    if (Game1.squad[current_character].mana > 0)
                         _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
                     else
                         _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
