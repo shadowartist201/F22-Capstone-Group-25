@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Graphics;
 using System.Diagnostics;
 using System;
 
@@ -9,11 +8,11 @@ namespace Game_Demo
     internal class Collision
     {
         public static Color color;
-        public static Rectangle hitbox;
-        public static Rectangle entitybox;
+        public static Rectangle hitbox; //for the player
+        public static Rectangle entitybox; //for the entity we collide with
         private static TiledMapTile previous_tile = new();
 
-        private static bool OutOfBounds(Rectangle hitbox)
+        private static bool OutOfBounds(Rectangle hitbox) //check if player is out of bounds
         {
             if (hitbox.Left < 0 || hitbox.Top < 0 || hitbox.Right > Tiled._tiledMap.WidthInPixels-1 || hitbox.Bottom > Tiled._tiledMap.HeightInPixels-1) 
             {
@@ -25,7 +24,7 @@ namespace Game_Demo
             }
         }
 
-        public static Color CollisionCheck()
+        public static Color CollisionCheck() //player collision with tiles
         {
             hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
 
@@ -64,7 +63,7 @@ namespace Game_Demo
             }
         }
 
-        public static Color CollisionCheck_Entity(EntityTest entity)
+        public static Color CollisionCheck_Entity(EntityTest entity) //player collision with entity
         {
             hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
             entitybox = new((int)entity.position.X, (int)entity.position.Y, 48, 48);
@@ -89,7 +88,7 @@ namespace Game_Demo
             }
         }
 
-        public static void RandomBattle()
+        public static void RandomBattle() //random encounter check
         {
             hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
             int num = 0;

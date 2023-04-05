@@ -36,7 +36,7 @@ namespace Game_Demo
 
         ///TO DO: maybe a small hp/mana bar for each enemy on the field?
 
-        public static void LoadUI(ContentManager Content)
+        public static void LoadUI(ContentManager Content) //load assets
         {
             hp_bar = Content.Load<Texture2D>("Battle/hp-bar");
             bar_fill = Content.Load<Texture2D>("Battle/bar-fill");
@@ -279,7 +279,7 @@ namespace Game_Demo
                     _spriteBatch.Draw(bar_fill, new Rectangle(706, 383, 72, 11), Color.DarkGray); //"MP bar disabled" fill
                 }
             }
-        }
+        } //draw UI boxes
 
         public static void DrawText(SpriteBatch _spriteBatch)
         {
@@ -373,7 +373,7 @@ namespace Game_Demo
                 _spriteBatch.DrawString(Game1.medium_font, "Debug HP: " + e.health + " / " + e.mHealth, new Vector2(325, 217 + (j * 19)), Color.Cyan); //debug enemy HP
                 j += 1;
             }
-        }
+        } //draw text for boxes
 
         public static void advanceTurn()
         {

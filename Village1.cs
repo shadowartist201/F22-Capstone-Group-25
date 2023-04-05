@@ -32,13 +32,13 @@ namespace Game_Demo
             Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set starting position
 
-            NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1");
+            NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1"); //load sprite img
             NPC2.sprite = Content.Load<Texture2D>("World/Village1_NPC2");
 
             /*
-            var spriteSheet = Content.Load<SpriteSheet>("player.sf", new JsonContentLoader());
+            var spriteSheet = Content.Load<SpriteSheet>("player.sf", new JsonContentLoader()); //load sprite anim info
             var sprite = new MonoGame.Extended.Sprites.AnimatedSprite(spriteSheet);
-            sprite.Play("idle");
+            sprite.Play("idle"); //play idle animation
             _playerSprite = sprite;
             */
 
@@ -51,29 +51,29 @@ namespace Game_Demo
             Tiled.currentPosition = _camera.Center;
             Transition.TransitionCheck();
 
-            if (Collision.CollisionCheck_Entity(NPC1) == Color.Blue && talkToNPC1 == false)
+            if (Collision.CollisionCheck_Entity(NPC1) == Color.Blue && talkToNPC1 == false) //if near NPC1 and not spoken to
                 if (Input.SinglePress() == "enter")
                 {
-                    talkToNPC1 = true;
-                    NPC1.MakeDialogBox(DialogText.Village1_NPC1, GraphicsDevice);
+                    talkToNPC1 = true; //set flag to true
+                    NPC1.MakeDialogBox(DialogText.Village1_NPC1, GraphicsDevice); //make box
                 }
-            if (talkToNPC1)
-                if (NPC1.DialogUpdate() == "hidden")
-                    talkToNPC1 = false;
+            if (talkToNPC1) //if flag is true
+                if (NPC1.DialogUpdate() == "hidden") //when box is closed
+                    talkToNPC1 = false; //clear flag
                 else
-                    NPC1.DialogUpdate();
+                    NPC1.DialogUpdate(); //update box
 
-            if (Collision.CollisionCheck_Entity(NPC2) == Color.Blue && talkToNPC2 == false)
+            if (Collision.CollisionCheck_Entity(NPC2) == Color.Blue && talkToNPC2 == false) //if near NPC2 and not spoken to
                 if (Input.SinglePress() == "enter")
                 {
-                    talkToNPC2 = true;
-                    NPC2.MakeDialogBox(DialogText.Village1_NPC2, GraphicsDevice);
+                    talkToNPC2 = true; //set flag to true
+                    NPC2.MakeDialogBox(DialogText.Village1_NPC2, GraphicsDevice); //make box
                 }
-            if (talkToNPC2)
-                if (NPC2.DialogUpdate() == "hidden")
-                    talkToNPC2 = false;
+            if (talkToNPC2) //if flag is true
+                if (NPC2.DialogUpdate() == "hidden") //when box is closed
+                    talkToNPC2 = false; //clear flag
                 else
-                    NPC2.DialogUpdate();
+                    NPC2.DialogUpdate(); //update box
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
                 return;
@@ -84,17 +84,17 @@ namespace Game_Demo
 
             /*
             if (Input.Hold() == "down")
-                _playerSprite.Play("walk_down");
+                _playerSprite.Play("walk_down"); //walk down animation
             if (Input.Hold() == "up")
-                _playerSprite.Play("walk_up");
+                _playerSprite.Play("walk_up"); //walk up animation
             if (Input.Hold() == "left")
-                _playerSprite.Play("walk_left");
+                _playerSprite.Play("walk_left"); //walk left animation
             if (Input.Hold() == "right")
-                _playerSprite.Play("walk_right");
+                _playerSprite.Play("walk_right"); //walk right animation
             _playerSprite.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             */
 
-            if (!talkToNPC1 && !talkToNPC2)
+            if (!talkToNPC1 && !talkToNPC2) //if not speaking to an NPC, player can move
             {
                 Vector2 movementDirection = World.Movement(); //get movement direction
                 _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
@@ -115,7 +115,7 @@ namespace Game_Demo
             //_spriteBatch.Draw(_playerSprite, Tiled.currentPosition);
 
             _spriteBatch.End();
-            //-----------------------------
+            //-------------------- //Must be a different spriteBatch for box to appear correctly
             _spriteBatch.Begin();
 
             if (talkToNPC1)
