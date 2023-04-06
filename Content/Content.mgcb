@@ -233,10 +233,50 @@
 /processor:TiledMapProcessor
 /build:Maps/city.tmx
 
+#begin Maps/City_Castle.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/City_Castle.tmx
+
 #begin Maps/forest.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:Maps/forest.tmx
+
+#begin Maps/City_EquipShop.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/City_EquipShop.tmx
+
+#begin Maps/City_PotionShop.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/City_PotionShop.tmx
+
+#begin Maps/City_Bar.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/City_Bar.tmx
+
+#begin Maps/City_Bar_Inn.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/City_Bar_Inn.tmx
+
+#begin Maps/Village2_PotionsShop.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/Village2_PotionsShop.tmx
+
+#begin Maps/Village2_EquipShop.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/Village2_EquipShop.tmx
+
+#begin Maps/MountianEntrance.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/MountianEntrance.tmx
 
 #begin Maps/forestpath1.tmx
 /importer:TiledMapImporter
