@@ -21,8 +21,6 @@ namespace Game_Demo
         private bool talkToNPC1 = false;
         private bool talkToNPC2 = false;
 
-        private MonoGame.Extended.Sprites.AnimatedSprite _playerSprite;
-
         public override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -35,12 +33,7 @@ namespace Game_Demo
             NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1"); //load sprite img
             NPC2.sprite = Content.Load<Texture2D>("World/Village1_NPC2");
 
-            /*
-            var spriteSheet = Content.Load<SpriteSheet>("player.sf", new JsonContentLoader()); //load sprite anim info
-            var sprite = new MonoGame.Extended.Sprites.AnimatedSprite(spriteSheet);
-            sprite.Play("idle"); //play idle animation
-            _playerSprite = sprite;
-            */
+            World.LoadAnim(Content);
 
             base.LoadContent();
         }
@@ -82,17 +75,9 @@ namespace Game_Demo
             if (Collision.CollisionCheck_Entity(NPC2) == Color.Green)
                 return;
 
-            /*
-            if (Input.Hold() == "down")
-                _playerSprite.Play("walk_down"); //walk down animation
-            if (Input.Hold() == "up")
-                _playerSprite.Play("walk_up"); //walk up animation
-            if (Input.Hold() == "left")
-                _playerSprite.Play("walk_left"); //walk left animation
-            if (Input.Hold() == "right")
-                _playerSprite.Play("walk_right"); //walk right animation
-            _playerSprite.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            */
+
+            World.UpdateAnim(gameTime);
+            
 
             if (!talkToNPC1 && !talkToNPC2) //if not speaking to an NPC, player can move
             {
@@ -108,11 +93,11 @@ namespace Game_Demo
 
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
-            _spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+            //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC1.sprite, new Rectangle((int)NPC1.position.X, (int)NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC2.sprite, new Rectangle((int)NPC2.position.X, (int)NPC2.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
 
-            //_spriteBatch.Draw(_playerSprite, Tiled.currentPosition);
+            World.DrawAnim(_spriteBatch);
 
             _spriteBatch.End();
             //-------------------- //Must be a different spriteBatch for box to appear correctly

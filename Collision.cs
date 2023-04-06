@@ -26,7 +26,7 @@ namespace Game_Demo
 
         public static Color CollisionCheck() //player collision with tiles
         {
-            hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
+            hitbox = new((int)Tiled.currentPosition.X-24, (int)Tiled.currentPosition.Y-24, 48, 48);
 
             TiledMapTile top_tile = new();
             TiledMapTile bottom_tile = new();
@@ -65,7 +65,7 @@ namespace Game_Demo
 
         public static Color CollisionCheck_Entity(EntityTest entity) //player collision with entity
         {
-            hitbox = new((int)Tiled.currentPosition.X, (int)Tiled.currentPosition.Y, 48, 48);
+            hitbox = new((int)Tiled.currentPosition.X-24, (int)Tiled.currentPosition.Y-24, 48, 48);
             entitybox = new((int)entity.position.X, (int)entity.position.Y, 48, 48);
 
             if (hitbox.Intersects(entitybox))

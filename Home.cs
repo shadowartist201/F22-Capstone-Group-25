@@ -34,6 +34,8 @@ namespace Game_Demo
 
             _dialog.MakeBox(DialogText.Demo, Game1.DialogFont, GraphicsDevice, new OrthographicCamera(GraphicsDevice));
 
+            World.LoadAnim(Content);
+
             /* 
              * soundEffect = Content.Load<SoundEffect>("thunk");
              * instance = soundEffect.CreateInstance();
@@ -60,6 +62,8 @@ namespace Game_Demo
 
             _dialog.Update();
 
+            World.UpdateAnim(gameTime);
+
             /*
              * if (player_rec.Location.X > 720)
              * {
@@ -80,7 +84,8 @@ namespace Game_Demo
 
             var transformMatrix = _camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
-            _spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+            //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+            World.DrawAnim(_spriteBatch);
             _spriteBatch.End();
 
             _spriteBatch.Begin();
