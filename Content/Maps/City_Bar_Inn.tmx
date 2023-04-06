@@ -63,7 +63,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="Transition">
+ <objectgroup id="4" name="Transitions">
   <object id="1" name="ToCity_Bar" x="384" y="192" width="96" height="48"/>
  </objectgroup>
 </map>

@@ -47,7 +47,7 @@
 0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="Transtition">
+ <objectgroup id="3" name="Transitions">
   <object id="5" x="358.667" y="972.667"/>
   <object id="7" name="ToCity" x="192" y="384" width="96" height="48"/>
  </objectgroup>
