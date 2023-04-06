@@ -137,6 +137,6 @@
   <object id="3" x="2507.33" y="696.667" width="18" height="8"/>
   <object id="7" x="768" y="1344" width="48" height="48"/>
   <object id="9" name="ToVillage2_PotionsShop" x="768" y="1344" width="48" height="48"/>
-  <object id="8" name="To_Village2_EquipShop" x="336" y="1344" width="48" height="48"/>
+  <object id="8" name="ToVillage2_EquipShop" x="336" y="1344" width="48" height="48"/>
  </objectgroup>
 </map>
