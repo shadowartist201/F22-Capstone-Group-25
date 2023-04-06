@@ -20,7 +20,8 @@ namespace Game_Demo
 
         public static ScreenManager _screenManager = new();
 
-        public static bool SwitchBattle, SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage;
+        public static bool SwitchBattle, SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage, 
+            SwitchCityCastle, SwitchCity_Bar_Inn, SwitchCity_Bar, SwitchCity_PotionShop, SwitchCity_EquipShop, SwitchMountianEntrance, SwitchVillage2_EquipShop, SwitchVillage2_PotionsShop;
 
         public Game1()
         {
@@ -61,6 +62,30 @@ namespace Game_Demo
                     break;
                 case 7:
                     LoadMiddleVillage();
+                    break;
+                case 8:
+                    LoadCityCastle();
+                    break;
+                case 9:
+                    LoadCity_EquipShop();
+                    break;
+                case 10:
+                    LoadCity_PotionShop();
+                    break;
+                case 11:
+                    LoadCity_Bar();
+                    break;
+                case 12:
+                    LoadCity_Bar_Inn();
+                    break;
+                case 13:
+                    LoadMountianEntrance();
+                    break;
+                case 14:
+                    LoadVillage2_EquipShop();
+                    break;
+                case 15:
+                    LoadVillage2_PotionsShop();
                     break;
             }
         }
@@ -124,6 +149,46 @@ namespace Game_Demo
                 SwitchMiddleVillage = false;
                 LoadMiddleVillage();
             }
+            else if (state.IsKeyDown(Keys.T) || SwitchCityCastle)
+            {
+                SwitchCityCastle = false;
+                LoadCityCastle();
+            }
+            else if (state.IsKeyDown(Keys.P) || SwitchCity_Bar)
+            {
+                SwitchCity_Bar = false;
+                LoadCity_Bar();
+            }
+            else if (state.IsKeyDown(Keys.O) || SwitchCity_Bar_Inn)
+            {
+                SwitchCity_Bar_Inn = false;
+                LoadCity_Bar_Inn();
+            }
+            else if (state.IsKeyDown(Keys.L) || SwitchCity_EquipShop)
+            {
+                SwitchCity_EquipShop = false;
+                LoadCity_EquipShop();
+            }
+            else if (state.IsKeyDown(Keys.K) || SwitchCity_PotionShop)
+            {
+                SwitchCity_PotionShop = false;
+                LoadCity_PotionShop();
+            }
+            else if (state.IsKeyDown(Keys.H) || SwitchMountianEntrance)
+            {
+                SwitchMountianEntrance = false;
+                LoadMountianEntrance();
+            }
+            else if (state.IsKeyDown(Keys.Y) || SwitchVillage2_EquipShop)
+            {
+                SwitchVillage2_EquipShop = false;
+                LoadVillage2_EquipShop();
+            }
+            else if (state.IsKeyDown(Keys.V) || SwitchVillage2_PotionsShop)
+            {
+                SwitchVillage2_PotionsShop = false;
+                LoadVillage2_PotionsShop();
+            }
             else if (Tiled.BattleReturn)
             {
                 BattleReturn();
@@ -178,6 +243,54 @@ namespace Game_Demo
         {
             Tiled.map = 7;
             _screenManager.LoadScreen(new MiddleVillage(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadCityCastle()
+        {
+            Tiled.map = 8;
+            _screenManager.LoadScreen(new CityCastle(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+        
+        public void LoadCity_EquipShop()
+        {
+            Tiled.map = 9;
+            _screenManager.LoadScreen(new City_EquipShop(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadCity_PotionShop()
+        {
+            Tiled.map = 10;
+            _screenManager.LoadScreen(new City_PotionShop(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadCity_Bar()
+        {
+            Tiled.map = 11;
+            _screenManager.LoadScreen(new City_Bar(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadCity_Bar_Inn()
+        {
+            Tiled.map = 12;
+            _screenManager.LoadScreen(new City_Bar_Inn(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadMountianEntrance()
+        {
+            Tiled.map = 13;
+            _screenManager.LoadScreen(new MountianEntrance(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadVillage2_EquipShop()
+        {
+            Tiled.map = 14;
+            _screenManager.LoadScreen(new Village2_EquipShop(this), new FadeTransition(GraphicsDevice, Color.Black));
+        }
+
+        public void LoadVillage2_PotionsShop()
+        {
+            Tiled.map = 15;
+            _screenManager.LoadScreen(new Village2_PotionsShop(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
     }
 }

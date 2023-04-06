@@ -122,6 +122,102 @@ namespace Game_Demo
                         startingPosition = new Vector2(96, 864);
                     break;
 
+                case "City_Castle":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(960, 1056);
+                    break;
+
+                case "City_EquipShop":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(336, 336);
+                    break;
+
+                case "City_PotionShop":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(336, 336);
+                    break;
+
+                case "City_Bar":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(114, 576);
+                    break;
+
+                case "City_Bar_Inn":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(336, 144);
+                    break;
+
+                case "MountianEntrance":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(96, 1680);
+                    break;
+
+                case "Village2_EquipShop":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(336, 336);
+                    break;
+
+                case "Village2_PotionsShop":
+                    if (Transition.Position != Vector2.Zero)
+                        startingPosition = Transition.Position;
+                    else if (BattleReturn)
+                    {
+                        startingPosition = currentPosition;
+                        BattleReturn = false;
+                    }
+                    else
+                        startingPosition = new Vector2(336, 336);
+                    break;
+
                 default:
                     break;
             }

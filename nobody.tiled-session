@@ -92,6 +92,14 @@
                 "x": 1032,
                 "y": 1031
             }
+        }, 
+		"Content/Maps/City_Castle.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 960,
+                "y": 720
+            }
         },
         "Content/Maps/forest.tmx": {
             "scale": 1,
@@ -99,6 +107,62 @@
             "viewCenter": {
                 "x": 441.5,
                 "y": 225.5
+            }
+        },
+        "Content/Maps/City_EquipShop.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 240
+            }
+        },
+        "Content/Maps/City_PotionShop.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 240
+            }
+        },
+        "Content/Maps/City_Bar.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 372
+            }
+        },
+        "Content/Maps/City_Bar_Inn.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 372
+            }
+        },
+        "Content/Maps/Village2_PotionsShop.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 240
+            }
+        },
+        "Content/Maps/Village2_EquipShop.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 240
+            }
+        },
+        "Content/Maps/MountianEntrance.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 480,
+                "y": 960
             }
         },
         "Content/Maps/forest1.tmx": {
@@ -244,6 +308,14 @@
         "Content/Maps/forestpath2.tmx",
         "Content/Maps/forestpath1.tmx",
         "Content/Maps/city.tmx",
+        "Content/Maps/City_Castle.tmx",
+        "Content/Maps/City_Bar.tmx",
+        "Content/Maps/City_Bar_Inn.tmx",
+        "Content/Maps/City_EquipShop.tmx",
+        "Content/Maps/City_PotionShop.tmx",
+        "Content/Maps/Village2_EquipShop.tmx",
+        "Content/Maps/Village2_PotionsShop.tmx",
+        "Content/Maps/MountianEntrance.tmx",
         "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/forest.tmx",
         "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/city.tmx"
     ]
