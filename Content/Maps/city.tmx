@@ -110,7 +110,7 @@
   <object id="3" name="ToCity_Castle" x="576" y="336" width="144" height="48"/>
   <object id="4" name="ToCity_EquipShop" x="1488" y="240" width="48" height="48"/>
   <object id="5" name="ToCity_PotionShop" x="1392" y="1776" width="48" height="48"/>
-  <object id="6" name="ToCity_bar" x="1776" y="1344" width="96" height="48"/>
+  <object id="6" name="ToCity_Bar" x="1776" y="1344" width="96" height="48"/>
  </objectgroup>
  <layer id="2" name="Collision" width="43" height="43">
   <data encoding="csv">
