@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
+using DavyKager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -258,6 +260,8 @@ namespace Game_Demo
                     {
                         _currentPage++;
                         _stopwatch.Restart();
+                        Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
+                        Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
                     }
                 }
 

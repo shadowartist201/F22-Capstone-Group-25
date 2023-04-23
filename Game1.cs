@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DavyKager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -20,6 +21,8 @@ namespace Game_Demo
 
         public static ScreenManager _screenManager = new();
 
+        
+
         public static bool SwitchBattle, SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage, 
             SwitchCityCastle, SwitchCity_Bar_Inn, SwitchCity_Bar, SwitchCity_PotionShop, SwitchCity_EquipShop, SwitchMountianEntrance, SwitchVillage2_EquipShop, SwitchVillage2_PotionsShop;
 
@@ -30,6 +33,8 @@ namespace Game_Demo
             IsMouseVisible = true;
             _screenManager = new ScreenManager();
             Components.Add(_screenManager);
+            Tolk.Load();
+            Tolk.TrySAPI(true);
         }
 
         public void LoadBattle()
