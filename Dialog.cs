@@ -225,6 +225,9 @@ namespace Game_Demo
             _stopwatch.Start();
 
             _pages = WordWrap(Text);
+
+            Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
+            Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
         }
 
         /// <summary>
