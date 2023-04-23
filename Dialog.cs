@@ -240,6 +240,8 @@ namespace Game_Demo
             _stopwatch.Stop();
 
             _stopwatch = null;
+
+            Tolk.Silence();
         }
 
         /// <summary>
