@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DavyKager;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -59,6 +60,7 @@ namespace Game_Demo
             {
                 if (Input.SinglePress() == "enter")  //check for enter
                 {
+                    World.box_ok.Play();
                     flee_message = false;  //disable flee message
                     message_alpha = 0;    //hide message box
                 }
@@ -67,6 +69,7 @@ namespace Game_Demo
             {
                 if (Input.SinglePress() == "enter")  //check for enter
                 {
+                    World.box_ok.Play();
                     attack_message = false;   //disable message
                     message_alpha = 0;        //hide box
                     advanceTurn();
@@ -76,6 +79,7 @@ namespace Game_Demo
             {
                 if (Input.SinglePress() == "enter")  //check for enter
                 {
+                    World.box_ok.Play();
                     magic_message = false;  //disable message
                     message_alpha = 0;      //hide box
                     if (Game1.squad[current_character].mana > 0) //if have mana, edgecase:on emptying mana bar, take second turn
@@ -88,6 +92,7 @@ namespace Game_Demo
             {
                 if (Input.SinglePress() == "enter")  //check for enter
                 {
+                    World.box_ok.Play();
                     cat_magic_message = false;  //disable message
                     message_alpha = 0;   //hide box
                 }
@@ -100,21 +105,29 @@ namespace Game_Demo
                     string output = Input.SinglePress();
                     if (output == "backspace")  //check for backspace
                     {
+                        World.box_ok.Play();
                         if (inventory_alpha == 1)  //if inventory menu activated, hide it
                             inventory_alpha = 0;
                     }
                     else if (output == "up")  //check for up
                     {
-                        if (selection_index != 1)  //move selection box up (and stop at 1 so we don't go out of bounds)
+                        if (selection_index != 1)
+                        {//move selection box up (and stop at 1 so we don't go out of bounds)
                             selection_index--;
+                            World.box_navi.Play();
+                        }
                     }
                     else if (output == "down")  //check for down
                     {
-                        if (selection_index != 4)  //move selection box down (and stop at 4 so we don't go out of bounds)
+                        if (selection_index != 4)
+                        {//move selection box down (and stop at 4 so we don't go out of bounds)
                             selection_index++;
+                            World.box_navi.Play();
+                        }
                     }
                     else if (output == "enter")  //check for enter
                     {
+                        World.box_ok.Play();
                         if (inventory_alpha == 1) //if inventory showing
                         {
                             //nothing right now
@@ -138,13 +151,13 @@ namespace Game_Demo
                             else if (output == "enter")
                             {
                                 if (selection_index == 1)*/
-                                    attack_message = true;  //enable attack message
-                                /*if (selection_index == 2)
-                                    magic_message = true;*/
-                                menu_alpha = 0;    //hide action menu
-                                message_alpha = 1;   //show message box
-                                Battle.alratk = false;
-                                Battle.selection = false;
+                            attack_message = true;  //enable attack message
+                            /*if (selection_index == 2)
+                                magic_message = true;*/
+                            menu_alpha = 0;    //hide action menu
+                            message_alpha = 1;   //show message box
+                            Battle.alratk = false;
+                            Battle.selection = false;
                             //}
                         }
                         else
@@ -367,10 +380,12 @@ namespace Game_Demo
                 }
                 if (magic_message) //when magic message activated, draw it
                 {
-                    if (Game1.squad[current_character].mana > 0)
+                    if (Game1.squad[current_character].mana > 0) {
                         _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
-                    else
-                        _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
+                    }
+                    else {
+                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
+                    }
                 }
                 if (cat_magic_message) //when cat message message activated, draw it
                 {
@@ -382,9 +397,9 @@ namespace Game_Demo
             {
                 Entity e = Game1.squad[placediff / 19];
 
-                _spriteBatch.DrawString(Game1.small_font, e.health + " / " + e.mHealth, new Vector2(618, 364 + placediff), Color.White); //HP labels
+                _spriteBatch.DrawString(Game1.small_font, e.health + " / " + e.mHealth, new Vector2(618, 364 + placediff), Color.Black); //HP labels
                 if (e.mMana != 0) //if MP not 0
-                    _spriteBatch.DrawString(Game1.small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.White); //MP labels
+                    _spriteBatch.DrawString(Game1.small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black); //MP labels
                 else
                     _spriteBatch.DrawString(Game1.small_font, "XX", new Vector2(758, 383), Color.Black); //MP disabled
             }
