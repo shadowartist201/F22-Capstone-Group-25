@@ -27,14 +27,24 @@ namespace Game_Demo
 
         public static Vector2 Movement() //convert keyboard input to Vector2 for camera move
         {
-            return Input.Hold() switch
+            string result = Input.Hold();
+            if (result != "up" && result != "down" && result != "left" && result != "right")
             {
-                "up" => new Vector2(0, -1),
-                "down" => new Vector2(0, 1),
-                "left" => new Vector2(-1, 0),
-                "right" => new Vector2(1, 0),
-                _ => new Vector2(0, 0),
-            };
+                instance.Stop();
+                return new Vector2(0, 0);
+            }
+            else
+            {
+                instance.Play();
+                return result switch
+                {
+                    "up" => new Vector2(0, -1),
+                    "down" => new Vector2(0, 1),
+                    "left" => new Vector2(-1, 0),
+                    "right" => new Vector2(1, 0),
+                    _ => new Vector2(0, 0),
+                };
+            }
         }
         
         public static void LoadAnim(ContentManager Content)

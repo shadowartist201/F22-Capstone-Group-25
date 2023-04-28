@@ -122,6 +122,7 @@ namespace Game_Demo
             if (state.IsKeyDown(Keys.A) || SwitchBattle)
             {
                 SwitchBattle = false;
+                Tolk.Silence();
                 LoadBattle();
             }
             else if (state.IsKeyDown(Keys.S) || SwitchHome)
@@ -202,6 +203,10 @@ namespace Game_Demo
             else if (Tiled.BattleReturn)
             {
                 BattleReturn();
+            }
+            else if (state.IsKeyDown(Keys.Tab))
+            {
+                _graphics.ToggleFullScreen();
             }
 
             base.Update(gameTime);

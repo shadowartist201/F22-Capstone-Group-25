@@ -119,9 +119,9 @@ namespace Game_Demo
                         {
                             //nothing right now
                         }
-                        else if(Battle.selection)
+                        else if (Battle.selection)
                         {
-                            if (output == "backspace")  //check for backspace
+                            /*if (output == "backspace")  //check for backspace
                             {
                                 Battle.selection = false;
                             }
@@ -137,27 +137,37 @@ namespace Game_Demo
                             }
                             else if (output == "enter")
                             {
-                                if (selection_index == 1)
+                                if (selection_index == 1)*/
                                     attack_message = true;  //enable attack message
-                                if (selection_index == 2)
-                                    magic_message = true;
+                                /*if (selection_index == 2)
+                                    magic_message = true;*/
                                 menu_alpha = 0;    //hide action menu
                                 message_alpha = 1;   //show message box
                                 Battle.alratk = false;
                                 Battle.selection = false;
-                            }
+                            //}
                         }
                         else
                         {
                             if (selection_index == 1) //attack
                             {
-                                Battle.selection = true;
+                                //Battle.selection = true;
+                                attack_message = true;
+                                menu_alpha = 0;    //hide action menu
+                                message_alpha = 1;   //show message box
+                                Battle.alratk = false;
+                                Battle.selection = false;
                             }
                             else if (selection_index == 2) //magic
                             {
                                 if (current_character == 0)
                                 {
-                                    Battle.selection = true;
+                                    //Battle.selection = true;
+                                    magic_message = true;
+                                    menu_alpha = 0;    //hide action menu
+                                    message_alpha = 1;   //show message box
+                                    Battle.alratk = false;
+                                    Battle.selection = false;
                                 }
                                 else
                                 {
@@ -194,6 +204,15 @@ namespace Game_Demo
             graphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
             _spriteBatch.DrawString(Game1.large_font, "Congrat, you is winner", new Vector2(300, 226), Color.White);
+            _spriteBatch.DrawString(Game1.medium_font, "Press Enter to continue", new Vector2(300, 250), Color.White);
+            _spriteBatch.End();
+        }
+
+        public static void BattleEndBad(GraphicsDevice graphicsDevice, SpriteBatch _spriteBatch)
+        {
+            graphicsDevice.Clear(Color.Black);
+            _spriteBatch.Begin();
+            _spriteBatch.DrawString(Game1.large_font, "You were defeated in battle", new Vector2(300, 226), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Press Enter to continue", new Vector2(300, 250), Color.White);
             _spriteBatch.End();
         }
@@ -253,21 +272,21 @@ namespace Game_Demo
             }
             if (Battle.selection)
             {
-                _spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White);
+                /*_spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White);
                 int i = 0;
                 foreach (Entity e in Game1.enemies)
                 {
                     _spriteBatch.DrawString(Game1.medium_font, "*" + e.name, new Vector2(618, 364 + (i * 19)), Color.Black);
                     i++;
                 }
-                _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * Battle.target), 105, 29), Color.White);
+                _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * Battle.target), 105, 29), Color.White);*/
             }
-            for (int placediff = 0; placediff < Game1.squad.Count; placediff ++) //placement for HP and MP bars
+            for (int placediff = 0; placediff < Game1.squad.Count; placediff++) //placement for HP and MP bars
             {
                 Entity e = Game1.squad[placediff];
 
-                _spriteBatch.Draw(hp_bar, new Rectangle(609, 361 + placediff*19, 78, 17), Color.White); //empty HP bar
-                _spriteBatch.Draw(bar_fill, new Rectangle(612, 364 + placediff*19, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green); //HP bar fill
+                _spriteBatch.Draw(hp_bar, new Rectangle(609, 361 + placediff * 19, 78, 17), Color.White); //empty HP bar
+                _spriteBatch.Draw(bar_fill, new Rectangle(612, 364 + placediff * 19, ((int)((float)e.health / (float)e.mHealth * 72)), 11), Color.Green); //HP bar fill
                 if (e.mMana != 0) //if MP not 0
                 {
                     _spriteBatch.Draw(hp_bar, new Rectangle(703, 361, 78, 17), Color.White); //empty MP bar
@@ -284,10 +303,12 @@ namespace Game_Demo
         public static void DrawText(SpriteBatch _spriteBatch)
         {
             //debug text
+            /*
             _spriteBatch.DrawString(Game1.medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "X - End Battle", new Vector2(310, 132), Color.White);
+            */
 
             //labels
             _spriteBatch.DrawString(Game1.large_font, "Dragon", new Vector2(41, 361), Color.Black);
@@ -313,7 +334,7 @@ namespace Game_Demo
                 _spriteBatch.DrawString(Game1.small_font, "DETAILS", new Vector2(343, 314), Color.Black);
 
                 if (selection_index == 1) //change info text based on item
-                    _spriteBatch.DrawString(Game1.medium_font, "Example text potion", new Vector2(342, 335), Color.Black);
+                    _spriteBatch.DrawString(Game1.medium_font, "Does not work", new Vector2(342, 335), Color.Black);
                 else if (selection_index == 2)
                     _spriteBatch.DrawString(Game1.medium_font, "Blank 1", new Vector2(342, 335), Color.Black);
                 else if (selection_index == 3)
@@ -327,7 +348,7 @@ namespace Game_Demo
                 {
                     for (int i = 0; i < Game1.enemies.Count; i++)
                     {
-                        _spriteBatch.DrawString(Game1.medium_font, "*A(n) " + Game1.enemies[i].name + " appeared!", new Vector2(205, 361 + (21 * i)), Color.Black);
+                        _spriteBatch.DrawString(Game1.large_font, "*A(n) " + Game1.enemies[i].name + " appeared!", new Vector2(205, 361 + (21 * i)), Color.Black);
                     }
                     if (Input.SinglePress() == "enter")  //if enter pressed, hide message
                     {
@@ -361,16 +382,16 @@ namespace Game_Demo
             {
                 Entity e = Game1.squad[placediff / 19];
 
-                _spriteBatch.DrawString(Game1.small_font, e.health + " / " + e.mHealth, new Vector2(618, 364 + placediff), Color.Black); //HP labels
+                _spriteBatch.DrawString(Game1.small_font, e.health + " / " + e.mHealth, new Vector2(618, 364 + placediff), Color.White); //HP labels
                 if (e.mMana != 0) //if MP not 0
-                    _spriteBatch.DrawString(Game1.small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.Black); //MP labels
+                    _spriteBatch.DrawString(Game1.small_font, e.mana + " / " + e.mMana, new Vector2(732, 364), Color.White); //MP labels
                 else
                     _spriteBatch.DrawString(Game1.small_font, "XX", new Vector2(758, 383), Color.Black); //MP disabled
             }
             int j = 0;
             foreach (Entity e in Game1.enemies)
             {
-                _spriteBatch.DrawString(Game1.medium_font, "Debug HP: " + e.health + " / " + e.mHealth, new Vector2(325, 217 + (j * 19)), Color.Cyan); //debug enemy HP
+                //_spriteBatch.DrawString(Game1.medium_font, "Debug HP: " + e.health + " / " + e.mHealth, new Vector2(325, 217 + (j * 19)), Color.Cyan); //debug enemy HP
                 j += 1;
             }
         } //draw text for boxes
@@ -378,13 +399,13 @@ namespace Game_Demo
         public static void advanceTurn()
         {
             current_character += 1;
-            if (current_character > Game1.squad.Count-1 && squadTurn)
+            if (current_character > Game1.squad.Count - 1 && squadTurn)
             {
                 current_character = 0;
                 squadTurn = false;
                 Battle.target = 0;
             }
-            else if (current_character > Game1.enemies.Count-1 && !squadTurn)
+            else if (current_character > Game1.enemies.Count - 1 && !squadTurn)
             {
                 current_character = 0;
                 squadTurn = true;
@@ -399,7 +420,7 @@ namespace Game_Demo
             }
             else
             {
-                if (Game1.enemies[current_character].health<1)
+                if (Game1.enemies[current_character].health < 1)
                 {
                     advanceTurn();
                 }

@@ -43,11 +43,7 @@ namespace Game_Demo
             World.UpdateAnim(gameTime);
 
             Vector2 movementDirection = World.Movement(); //get movement direction
-            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
-            if (movementDirection == new Vector2(0, 0))
-                World.instance.Stop();
-            else
-                World.instance.Play();
+            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds());
         }
 
 		public override void Draw(GameTime gameTime)

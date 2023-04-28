@@ -4,7 +4,7 @@ namespace Game_Demo
 {
     public class Input
     {
-        public static bool up, down, left, right, enter, back, o, x; //flags for single press
+        public static bool up, down, left, right, enter, back, o, x, tab; //flags for single press
         public static string Hold() //constant press
         {
             KeyboardState state = Keyboard.GetState();
@@ -40,6 +40,10 @@ namespace Game_Demo
             if (state.IsKeyDown(Keys.X))
             {
                 return "x";
+            }
+            if (state.IsKeyDown(Keys.Tab))
+            {
+                return "tab";
             }
             else
             {
@@ -115,6 +119,14 @@ namespace Game_Demo
             }
             if (state.IsKeyUp(Keys.X) && x)
                 back = false;
+            //---------------------------------------
+            if (state.IsKeyDown(Keys.Tab) && !tab)
+            {
+                tab = true;
+                output = "tab";
+            }
+            if (state.IsKeyUp(Keys.Tab) && tab)
+                tab = false;
             //---------------------------------------
             return output;
         }
