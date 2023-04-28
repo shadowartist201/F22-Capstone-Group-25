@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using DavyKager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -22,7 +23,7 @@ namespace Game_Demo
 
         public static ScreenManager _screenManager = new();
 
-        
+        public static bool inBattle = false;
 
         public static bool SwitchBattle, SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage, 
             SwitchCityCastle, SwitchCity_Bar_Inn, SwitchCity_Bar, SwitchCity_PotionShop, SwitchCity_EquipShop, SwitchMountianEntrance, SwitchVillage2_EquipShop, SwitchVillage2_PotionsShop;
@@ -42,11 +43,13 @@ namespace Game_Demo
         public void LoadBattle()
         {
             //no map change!
+            inBattle = true;
             _screenManager.LoadScreen(new Battle(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
         public void BattleReturn()
         {
+            inBattle = false;
             switch (Tiled.map)
             {
                 case 1:
@@ -128,76 +131,91 @@ namespace Game_Demo
             }
             else if (state.IsKeyDown(Keys.S) || SwitchHome)
             {
+                inBattle = false;
                 SwitchHome = false;
                 LoadHome();
             }
             else if (state.IsKeyDown(Keys.D) || SwitchVillage)
             {
+                inBattle = false;
                 SwitchVillage = false;
                 LoadVillage1();
             }
             else if (state.IsKeyDown(Keys.F) || SwitchForest)
             {
+                inBattle = false;
                 SwitchForest = false;
                 LoadForest();
             }
             else if (state.IsKeyDown(Keys.G) || SwitchCity)
             {
+                inBattle = false;
                 SwitchCity = false;
                 LoadCity();
             }
             else if (state.IsKeyDown(Keys.M) || SwitchForestPath1)
             {
+                inBattle = false;
                 SwitchForestPath1 = false;
                 LoadForestPath1();
             }
             else if (state.IsKeyDown(Keys.N) || SwitchForestPath2)
             {
+                inBattle = false;
                 SwitchForestPath2 = false;
                 LoadForestPath2();
             }
             else if (state.IsKeyDown(Keys.B) || SwitchMiddleVillage)
             {
+                inBattle = false;
                 SwitchMiddleVillage = false;
                 LoadMiddleVillage();
             }
             else if (state.IsKeyDown(Keys.T) || SwitchCityCastle)
             {
+                inBattle = false;
                 SwitchCityCastle = false;
                 LoadCityCastle();
             }
             else if (state.IsKeyDown(Keys.P) || SwitchCity_Bar)
             {
+                inBattle = false;
                 SwitchCity_Bar = false;
                 LoadCity_Bar();
             }
             else if (state.IsKeyDown(Keys.O) || SwitchCity_Bar_Inn)
             {
+                inBattle = false;
                 SwitchCity_Bar_Inn = false;
                 LoadCity_Bar_Inn();
             }
             else if (state.IsKeyDown(Keys.L) || SwitchCity_EquipShop)
             {
+                inBattle = false;
                 SwitchCity_EquipShop = false;
                 LoadCity_EquipShop();
             }
             else if (state.IsKeyDown(Keys.K) || SwitchCity_PotionShop)
             {
+                inBattle = false;
                 SwitchCity_PotionShop = false;
                 LoadCity_PotionShop();
             }
             else if (state.IsKeyDown(Keys.H) || SwitchMountianEntrance)
             {
+                inBattle = false;
                 SwitchMountianEntrance = false;
                 LoadMountianEntrance();
             }
             else if (state.IsKeyDown(Keys.Y) || SwitchVillage2_EquipShop)
             {
+                inBattle = false;
                 SwitchVillage2_EquipShop = false;
                 LoadVillage2_EquipShop();
             }
             else if (state.IsKeyDown(Keys.V) || SwitchVillage2_PotionsShop)
             {
+                inBattle = false;
                 SwitchVillage2_PotionsShop = false;
                 LoadVillage2_PotionsShop();
             }

@@ -8,6 +8,8 @@ using MonoGame.Extended.Sprites;
 using System.Collections.Generic;
 using SharpFont.MultipleMasters;
 using System.Reflection.Metadata;
+using MonoGame.Extended.Screens;
+using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -27,6 +29,7 @@ namespace Game_Demo
 
         public static Vector2 Movement() //convert keyboard input to Vector2 for camera move
         {
+            Debug.WriteLine(instance.State);
             string result = Input.Hold();
             if (result != "up" && result != "down" && result != "left" && result != "right")
             {
@@ -35,7 +38,8 @@ namespace Game_Demo
             }
             else
             {
-                instance.Play();
+                if (!Game1.inBattle)
+                    instance.Play();
                 return result switch
                 {
                     "up" => new Vector2(0, -1),
@@ -58,7 +62,7 @@ namespace Game_Demo
             box_ok = soundEffects[2].CreateInstance();
             collided = soundEffects[3].CreateInstance();
             //collided.IsLooped = true;
-            instance.IsLooped = true;
+            //instance.IsLooped = true;
         }
 
         public static void UpdateAnim(GameTime gameTime)
