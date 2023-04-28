@@ -54,8 +54,10 @@ namespace Game_Demo
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
             {
+                World.collided.Play();
                 return;
             }
+            World.collided.Stop();
 
             Vector2 movementDirection = World.Movement(); //get movement direction
             _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera

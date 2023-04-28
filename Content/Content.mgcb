@@ -407,6 +407,12 @@
 /processorParam:TextureFormat=Color
 /build:World/chest.png
 
+#begin World/Collision.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:World/Collision.wav
+
 #begin World/grass.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

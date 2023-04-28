@@ -33,10 +33,12 @@ namespace Game_Demo
 			Tiled.currentPosition = _camera.Center;
 			Transition.TransitionCheck();
 
-			if (Collision.CollisionCheck() == Color.Green) //if collided
-			{
-				return;
-			}
+            if (Collision.CollisionCheck() == Color.Green) //if collided
+            {
+                World.collided.Play();
+                return;
+            }
+            World.collided.Stop();
 
             World.UpdateAnim(gameTime);
 

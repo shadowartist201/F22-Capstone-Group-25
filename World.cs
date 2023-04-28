@@ -22,6 +22,7 @@ namespace Game_Demo
         public static SoundEffectInstance instance;
         public static SoundEffectInstance box_navi;
         public static SoundEffectInstance box_ok;
+        public static SoundEffectInstance collided;
 
 
         public static Vector2 Movement() //convert keyboard input to Vector2 for camera move
@@ -45,6 +46,8 @@ namespace Game_Demo
             instance = soundEffects[0].CreateInstance();
             box_navi = soundEffects[1].CreateInstance();
             box_ok = soundEffects[2].CreateInstance();
+            collided = soundEffects[3].CreateInstance();
+            //collided.IsLooped = true;
             instance.IsLooped = true;
         }
 

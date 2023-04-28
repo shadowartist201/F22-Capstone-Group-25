@@ -37,8 +37,10 @@ namespace Game_Demo
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
             {
+                World.collided.Play();
                 return;
             }
+            World.collided.Stop();
 
             World.UpdateAnim(gameTime);
 

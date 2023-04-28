@@ -112,6 +112,7 @@ namespace Game_Demo
             World.soundEffects.Add(Content.Load<SoundEffect>("World/grass"));
             World.soundEffects.Add(Content.Load<SoundEffect>("World/box_navi"));
             World.soundEffects.Add(Content.Load<SoundEffect>("World/box_ok"));
+            World.soundEffects.Add(Content.Load<SoundEffect>("World/Collision"));
         }
 
         protected override void Update(GameTime gameTime)

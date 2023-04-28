@@ -68,12 +68,22 @@ namespace Game_Demo
                 else
                     NPC2.DialogUpdate(); //update box
 
-            if (Collision.CollisionCheck() == Color.Green) //if collided
+            if (Collision.CollisionCheck() == Color.Green) //if collided 
+            {
+                World.collided.Play();
                 return;
+            }
             if (Collision.CollisionCheck_Entity(NPC1) == Color.Green)
+            {
+                World.collided.Play();
                 return;
+            }
             if (Collision.CollisionCheck_Entity(NPC2) == Color.Green)
+            {
+                World.collided.Play();
                 return;
+            }
+            World.collided.Stop();
 
 
             World.UpdateAnim(gameTime);
