@@ -24,13 +24,14 @@ namespace Game_Demo
 
         public static bool alratk = false; //already attacked
         private bool endBattle = false;
+        public static bool tpk = false;
 
         public override void Initialize()
         {
             //new Entity(name, HP, max HP, MP, max MP, attack, magic attack, defense, magic defense, speed)
             //TO DO: clear this out, testing inputs will need this cleared
             Game1.enemies.Clear();
-            Game1.enemies.Add(new Entity("Dragon", 200, 200, 0, 0, 10, 15, 0, 0));
+            Game1.enemies.Add(new Entity("Dragon", 180, 180, 0, 0, 10, 15, 0, 0));
 
             Game1.squad.Clear();
             Game1.squad.Add(new Entity("Nobody", 100, 100, 10, 10, 5, 10, 10, 12));
@@ -64,13 +65,22 @@ namespace Game_Demo
             KeyboardState state = Keyboard.GetState();
             endBattle = false;
             int totH = 0;
+            int tTotH = 0;
             foreach (Entity e in Game1.enemies)
             {
                 totH += e.health;
             }
-            if (totH < 1) //if battle over
+            foreach (Entity e in Game1.squad)
+            {
+                tTotH += e.health;
+            }
+            if (totH < 1)
             {
                 endBattle = true;
+            }
+            if(tTotH<1)
+            {
+                tpk = true;
             }
 
             if (endBattle)
@@ -85,7 +95,16 @@ namespace Game_Demo
                 {
                     Tiled.BattleReturn = true;
                 }
+            }
+            else if (tpk)
+            {
+                BattleUI.BattleEndBad(GraphicsDevice, _spriteBatch);
 
+                if (Input.Hold() == "enter")
+                {
+                    Tiled.BattleReturn = true;
+                    //Tiled.LoadMap("home", Content, GraphicsDevice);
+                }
             }
             else  //if battle still going
             {

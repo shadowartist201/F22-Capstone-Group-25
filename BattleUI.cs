@@ -198,6 +198,15 @@ namespace Game_Demo
             _spriteBatch.End();
         }
 
+        public static void BattleEndBad(GraphicsDevice graphicsDevice, SpriteBatch _spriteBatch)
+        {
+            graphicsDevice.Clear(Color.Black);
+            _spriteBatch.Begin();
+            _spriteBatch.DrawString(Game1.large_font, "You were defeated in battle", new Vector2(300, 226), Color.White);
+            _spriteBatch.DrawString(Game1.medium_font, "Press Enter to continue", new Vector2(300, 250), Color.White);
+            _spriteBatch.End();
+        }
+
         public static void DrawBoxes(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(enemy_box, new Rectangle(14, 336, 160, 128), Color.White); //enemy info box

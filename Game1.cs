@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using DavyKager;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
@@ -22,8 +20,6 @@ namespace Game_Demo
 
         public static ScreenManager _screenManager = new();
 
-        
-
         public static bool SwitchBattle, SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage, 
             SwitchCityCastle, SwitchCity_Bar_Inn, SwitchCity_Bar, SwitchCity_PotionShop, SwitchCity_EquipShop, SwitchMountianEntrance, SwitchVillage2_EquipShop, SwitchVillage2_PotionsShop;
 
@@ -34,8 +30,6 @@ namespace Game_Demo
             IsMouseVisible = true;
             _screenManager = new ScreenManager();
             Components.Add(_screenManager);
-            Tolk.Load();
-            Tolk.TrySAPI(true);
         }
 
         public void LoadBattle()
@@ -46,6 +40,11 @@ namespace Game_Demo
 
         public void BattleReturn()
         {
+            if (Battle.tpk)
+            {
+                LoadHome();
+                Tiled.BattleReturn = false;
+            }
             switch (Tiled.map)
             {
                 case 1:
@@ -109,9 +108,6 @@ namespace Game_Demo
             large_font = Content.Load<SpriteFont>("Battle/large");
             DialogFont = Content.Load<SpriteFont>("Fonts/dialog");
             World.player = Content.Load<Texture2D>("World/player");
-            World.soundEffects.Add(Content.Load<SoundEffect>("World/grass"));
-            World.soundEffects.Add(Content.Load<SoundEffect>("World/box_navi"));
-            World.soundEffects.Add(Content.Load<SoundEffect>("World/box_ok"));
         }
 
         protected override void Update(GameTime gameTime)
