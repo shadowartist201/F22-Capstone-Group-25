@@ -30,6 +30,7 @@ namespace Game_Demo
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            this.Window.Title = "Nobody Demo";
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _screenManager = new ScreenManager();
