@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DavyKager;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
@@ -108,6 +109,9 @@ namespace Game_Demo
             large_font = Content.Load<SpriteFont>("Battle/large");
             DialogFont = Content.Load<SpriteFont>("Fonts/dialog");
             World.player = Content.Load<Texture2D>("World/player");
+            World.soundEffects.Add(Content.Load<SoundEffect>("World/grass"));
+            World.soundEffects.Add(Content.Load<SoundEffect>("World/box_navi"));
+            World.soundEffects.Add(Content.Load<SoundEffect>("World/box_ok"));
         }
 
         protected override void Update(GameTime gameTime)

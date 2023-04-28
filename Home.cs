@@ -32,9 +32,9 @@ namespace Game_Demo
             Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set starting position
 
+            World.LoadAnim(Content);
             _dialog.MakeBox(DialogText.Demo, Game1.DialogFont, GraphicsDevice, new OrthographicCamera(GraphicsDevice));
 
-            World.LoadAnim(Content);
 
             /* 
              * soundEffect = Content.Load<SoundEffect>("thunk");
@@ -59,6 +59,10 @@ namespace Game_Demo
 
             Vector2 movementDirection = World.Movement(); //get movement direction
             _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
+            if (movementDirection == new Vector2(0, 0))
+                World.instance.Stop();
+            else
+                World.instance.Play();
 
             _dialog.Update();
 

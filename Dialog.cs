@@ -15,6 +15,7 @@ namespace Game_Demo
         DialogBox dialogBox;
         public void MakeBox(string text, SpriteFont dialogFont, GraphicsDevice graphicsDevice, OrthographicCamera _camera)
         {
+            World.box_ok.Play();
             dialogBox = new DialogBox(graphicsDevice, _camera)
             {
                 Text = text,
@@ -256,6 +257,7 @@ namespace Game_Demo
                 // Button press will proceed to the next page of the dialog box
                 if (Input.SinglePress() == "enter")
                 {
+                    World.box_navi.Play();
                     if (_currentPage >= _pages.Count - 1)
                     {
                         Hide();

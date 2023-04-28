@@ -228,20 +228,20 @@
 #begin Macros.fxh
 /copy:Macros.fxh
 
-#begin Maps/city.tmx
+#begin Maps/City_Bar_Inn.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:Maps/city.tmx
+/build:Maps/City_Bar_Inn.tmx
+
+#begin Maps/City_Bar.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/City_Bar.tmx
 
 #begin Maps/City_Castle.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:Maps/City_Castle.tmx
-
-#begin Maps/forest.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/forest.tmx
 
 #begin Maps/City_EquipShop.tmx
 /importer:TiledMapImporter
@@ -253,30 +253,15 @@
 /processor:TiledMapProcessor
 /build:Maps/City_PotionShop.tmx
 
-#begin Maps/City_Bar.tmx
+#begin Maps/city.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:Maps/City_Bar.tmx
+/build:Maps/city.tmx
 
-#begin Maps/City_Bar_Inn.tmx
+#begin Maps/forest.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:Maps/City_Bar_Inn.tmx
-
-#begin Maps/Village2_PotionsShop.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/Village2_PotionsShop.tmx
-
-#begin Maps/Village2_EquipShop.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/Village2_EquipShop.tmx
-
-#begin Maps/MountianEntrance.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:Maps/MountianEntrance.tmx
+/build:Maps/forest.tmx
 
 #begin Maps/forestpath1.tmx
 /importer:TiledMapImporter
@@ -298,10 +283,25 @@
 /processor:TiledMapProcessor
 /build:Maps/middlevillage.tmx
 
+#begin Maps/MountianEntrance.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/MountianEntrance.tmx
+
 #begin Maps/village.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:Maps/village.tmx
+
+#begin Maps/Village2_EquipShop.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/Village2_EquipShop.tmx
+
+#begin Maps/Village2_PotionsShop.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Maps/Village2_PotionsShop.tmx
 
 #begin playersprite.png
 /importer:TextureImporter
@@ -383,6 +383,18 @@
 /processor:TiledMapTilesetProcessor
 /build:Tilesets/Outside_C.tsx
 
+#begin World/box_navi.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:World/box_navi.wav
+
+#begin World/box_ok.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:World/box_ok.wav
+
 #begin World/chest.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -394,6 +406,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:World/chest.png
+
+#begin World/grass.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:World/grass.wav
 
 #begin World/monster.png
 /importer:TextureImporter
