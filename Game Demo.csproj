@@ -96,16 +96,16 @@
     <None Update="Content\player.sf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="nvdaControllerClient64.dll">
+    <None Update="DLLs\nvdaControllerClient64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SAAPI64.dll">
+    <None Update="DLLs\SAAPI64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Tolk.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TolkDotNet.dll">
+    <None Update="DLLs\TolkDotNet.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
