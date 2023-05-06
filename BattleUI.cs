@@ -192,7 +192,7 @@ namespace Game_Demo
                             World.box_navi.Play();
                             //selection = 2, inventory = 1, 1 <= 1 
                         }
-                        else if (selection_index != 4 && inventory_alpha == 1)
+                        else if (selection_index != 4 && inventory_alpha == 1 && Game1.inventory.Count > 4)
                         {
                             selection_index++;
                             World.box_navi.Play();
@@ -454,6 +454,10 @@ namespace Game_Demo
             {
                 //Debug.WriteLine(output);
                 //INSERT
+                if (Game1.inventory.Count < 5)
+                {
+                    end = Game1.inventory.Count-1;
+                }
                 if (inventory_index == end + 1)
                 {
                     start++;
