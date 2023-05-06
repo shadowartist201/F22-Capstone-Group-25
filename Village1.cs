@@ -6,6 +6,7 @@ using MonoGame.Extended.Screens;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Sprites;
+using System.Collections.Generic;
 
 namespace Game_Demo
 {
@@ -14,12 +15,16 @@ namespace Game_Demo
         private new Game1 Game => (Game1)base.Game;
         public Village1(Game1 game) : base(game) { }
 
+        private List<Item> chestinv = new List<Item> { new Item("Small potion", "Heals 20 health")};
+
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
         private EntityTest NPC1 = new(null, new Vector2(100,100), false, false);
         private EntityTest NPC2 = new(null, new Vector2(300,300), false, false);
+        private EntityTest NPC3 = new(null, new Vector2(400,400), false, false);
         private bool talkToNPC1 = false;
         private bool talkToNPC2 = false;
+        private bool talkToNPC3 = false;
 
         public override void LoadContent()
         {
@@ -32,6 +37,7 @@ namespace Game_Demo
 
             NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1"); //load sprite img
             NPC2.sprite = Content.Load<Texture2D>("World/Village1_NPC2");
+            NPC3.sprite = Content.Load<Texture2D>("World/Chest");
 
             World.LoadAnim(Content);
 
@@ -68,11 +74,23 @@ namespace Game_Demo
                 else
                     NPC2.DialogUpdate(); //update box
 
+            if (Collision.CollisionCheck_Entity(NPC3) == Color.Blue && talkToNPC3 == false) //if near NPC1 and not spoken to
+                if (Input.SinglePress() == "enter")
+                {
+                    talkToNPC3 = true; //set flag to true
+                    foreach(Item i in chestinv)
+                    {
+                        Game1.inventory.Add(i);
+                    }
+                }
+
             if (Collision.CollisionCheck() == Color.Green) //if collided
                 return;
             if (Collision.CollisionCheck_Entity(NPC1) == Color.Green)
                 return;
             if (Collision.CollisionCheck_Entity(NPC2) == Color.Green)
+                return;
+            if (Collision.CollisionCheck_Entity(NPC3) == Color.Green)
                 return;
 
 

@@ -239,10 +239,10 @@ namespace Game_Demo
                         switch(itemType)
                         {
                             case 1:
-                                Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 15, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 20, _spriteBatch, BattleUI.battle_message, Game1.large_font);
                                 break;
                             case 2:
-                                Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 45, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
                                 break;
                             case 3:
                                 Game1.squad[BattleUI.current_character] = manaByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
@@ -262,8 +262,8 @@ namespace Game_Demo
                             default:
                                 break;
                         }
+                        alratk = true;
                     }
-                    alratk = true;
                     //INSERT
                 }
                 _spriteBatch.End();

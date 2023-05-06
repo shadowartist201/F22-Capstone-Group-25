@@ -475,6 +475,7 @@ namespace Game_Demo
         public static void advanceTurn()
         {
             current_character += 1;
+            inventory_index = 0;
             if (current_character > Game1.squad.Count-1 && squadTurn)
             {
                 current_character = 0;
