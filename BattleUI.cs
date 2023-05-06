@@ -155,6 +155,7 @@ namespace Game_Demo
                         {
                             menu_alpha = 0f;
                             inventory_alpha = 0f;
+                            item_message = true;
                             message_alpha = 1;
                         }
                         else if(Battle.selection)
