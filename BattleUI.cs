@@ -315,7 +315,9 @@ namespace Game_Demo
             }
             if (Battle.selection)
             {
-                _spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White);
+                _spriteBatch.Draw(menu_box, new Rectangle(213, 308, 150, 155), Color.White);
+                _spriteBatch.DrawString(Game1.large_font, "Dragon", new Vector2(234, 334), Color.Black);
+                _spriteBatch.DrawString(Game1.large_font, "TestEntity", new Vector2(234, 361), Color.Black);
                 int i = 0;
                 foreach (Entity e in Game1.enemies)
                 {
@@ -323,7 +325,7 @@ namespace Game_Demo
                     //_spriteBatch.DrawString(Game1.medium_font, "*" + e.name, new Vector2(618, 364 + (i * 19)), Color.Black);
                     i++;
                 }
-                _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * Battle.target), 105, 29), Color.White);
+                _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * (Battle.target+1)), 105, 29), Color.White);
             }
             for (int placediff = 0; placediff < Game1.squad.Count; placediff ++) //placement for HP and MP bars
             {
