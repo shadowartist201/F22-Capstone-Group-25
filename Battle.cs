@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using MonoGame.Extended.Screens;
+using System;
 
 namespace Game_Demo
 {
@@ -220,13 +221,16 @@ namespace Game_Demo
                     if (BattleUI.cat_magic_message) //when cat message message activated, draw it
                     {
                         //INSERT
-                        BattleUI.menu_alpha = 0f;
-                        Entity recieve = Game1.squad[0];
-                        Game1.squad[0] = healByPerc(ref recieve, 15, _spriteBatch, BattleUI.battle_message, Game1.large_font);
-                        if (Game1.squad.Count>2)
+                        if (!alratk)
                         {
-                            recieve = Game1.squad[2];
-                            Game1.squad[2] = healByPerc(ref recieve, 15, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                            BattleUI.menu_alpha = 0f;
+                            Entity recieve = Game1.squad[0];
+                            Game1.squad[0] = healByPerc(ref recieve, 15, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                            if (Game1.squad.Count > 2)
+                            {
+                                recieve = Game1.squad[2];
+                                Game1.squad[2] = healByPerc(ref recieve, 15, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                            }
                         }
                         alratk = true;
                         //INSERT
@@ -235,32 +239,35 @@ namespace Game_Demo
                     if(BattleUI.item_message)
                     {
                         BattleUI.menu_alpha = 0f;
-                        Entity recieve = Game1.squad[BattleUI.current_character];
-                        switch(itemType)
+                        if (!alratk)
                         {
-                            case 1:
-                                Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 20, _spriteBatch, BattleUI.battle_message, Game1.large_font);
-                                break;
-                            case 2:
-                                Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
-                                break;
-                            case 3:
-                                Game1.squad[BattleUI.current_character] = manaByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
-                                break;
-                            case 4:
-                                Game1.squad[BattleUI.current_character] = itemEffect(ref recieve, Game1.inventory[BattleUI.inventory_index], 0, 0, _spriteBatch, BattleUI.battle_message, Game1.large_font);
-                                Game1.squad[BattleUI.current_character] = new Entity(recieve.name, recieve.health, recieve.mHealth, recieve.mana, recieve.mMana, (int)((float)recieve.attack * 1.25), (int)((float)recieve.spattack * 1.1), recieve.def, recieve.spdef);
-                                atkbuf[BattleUI.current_character] = 2;
-                                atkbool[BattleUI.current_character] = true;
-                                break;
-                            case 5:
-                                Game1.squad[BattleUI.current_character] = itemEffect(ref recieve, Game1.inventory[BattleUI.inventory_index], 0, 0, _spriteBatch, BattleUI.battle_message, Game1.large_font);
-                                Game1.squad[BattleUI.current_character] = new Entity(recieve.name, recieve.health, recieve.mHealth, recieve.mana, recieve.mMana, recieve.attack, recieve.spattack, (int)((float)recieve.def*1.25), (int)((float)recieve.spdef*1.1));
-                                defbuf[BattleUI.current_character] = 2;
-                                defbool[BattleUI.current_character] = true;
-                                break;
-                            default:
-                                break;
+                            Entity recieve = Game1.squad[BattleUI.current_character];
+                            switch (itemType)
+                            {
+                                case 1:
+                                    Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 20, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    break;
+                                case 2:
+                                    Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    break;
+                                case 3:
+                                    Game1.squad[BattleUI.current_character] = manaByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    break;
+                                case 4:
+                                    Game1.squad[BattleUI.current_character] = itemEffect(ref recieve, Game1.inventory[BattleUI.inventory_index], 0, 0, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    Game1.squad[BattleUI.current_character] = new Entity(recieve.name, recieve.health, recieve.mHealth, recieve.mana, recieve.mMana, (int)Math.Floor((float)recieve.attack * (float)1.25), (int)Math.Floor((float)recieve.spattack * (float)1.1), recieve.def, recieve.spdef);
+                                    atkbuf[BattleUI.current_character] = 2;
+                                    atkbool[BattleUI.current_character] = true;
+                                    break;
+                                case 5:
+                                    Game1.squad[BattleUI.current_character] = itemEffect(ref recieve, Game1.inventory[BattleUI.inventory_index], 0, 0, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    Game1.squad[BattleUI.current_character] = new Entity(recieve.name, recieve.health, recieve.mHealth, recieve.mana, recieve.mMana, recieve.attack, recieve.spattack, (int)Math.Floor((float)recieve.def * (float)1.25), (int)Math.Floor((float)recieve.spdef * (float)1.1));
+                                    defbuf[BattleUI.current_character] = 2;
+                                    defbool[BattleUI.current_character] = true;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         alratk = true;
                     }

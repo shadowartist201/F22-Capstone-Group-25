@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Game_Demo
 {
@@ -492,15 +493,15 @@ namespace Game_Demo
                 Battle.atkbuf[current_character]--;
             if (Battle.atkbuf[current_character] == 0 && Battle.atkbool[current_character])
             {
-                Game1.squad[current_character] = Game1.squad[BattleUI.current_character] = new Entity(Game1.squad[current_character].name, Game1.squad[current_character].health, Game1.squad[current_character].mHealth, Game1.squad[current_character].mana, Game1.squad[current_character].mMana, (int)((float)Game1.squad[current_character].attack / 1.25), (int)((float)Game1.squad[current_character].spattack / 1.1), Game1.squad[current_character].def, Game1.squad[current_character].spdef);
-                Battle.atkbool[current_character] = true;
+                Game1.squad[current_character] = Game1.squad[BattleUI.current_character] = new Entity(Game1.squad[current_character].name, Game1.squad[current_character].health, Game1.squad[current_character].mHealth, Game1.squad[current_character].mana, Game1.squad[current_character].mMana, (int)Math.Ceiling((float)Game1.squad[current_character].attack / (float)1.25), (int)Math.Ceiling((float)Game1.squad[current_character].spattack / (float)1.1), Game1.squad[current_character].def, Game1.squad[current_character].spdef);
+                Battle.atkbool[current_character] = false;
             }
             if (squadTurn && Battle.defbuf[current_character] > 0)
                 Battle.defbuf[current_character]--;
             if (Battle.defbuf[current_character] == 0 && Battle.defbool[current_character])
             {
-                Game1.squad[current_character] = Game1.squad[BattleUI.current_character] = new Entity(Game1.squad[current_character].name, Game1.squad[current_character].health, Game1.squad[current_character].mHealth, Game1.squad[current_character].mana, Game1.squad[current_character].mMana, Game1.squad[current_character].attack, Game1.squad[current_character].spattack, (int)((float)Game1.squad[current_character].def / 1.25), (int)((float)Game1.squad[current_character].spdef / 1.1));
-                Battle.defbool[current_character] = true;
+                Game1.squad[current_character] = Game1.squad[BattleUI.current_character] = new Entity(Game1.squad[current_character].name, Game1.squad[current_character].health, Game1.squad[current_character].mHealth, Game1.squad[current_character].mana, Game1.squad[current_character].mMana, Game1.squad[current_character].attack, Game1.squad[current_character].spattack, (int)Math.Ceiling((float)Game1.squad[current_character].def / (float)1.25), (int)Math.Ceiling((float)Game1.squad[current_character].spdef / (float)1.1));
+                Battle.defbool[current_character] = false;
             }
             if (squadTurn)
             {
