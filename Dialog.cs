@@ -13,6 +13,16 @@ namespace Game_Demo
     public class Dialog //master class
     {
         DialogBox dialogBox;
+
+        public static string concatInventory(List<Item> item)
+        {
+            string inventList = "";
+            foreach (Item i in item)
+            {
+                inventList = string.Concat(inventList, i.name);
+            }
+            return inventList;
+        }
         public void MakeBox(string text, SpriteFont dialogFont, GraphicsDevice graphicsDevice, OrthographicCamera _camera)
         {
             World.box_ok.Play();
@@ -403,5 +413,7 @@ namespace Game_Demo
 
         public static string Village1_NPC1 = "This is a test for NPC1. I am a square made in MS Paint and I like to eat cake.";
         public static string Village1_NPC2 = "This is a test for NPC2. I am a friendly square, so please add me on Instagram :)";
+        public static string Village1_NPC3 = Dialog.concatInventory(Game1.inventory);
+        public static string Home_NPC4 = Dialog.concatInventory(Game1.inventory);
     }
 }

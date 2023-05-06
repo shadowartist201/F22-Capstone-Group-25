@@ -79,7 +79,7 @@ namespace Game_Demo
         public override void Draw(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-            endBattle = false;
+            //endBattle = false;
             int totH = 0;
             int tTotH = 0;
             foreach (Entity e in Game1.enemies)

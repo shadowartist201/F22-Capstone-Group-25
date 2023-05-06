@@ -14,7 +14,7 @@
 /reference:..\..\..\..\..\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
 /reference:../../../.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
 /reference:\Users\thijm\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
-
+/reference:\Users\nikot\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
 #---------------------------------- Content ---------------------------------#
 
 #begin Battle/bar-fill.png

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 //using Microsoft.Xna.Framework.Audio;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
+using System.Collections.Generic;
 
 namespace Game_Demo
 {
@@ -11,11 +12,16 @@ namespace Game_Demo
         private new Game1 Game => (Game1)base.Game;
         public Home(Game1 game) : base(game) { }
 
+        private List<Item> chestHomeinv = new List<Item> { new Item("Small potion", "Heals 20 health") };
+
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
 
         private Dialog _dialog = new();
+        private EntityTest NPCHomeChest = new(null, new Vector2(270, 170), false, false);
 
+
+        private bool talkToNPCHomeChest = false;
         /* 
          * private SoundEffect soundEffect;
          * private SoundEffectInstance instance;
@@ -31,6 +37,8 @@ namespace Game_Demo
             Tiled.LoadMap("home", Content, GraphicsDevice); //load map
             Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set starting position
+
+            NPCHomeChest.sprite = Content.Load<Texture2D>("World/chest");
 
             World.LoadAnim(Content);
             _dialog.MakeBox(DialogText.Demo, Game1.DialogFont, GraphicsDevice, new OrthographicCamera(GraphicsDevice));
@@ -51,6 +59,26 @@ namespace Game_Demo
             Tiled.Update_(gameTime); //tiledMapRenderer update
             Tiled.currentPosition = _camera.Center;
             Transition.TransitionCheck();
+
+            if (Collision.CollisionCheck_Entity(NPCHomeChest) == Color.Blue && talkToNPCHomeChest == false) //if near NPC3 and not spoken to
+                if (Input.SinglePress() == "enter")
+                {
+                    talkToNPCHomeChest = true; //set flag to true
+                    foreach (Item i in chestHomeinv)
+                    {
+                        Game1.inventory.Add(i);
+                    }
+                    NPCHomeChest.MakeDialogBox(DialogText.Village1_NPC3, GraphicsDevice); //make box
+                }
+
+            if (talkToNPCHomeChest) //if flag is true
+                if (NPCHomeChest.DialogUpdate() == "hidden") //when box is closed
+                    talkToNPCHomeChest = false; //clear flag
+                else
+                    NPCHomeChest.DialogUpdate(); //update box
+
+            if (Collision.CollisionCheck_Entity(NPCHomeChest) == Color.Green)
+                return;
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
             {
@@ -87,11 +115,20 @@ namespace Game_Demo
             var transformMatrix = _camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
             //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+
+            _spriteBatch.Draw(NPCHomeChest.sprite, new Rectangle((int)NPCHomeChest.position.X, (int)NPCHomeChest.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+
             World.DrawAnim(_spriteBatch);
             _spriteBatch.End();
 
+           
+
             _spriteBatch.Begin();
             _dialog.Draw(_spriteBatch);
+
+            if (talkToNPCHomeChest)
+                NPCHomeChest.DialogDraw(_spriteBatch);
+
             _spriteBatch.End();
         }
     }

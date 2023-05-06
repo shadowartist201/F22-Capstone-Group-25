@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
+using System.Collections.Generic;
 
 namespace Game_Demo
 {
@@ -10,8 +11,12 @@ namespace Game_Demo
         private new Game1 Game => (Game1)base.Game;
         public City(Game1 game) : base(game) { }
 
+        private List<Item> chestCITYinv = new List<Item> { new Item("Small potion", "Heals 20 health") };
+
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
+
+        private EntityTest NPCCITIChest1 = new(null, new Vector2(270, 170), false, false);
 
         public override void LoadContent()
         {
