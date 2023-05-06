@@ -167,11 +167,19 @@ namespace Game_Demo
                             selection_index--;
                         }
                         else if (inventory_alpha == 1)
-                            if(inventory_index < Game1.inventory.Count - 1)
+                            if (inventory_index < Game1.inventory.Count - 1)
                                 inventory_index++;
                         //INSERT
-                        if (selection_index != 4)  //move selection box down (and stop at 4 so we don't go out of bounds)
-                            selection_index++;
+                        if (Game1.inventory.Count > 3)
+                        {
+                            if (selection_index != 4)  //move selection box down (and stop at 4 so we don't go out of bounds)
+                                selection_index++;
+                        }
+                        else
+                        {
+                            if (selection_index != Game1.inventory.Count)
+                                selection_index++;
+                        }
                     }
                     else if (output == "enter")  //check for enter
                     {
@@ -411,6 +419,14 @@ namespace Game_Demo
                     start--;
                     end--;
                 }
+                if(Game1.inventory.Count<4)
+                {
+                    end = Game1.inventory.Count - 1;
+                    if(inventory_index>Game1.inventory.Count)
+                    {
+                        inventory_index--;
+                    }
+                }
                 for (int i = start; i <= end; i++)
                 {
                     _spriteBatch.DrawString(Game1.large_font, Game1.inventory[i].name, new Vector2(234, 334 + ((i - start) * 27)), Color.Black);
@@ -496,7 +512,7 @@ namespace Game_Demo
                 if (item_message)
                 {
                     menu_alpha = 0f;
-                    _spriteBatch.DrawString(Game1.large_font, "Somehow this isnt working", new Vector2(205, 361), Color.Black);
+                    //_spriteBatch.DrawString(Game1.large_font, "Somehow this isnt working", new Vector2(205, 361), Color.Black);
                 }
 
             }
