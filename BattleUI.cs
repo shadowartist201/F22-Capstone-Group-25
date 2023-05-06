@@ -319,7 +319,8 @@ namespace Game_Demo
                 int i = 0;
                 foreach (Entity e in Game1.enemies)
                 {
-                    _spriteBatch.DrawString(Game1.medium_font, "*" + e.name, new Vector2(618, 364 + (i * 19)), Color.Black);
+                    //lists enemies to attack
+                    //_spriteBatch.DrawString(Game1.medium_font, "*" + e.name, new Vector2(618, 364 + (i * 19)), Color.Black);
                     i++;
                 }
                 _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * Battle.target), 105, 29), Color.White);
@@ -437,21 +438,21 @@ namespace Game_Demo
                 }
                 if (magic_message) //when magic message activated, draw it
                 {
-                    if (Game1.squad[current_character].mana > 0)
-                        _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
-                    else
-                        _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
+                    //if (Game1.squad[current_character].mana > 0)
+                        //_spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " summoned fire!", new Vector2(205, 361), Color.Black);
+                    //else
+                        //_spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[current_character] + " is out of mana!", new Vector2(205, 361), Color.Black);
                 }
                 if (cat_magic_message) //when cat message message activated, draw it
                 {
                     menu_alpha = 0f;
-                    _spriteBatch.DrawString(Game1.large_font, "*The cat winds its way around your legs and you feel envigorated!", new Vector2(205, 361), Color.Black);
-                    _spriteBatch.DrawString(Game1.large_font, "*Your party has been healed for 15% health!", new Vector2(205, 381), Color.Black);
+                    _spriteBatch.DrawString(Game1.large_font, "*The cat winds its way around\nyour legs.", new Vector2(205, 361), Color.Black);
+                    _spriteBatch.DrawString(Game1.large_font, "\n*Your party has been healed\nfor 15% health!", new Vector2(205, 381), Color.Black);
                 }
                 if (item_message)
                 {
                     menu_alpha = 0f;
-                    _spriteBatch.DrawString(Game1.large_font, "Somehow this isnt working", new Vector2(285, 361), Color.Black);
+                    _spriteBatch.DrawString(Game1.large_font, "Somehow this isnt working", new Vector2(205, 361), Color.Black);
                 }
 
             }

@@ -12,7 +12,7 @@ namespace Game_Demo
         public static GraphicsDeviceManager _graphics;
         public static List<Entity> enemies = new List<Entity> {};
         public static List<Entity> squad = new List<Entity> {};
-        public static List<Item> inventory = new List<Item> {new Item(), new Item(), new Item(), new Item("Mana potion", "Restores 50 mana"), new Item("Large potion", "Heals 50 hp"), new Item("attack buff", "An attack booster"), new Item("defense buff", "a defense booster") };
+        public static List<Item> inventory = new List<Item> {new Item(), new Item(), new Item(), new Item("MP potion", "Restores 50 MP"), new Item("HP potion L", "Heals 50 HP"), new Item("Attack UP", "An attack booster"), new Item("Defense UP", "A defense booster") };
 
         public static SpriteFont small_font;
         public static SpriteFont medium_font;
