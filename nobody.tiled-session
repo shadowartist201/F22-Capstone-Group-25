@@ -5,9 +5,9 @@
     },
     "activeFile": "Content/Maps/city.tmx",
     "expandedProjectPaths": [
-        "Content/Tilesets",
+        "Content/Images",
         "Content/Maps",
-        "Content/Images"
+        "Content/Tilesets"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -153,15 +153,15 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1033,
-                "y": 1031
+                "x": 674,
+                "y": 539
             }
         },
         "Content/Maps/forest.tmx": {
             "scale": 1,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 480,
+                "x": 480.5,
                 "y": 239.5
             }
         },

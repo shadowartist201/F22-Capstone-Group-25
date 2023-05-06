@@ -80,6 +80,7 @@ namespace Game_Demo
 
         public static void Update_()
         {
+            Debug.WriteLine("Selection: " + selection_index + " | Battle: " + Battle.target);
             if (flee_message)  //if flee message activated
             {
                 if (Input.SinglePress() == "enter")  //check for enter
@@ -140,7 +141,11 @@ namespace Game_Demo
                     if (output == "backspace")  //check for backspace
                     {
                         if (Battle.selection)
+                        {
                             Battle.selection = false;
+                            World.box_ok.Play();
+                            selection_index = 1;
+                        }
                         if (inventory_alpha == 1)
                         {  //if inventory menu activated, hide it
                             World.box_ok.Play();
@@ -155,15 +160,20 @@ namespace Game_Demo
                         if (Battle.selection)
                         {
                             if (Battle.target > 0)
+                            {
                                 Battle.target--;
-                            selection_index++;
+                                selection_index--;
+                                World.box_navi.Play();
+                            }
                         }
                         else if (inventory_alpha == 1)
                             if (inventory_index <= Game1.inventory.Count - 1 && inventory_index != 0)
+                            {
                                 inventory_index--;
+                            }
                         //INSERT
                         if (selection_index != 1)
-                        {//move selection box up (and stop at 1 so we don't go out of bounds)
+                        {   //move selection box up (and stop at 1 so we don't go out of bounds)
                             selection_index--;
                             World.box_navi.Play();
                         }
@@ -173,15 +183,22 @@ namespace Game_Demo
                         //INSERT
                         if (Battle.selection)
                         {
-                            if (Battle.target < Game1.enemies.Count - 1)
+                            if (Battle.target < Game1.enemies.Count-1)
+                            {
                                 Battle.target++;
-                            selection_index--;
+                                selection_index++;
+                                World.box_navi.Play();
+                            }
                         }
                         else if (inventory_alpha == 1)
+                        {
                             if (inventory_index < Game1.inventory.Count - 1)
+                            {
                                 inventory_index++;
+                            }
+                        }
                         //INSERT
-                        if (selection_index != 4 && inventory_alpha != 1)
+                        if (selection_index != 4 && inventory_alpha != 1 && !Battle.selection)
                         {//move selection box down (and stop at 4 so we don't go out of bounds)
                             selection_index++;
                             World.box_navi.Play();
@@ -462,11 +479,13 @@ namespace Game_Demo
                 {
                     start++;
                     end++;
+                    World.box_navi.Play();
                 }
                 if (inventory_index == start - 1)
                 {
                     start--;
                     end--;
+                    World.box_navi.Play();
                 }
                 for (int i = start; i <= end; i++)
                 {

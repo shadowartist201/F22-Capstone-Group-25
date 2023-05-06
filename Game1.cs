@@ -38,7 +38,7 @@ namespace Game_Demo
             _screenManager = new ScreenManager();
             Components.Add(_screenManager);
             Tolk.Load();
-            Tolk.TrySAPI(true);
+            Tolk.TrySAPI(false);
         }
 
         public void LoadBattle()

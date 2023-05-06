@@ -61,6 +61,10 @@ namespace Game_Demo
             box_navi = soundEffects[1].CreateInstance();
             box_ok = soundEffects[2].CreateInstance();
             collided = soundEffects[3].CreateInstance();
+            box_navi.Volume = 0.45f;
+            box_ok.Volume = 0.45f;
+            instance.Volume = 0.45f;
+            collided.Volume = 0.45f;
             //collided.IsLooped = true;
             //instance.IsLooped = true;
         }
