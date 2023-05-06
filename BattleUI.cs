@@ -39,9 +39,9 @@ namespace Game_Demo
         public static bool flee_message = false;      //message when attempting to flee battle
         public static bool item_message = false;
 
-        static int start = 0;
-        static int end = 0;
-        public static string output = "";
+        static int start = 0;                         //start index of inventory menu display
+        static int end = 0;                           //end index of inventory menu display
+        public static string output = "";             //the current key pressed
 
         ///TO DO: maybe a small hp/mana bar for each enemy on the field?
         public static void ResetScreen()
