@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using MonoGame.Extended.Screens;
+using System;
 using System.Diagnostics;
 
 namespace Game_Demo
@@ -24,8 +25,13 @@ namespace Game_Demo
         public static bool selection = false;
 
         public static bool alratk = false; //already attacked
-        private bool endBattle = false;
+        public static bool endBattle = false;
         public static bool tpk = false;
+        public static int itemType = 0;
+        public static List<int> atkbuf = new List<int>{};
+        public static List<int> defbuf = new List<int>{};
+        public static List<bool> atkbool = new List<bool>{};
+        public static List<bool> defbool = new List<bool>{};
 
         public override void Initialize()
         {
@@ -33,6 +39,15 @@ namespace Game_Demo
             //TO DO: clear this out, testing inputs will need this cleared
             Game1.enemies.Clear();
             Game1.enemies.Add(new Entity("Dragon", 180, 180, 0, 0, 10, 15, 0, 0));
+            Game1.enemies.Add(new Entity("TestEntity", 10, 10, 0, 0, 0, 0, 0, 0));
+            atkbuf.Add(0);
+            defbuf.Add(0);
+            atkbuf.Add(0);
+            defbuf.Add(0);
+            atkbool.Add(false);
+            defbool.Add(false);
+            atkbool.Add(false);
+            defbool.Add(false);
 
             Game1.squad.Clear();
             Game1.squad.Add(new Entity("Nobody", 100, 100, 10, 10, 5, 10, 10, 12));
@@ -75,11 +90,11 @@ namespace Game_Demo
             {
                 tTotH += e.health;
             }
-            if (totH < 1)
+            if (BattleUI.output == "x")
             {
                 endBattle = true;
             }
-            if (tTotH < 1)
+            if(tTotH<1)
             {
                 tpk = true;
             }
@@ -206,10 +221,58 @@ namespace Game_Demo
                     }
                     if (BattleUI.cat_magic_message) //when cat message message activated, draw it
                     {
-                        BattleUI.menu_alpha = 0f;
-                        _spriteBatch.Draw(BattleUI.battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                        _spriteBatch.DrawString(Game1.large_font, "*Cats can't do magic, silly!", new Vector2(205, 361), Color.Black);
+                        //INSERT
+                        if (!alratk)
+                        {
+                            BattleUI.menu_alpha = 0f;
+                            Entity recieve = Game1.squad[0];
+                            Game1.squad[0] = healByPerc(ref recieve, 15, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                            if (Game1.squad.Count > 2)
+                            {
+                                recieve = Game1.squad[2];
+                                Game1.squad[2] = healByPerc(ref recieve, 15, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                            }
+                        }
+                        alratk = true;
+                        //INSERT
                     }
+                    //INSERT
+                    if(BattleUI.item_message)
+                    {
+                        BattleUI.menu_alpha = 0f;
+                        if (!alratk)
+                        {
+                            Entity recieve = Game1.squad[BattleUI.current_character];
+                            switch (itemType)
+                            {
+                                case 1:
+                                    Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 20, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    break;
+                                case 2:
+                                    Game1.squad[BattleUI.current_character] = healByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    break;
+                                case 3:
+                                    Game1.squad[BattleUI.current_character] = manaByFlat(ref recieve, 50, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    break;
+                                case 4:
+                                    Game1.squad[BattleUI.current_character] = itemEffect(ref recieve, Game1.inventory[BattleUI.inventory_index], 0, 0, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    Game1.squad[BattleUI.current_character] = new Entity(recieve.name, recieve.health, recieve.mHealth, recieve.mana, recieve.mMana, (int)Math.Floor((float)recieve.attack * (float)1.25), (int)Math.Floor((float)recieve.spattack * (float)1.1), recieve.def, recieve.spdef);
+                                    atkbuf[BattleUI.current_character] = 2;
+                                    atkbool[BattleUI.current_character] = true;
+                                    break;
+                                case 5:
+                                    Game1.squad[BattleUI.current_character] = itemEffect(ref recieve, Game1.inventory[BattleUI.inventory_index], 0, 0, _spriteBatch, BattleUI.battle_message, Game1.large_font);
+                                    Game1.squad[BattleUI.current_character] = new Entity(recieve.name, recieve.health, recieve.mHealth, recieve.mana, recieve.mMana, recieve.attack, recieve.spattack, (int)Math.Floor((float)recieve.def * (float)1.25), (int)Math.Floor((float)recieve.spdef * (float)1.1));
+                                    defbuf[BattleUI.current_character] = 2;
+                                    defbool[BattleUI.current_character] = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        alratk = true;
+                    }
+                    //INSERT
                 }
                 _spriteBatch.End();
             }
@@ -277,7 +340,7 @@ namespace Game_Demo
                 return t;
             }
 
-            Entity healByPerc(Entity t, int change, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int change
+            Entity healByPerc(ref Entity t, int change, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int change
             {
                 hpManip(ref t, (change * t.health) * -1); //increase HP by percentage of max
                 BattleUI.menu_alpha = 0f; //hide menu
@@ -285,16 +348,26 @@ namespace Game_Demo
                 _spriteBatch.DrawString(large_font, "*" + t.name + " was healed for " + change + "% HP!", new Vector2(205, 361), Color.Black);
                 return t;
             }
-
-            Entity itemEffect(ref Entity t, /*Entity a, item i,*/ int hp, int mp, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int HP, int MP
+            //INSERT
+            Entity manaByFlat(ref Entity t, int change, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int change
+            {
+                manaManip(ref t, change*-1); //restore by flat rate
+                BattleUI.menu_alpha = 0f; //hide menu
+                _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                _spriteBatch.DrawString(large_font, "*" + t.name + " had " + change + " mana restored!", new Vector2(205, 361), Color.Black);
+                return t;
+            }
+            
+            Entity itemEffect(ref Entity t, Item i, int hp, int mp, SpriteBatch _spriteBatch, Texture2D battle_message, SpriteFont large_font) //ref Entity target, int HP, int MP
             {
                 hpManip(ref t, hp * -1); //increase HP by flat rate
                 manaManip(ref t, mp * -1); //increase MP by flat rate
                 BattleUI.menu_alpha = 0f; //hide menu
                 _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                _spriteBatch.DrawString(large_font, "*" + /*+ t.name + " is feeling the effects of " + i.name*/" wow, I can't believe I've done this", new Vector2(205, 361), Color.Black);
+                _spriteBatch.DrawString(large_font, "*" + t.name + " is feeling the effects of " + i.name, new Vector2(205, 361), Color.Black);
                 return t;
             }
+            //INSERT
         }
     }
 }
