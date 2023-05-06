@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks.Sources;
 
 namespace Game_Demo
 {
@@ -37,7 +39,27 @@ namespace Game_Demo
         public static bool flee_message = false;      //message when attempting to flee battle
         public static bool item_message = false;
 
+        static int start = 0;
+        static int end = 0;
+        public static string output = "";
+
         ///TO DO: maybe a small hp/mana bar for each enemy on the field?
+        public static void ResetScreen()
+        {
+            current_character = 0;      //which character's turn is it, where 1 = Nobody and 2 = Cat
+
+            menu_alpha = 0.0f;        //action menu visibility, 0 = hidden and 1 = show
+            inventory_alpha = 0.0f;   //inventory menu visibility
+            message_alpha = 1.0f;     //message box visibility, initialized to 1 for initial message
+
+            initial_message = true;    //initial message "A <thing> appeared!"
+            attack_message = false;    //message "<chara> attacked!"
+            magic_message = false;     //message "<chara> used magic!"
+            cat_magic_message = false; //message "Cats can't use magic"
+            flee_message = false;      //message when attempting to flee battle
+            item_message = false;
+            Battle.selection = false;
+        }
 
         public static void LoadUI(ContentManager Content) //load assets
         {
@@ -110,13 +132,14 @@ namespace Game_Demo
                 if (squadTurn)
                 {
                     menu_alpha = 1; //enable action menu
-                    string output = Input.SinglePress();
+                    output = Input.SinglePress();
                     if (output == "backspace")  //check for backspace
                     {
                         if (Battle.selection)
                             Battle.selection = false;
-                        if (inventory_alpha == 1)  //if inventory menu activated, hide it
+                        if (inventory_alpha == 1) {  //if inventory menu activated, hide it
                             inventory_alpha = 0;
+                            selection_index = 3; }
                     }
                     else if (output == "up")  //check for up
                     {
@@ -127,7 +150,7 @@ namespace Game_Demo
                                 Battle.target--;
                             selection_index++;
                         }
-                        if (inventory_alpha == 1)
+                        else if (inventory_alpha == 1)
                             if (inventory_index > 0)
                                 inventory_index--;
                         //INSERT
@@ -143,8 +166,8 @@ namespace Game_Demo
                                 Battle.target++;
                             selection_index--;
                         }
-                        if (inventory_alpha == 1)
-                            if(inventory_index<Game1.inventory.Count-1)
+                        else if (inventory_alpha == 1)
+                            if(inventory_index < Game1.inventory.Count - 1)
                                 inventory_index++;
                         //INSERT
                         if (selection_index != 4)  //move selection box down (and stop at 4 so we don't go out of bounds)
@@ -195,6 +218,9 @@ namespace Game_Demo
                             {
                                 inventory_alpha = 1;  //show inventory menu
                                 selection_index = 1;
+                                start = 0;
+                                end = 3;
+                                inventory_index = 0;
                             }
                             else if (selection_index == 4) //flee
                             {
@@ -242,13 +268,15 @@ namespace Game_Demo
             {
                 _spriteBatch.Draw(menu_box, new Rectangle(119, 308, 150, 155), Color.White); //options menu
                 _spriteBatch.Draw(current_fighter, new Rectangle(495, 360 + (19 * current_character), 12, 14), Color.White); //point to current fighter
-                if (inventory_alpha == 0f) //while inventory menu hidden, enable red selection box
+                if (inventory_alpha == 0f && !Battle.selection) //while inventory menu hidden, enable red selection box
                     _spriteBatch.Draw(item_selection, new Rectangle(130, 304 + (27 * selection_index), 105, 29), Color.White);
             }
             if (inventory_alpha == 1f) //inventory menu
             {
                 _spriteBatch.Draw(inventory_box, new Rectangle(213, 308, 273, 155), Color.White); //box
-                _spriteBatch.Draw(menu_up, new Rectangle(254, 313, 13, 11), Color.White); //up arrow
+                if (inventory_index != 0 && selection_index > 0)
+                    _spriteBatch.Draw(menu_up, new Rectangle(254, 313, 13, 11), Color.White); //up arrow
+                if (inventory_index != Game1.inventory.Count - 1 && selection_index < 5)
                 _spriteBatch.Draw(menu_down, new Rectangle(254, 443, 13, 11), Color.White); //down arrow
                 _spriteBatch.Draw(item_selection, new Rectangle(225, 304 + (27 * selection_index), 105, 29), Color.White);  //red selection box
                     
@@ -371,9 +399,23 @@ namespace Game_Demo
             }
             if (inventory_alpha == 1f) //inventory menu
             {
+                //Debug.WriteLine(output);
                 //INSERT
-                int start = 0;
-                if (inventory_index > 3)
+                if (inventory_index == end + 1)
+                {
+                    start++;
+                    end++;
+                }
+                if (inventory_index == start - 1)
+                {
+                    start--;
+                    end--;
+                }
+                for (int i = start; i <= end; i++)
+                {
+                    _spriteBatch.DrawString(Game1.large_font, Game1.inventory[i].name, new Vector2(234, 334 + ((i - start) * 27)), Color.Black);
+                }
+                /*if (inventory_index > 3)
                 {
                     start = inventory_index - 3;
                 }
@@ -390,7 +432,7 @@ namespace Game_Demo
                     {
                         _spriteBatch.DrawString(Game1.large_font, Game1.inventory[i].name, new Vector2(234, 334 + ((i - start) * 27)), Color.Black);
                     }
-                }
+                }*/
                 //INSERT
 
                 //REMOVE

@@ -36,6 +36,8 @@ namespace Game_Demo
         public void LoadBattle()
         {
             //no map change!
+            Battle.endBattle = false;
+            BattleUI.ResetScreen();
             _screenManager.LoadScreen(new Battle(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 

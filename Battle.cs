@@ -24,7 +24,7 @@ namespace Game_Demo
         public static bool selection = false;
 
         public static bool alratk = false; //already attacked
-        private bool endBattle = false;
+        public static bool endBattle = false;
         public static bool tpk = false;
         public static int itemType = 0;
         public static List<int> atkbuf = new List<int>{};
@@ -78,7 +78,7 @@ namespace Game_Demo
         public override void Draw(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-            endBattle = false;
+            //endBattle = false;
             int totH = 0;
             int tTotH = 0;
             foreach (Entity e in Game1.enemies)
@@ -89,7 +89,7 @@ namespace Game_Demo
             {
                 tTotH += e.health;
             }
-            if (totH < 1)
+            if (BattleUI.output == "x")
             {
                 endBattle = true;
             }
