@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Content/Maps/forest.tmx",
+    "activeFile": "Content/Maps/city.tmx",
     "expandedProjectPaths": [
-        "Content/Images",
+        "Content/Tilesets",
         "Content/Maps",
-        "Content/Tilesets"
+        "Content/Images"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -85,28 +85,28 @@
         "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Tilesets/Outside_C.tsx": {
             "scaleInDock": 1
         },
-        "Content/Maps/city.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 2,
+        "Content/Maps/City_Bar.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 1032,
-                "y": 1031
+                "x": 240,
+                "y": 372
             }
-        }, 
-		"Content/Maps/City_Castle.tmx": {
+        },
+        "Content/Maps/City_Bar_Inn.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 372
+            }
+        },
+        "Content/Maps/City_Castle.tmx": {
             "scale": 0.5,
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 960,
                 "y": 720
-            }
-        },
-        "Content/Maps/forest.tmx": {
-            "scale": 1,
-            "selectedLayer": 4,
-            "viewCenter": {
-                "x": 441.5,
-                "y": 225.5
             }
         },
         "Content/Maps/City_EquipShop.tmx": {
@@ -125,28 +125,12 @@
                 "y": 240
             }
         },
-        "Content/Maps/City_Bar.tmx": {
-            "scale": 1,
+        "Content/Maps/MountianEntrance.tmx": {
+            "scale": 0.25,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 240,
-                "y": 372
-            }
-        },
-        "Content/Maps/City_Bar_Inn.tmx": {
-            "scale": 1,
-            "selectedLayer": 4,
-            "viewCenter": {
-                "x": 240,
-                "y": 372
-            }
-        },
-        "Content/Maps/Village2_PotionsShop.tmx": {
-            "scale": 1,
-            "selectedLayer": 4,
-            "viewCenter": {
-                "x": 240,
-                "y": 240
+                "x": 480,
+                "y": 960
             }
         },
         "Content/Maps/Village2_EquipShop.tmx": {
@@ -157,12 +141,28 @@
                 "y": 240
             }
         },
-        "Content/Maps/MountianEntrance.tmx": {
-            "scale": 0.25,
+        "Content/Maps/Village2_PotionsShop.tmx": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 240,
+                "y": 240
+            }
+        },
+        "Content/Maps/city.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 1033,
+                "y": 1031
+            }
+        },
+        "Content/Maps/forest.tmx": {
+            "scale": 1,
             "selectedLayer": 4,
             "viewCenter": {
                 "x": 480,
-                "y": 960
+                "y": 239.5
             }
         },
         "Content/Maps/forest1.tmx": {
@@ -294,11 +294,13 @@
     "map.tileHeight": 48,
     "map.tileWidth": 48,
     "openFiles": [
-        "Content/Maps/forest.tmx"
+        "Content/Maps/forest.tmx",
+        "Content/Maps/city.tmx"
     ],
     "project": "nobody.tiled-project",
     "recentFiles": [
         "Content/Maps/forest.tmx",
+        "Content/Maps/city.tmx",
         "Content/Tilesets/Door.tsx",
         "Content/Tilesets/Inside_A2.tsx",
         "Content/Tilesets/Inside_A4.tsx",
@@ -307,16 +309,7 @@
         "Content/Maps/home.tmx",
         "Content/Maps/forestpath2.tmx",
         "Content/Maps/forestpath1.tmx",
-        "Content/Maps/city.tmx",
         "Content/Maps/City_Castle.tmx",
-        "Content/Maps/City_Bar.tmx",
-        "Content/Maps/City_Bar_Inn.tmx",
-        "Content/Maps/City_EquipShop.tmx",
-        "Content/Maps/City_PotionShop.tmx",
-        "Content/Maps/Village2_EquipShop.tmx",
-        "Content/Maps/Village2_PotionsShop.tmx",
-        "Content/Maps/MountianEntrance.tmx",
-        "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/forest.tmx",
-        "C:/Users/porte/Source/Repos/shadowartist201/F22-Capstone-Group-25/Content/Maps/city.tmx"
+        "Content/Maps/City_Bar.tmx"
     ]
 }
