@@ -19,7 +19,7 @@ namespace Game_Demo
 
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
-        private EntityTest NPC1 = new(null, new Vector2(100, 100), false, false);
+        private EntityTest NPC1 = new(null, new Vector2(700, 300), false, false);
         private EntityTest NPC2 = new(null, new Vector2(300, 300), false, false);
         private EntityTest NPC3 = new(null, new Vector2(150, 550), false, false);
 
