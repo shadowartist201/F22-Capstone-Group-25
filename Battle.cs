@@ -36,21 +36,19 @@ namespace Game_Demo
         {
             //new Entity(name, HP, max HP, MP, max MP, attack, magic attack, defense, magic defense, speed)
             //TO DO: clear this out, testing inputs will need this cleared
-            Game1.enemies.Clear();
-            Game1.enemies.Add(new Entity("Dragon", 180, 180, 0, 0, 10, 15, 0, 0));
-            Game1.enemies.Add(new Entity("TestEntity", 10, 10, 0, 0, 0, 0, 0, 0));
-            atkbuf.Add(0);
-            defbuf.Add(0);
-            atkbuf.Add(0);
-            defbuf.Add(0);
-            atkbool.Add(false);
-            defbool.Add(false);
-            atkbool.Add(false);
-            defbool.Add(false);
-
             Game1.squad.Clear();
             Game1.squad.Add(new Entity("Nobody", 100, 100, 10, 10, 5, 10, 10, 12));
             Game1.squad.Add(new Entity("Cat", 50, 50, 0, 0, 5, 10, 5, 7));
+            Game1.enemies.Clear();
+            Game1.enemies.Add(new Entity("Dragon", 180, 180, 0, 0, 10, 15, 0, 0));
+            Game1.enemies.Add(new Entity("TestEntity", 10, 10, 0, 0, 0, 0, 0, 0));
+            foreach(Entity e in Game1.squad)
+            {
+                atkbuf.Add(0);
+                defbuf.Add(0);
+                atkbool.Add(false);
+                defbool.Add(false);
+            }
 
             base.Initialize();
         }
