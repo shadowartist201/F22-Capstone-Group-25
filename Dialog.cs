@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
+using DavyKager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -11,8 +13,21 @@ namespace Game_Demo
     public class Dialog //master class
     {
         DialogBox dialogBox;
+
+        public static string concatInventory(List<Item> item)
+        {
+            Debug.WriteLine(item.Count + " | " + Game1.inventory.Count);
+            string inventList = "";
+            foreach (Item i in item)
+            {
+                inventList += i.name;
+                //Debug.WriteLine(inventList);
+            }
+            return inventList;
+        }
         public void MakeBox(string text, SpriteFont dialogFont, GraphicsDevice graphicsDevice, OrthographicCamera _camera)
         {
+            World.box_ok.Play();
             dialogBox = new DialogBox(graphicsDevice, _camera)
             {
                 Text = text,
@@ -223,6 +238,9 @@ namespace Game_Demo
             _stopwatch.Start();
 
             _pages = WordWrap(Text);
+
+            Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
+            //Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
         }
 
         /// <summary>
@@ -235,6 +253,8 @@ namespace Game_Demo
             _stopwatch.Stop();
 
             _stopwatch = null;
+
+            Tolk.Silence();
         }
 
         /// <summary>
@@ -249,6 +269,7 @@ namespace Game_Demo
                 // Button press will proceed to the next page of the dialog box
                 if (Input.SinglePress() == "enter")
                 {
+                    World.box_navi.Play();
                     if (_currentPage >= _pages.Count - 1)
                     {
                         Hide();
@@ -258,6 +279,8 @@ namespace Game_Demo
                     {
                         _currentPage++;
                         _stopwatch.Restart();
+                        Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
+                       // Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
                     }
                 }
 
@@ -392,5 +415,7 @@ namespace Game_Demo
 
         public static string Village1_NPC1 = "This is a test for NPC1. I am a square made in MS Paint and I like to eat cake.";
         public static string Village1_NPC2 = "This is a test for NPC2. I am a friendly square, so please add me on Instagram :)";
+        public static string Village1_NPC3 = Dialog.concatInventory(Game1.inventory);
+        public static string Home_NPC4 = Dialog.concatInventory(Game1.inventory);
     }
 }
