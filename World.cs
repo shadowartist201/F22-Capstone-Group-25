@@ -29,7 +29,7 @@ namespace Game_Demo
 
         public static Vector2 Movement() //convert keyboard input to Vector2 for camera move
         {
-            Debug.WriteLine(instance.State);
+            //Debug.WriteLine(instance.State);
             string result = Input.Hold();
             if (result != "up" && result != "down" && result != "left" && result != "right")
             {

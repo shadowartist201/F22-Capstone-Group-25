@@ -12,7 +12,7 @@ namespace Game_Demo
         private new Game1 Game => (Game1)base.Game;
         public Home(Game1 game) : base(game) { }
 
-        private List<Item> chestHomeinv = new List<Item> { new Item("Small potion", "Heals 20 health") };
+        private List<Item> chestHomeinv = new List<Item> { new Item("Attack UP", "An attack booster") };
 
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
@@ -22,6 +22,7 @@ namespace Game_Demo
 
 
         private bool talkToNPCHomeChest = false;
+        private bool checkNPCChest = false;
         /* 
          * private SoundEffect soundEffect;
          * private SoundEffectInstance instance;
@@ -68,12 +69,19 @@ namespace Game_Demo
                     {
                         Game1.inventory.Add(i);
                     }
-                    NPCHomeChest.MakeDialogBox(DialogText.Village1_NPC3, GraphicsDevice); //make box
+                    if(checkNPCChest == false)
+                    {
+                        NPCHomeChest.MakeDialogBox(Dialog.concatInventory(Game1.inventory), GraphicsDevice); //make box
+                        checkNPCChest = true;
+                    }
+                    
                 }
 
             if (talkToNPCHomeChest) //if flag is true
-                if (NPCHomeChest.DialogUpdate() == "hidden") //when box is closed
-                    talkToNPCHomeChest = false; //clear flag
+                if (NPCHomeChest.DialogUpdate() == "hidden")//when box is closed
+                {
+                    //talkToNPCHomeChest = false; //clear flag
+                }
                 else
                     NPCHomeChest.DialogUpdate(); //update box
 

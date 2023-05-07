@@ -1,7 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using MonoGame.Extended.Animations;
 using MonoGame.Extended.Screens;
+using MonoGame.Extended.Serialization;
+using MonoGame.Extended.Content;
+using MonoGame.Extended.Sprites;
+using System.Collections.Generic;
 
 namespace Game_Demo
 {
@@ -12,6 +17,9 @@ namespace Game_Demo
 
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
+        private EntityTest NPC1 = new(null, new Vector2(240, 240), false, false);
+
+        private bool talkToNPC1 = false;
 
         public override void LoadContent()
         {
@@ -20,7 +28,9 @@ namespace Game_Demo
 
             Tiled.LoadMap("City_PotionShop", Content, GraphicsDevice); //load map
             Transition.LoadTransition();
-            _camera.LookAt(Tiled.startingPosition); //set camera position
+            _camera.LookAt(Tiled.startingPosition); //set starting position
+
+            NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1"); //load sprite img
 
             World.LoadAnim(Content);
 
@@ -33,17 +43,32 @@ namespace Game_Demo
             Tiled.currentPosition = _camera.Center;
             Transition.TransitionCheck();
 
+            if (Collision.CollisionCheck_Entity(NPC1) == Color.Blue && talkToNPC1 == false) //if near NPC1 and not spoken to
+                if (Input.SinglePress() == "enter")
+                {
+                    talkToNPC1 = true; //set flag to true
+                    NPC1.MakeDialogBox(DialogText.Potion_NPC1, GraphicsDevice); //make box
+                }
+
+            if (talkToNPC1) //if flag is true
+                if (NPC1.DialogUpdate() == "hidden") //when box is closed
+                    talkToNPC1 = false; //clear flag
+                else
+                    NPC1.DialogUpdate(); //update box
+
+
             if (Collision.CollisionCheck() == Color.Green) //if collided
-            {
-                World.collided.Play();
                 return;
-            }
-            World.collided.Stop();
+            if (Collision.CollisionCheck_Entity(NPC1) == Color.Green)
+                return;
 
             World.UpdateAnim(gameTime);
 
-            Vector2 movementDirection = World.Movement(); //get movement direction
-            _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds());
+            if (!talkToNPC1) //if not speaking to an NPC, player can move
+            {
+                Vector2 movementDirection = World.Movement(); //get movement direction
+                _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -54,7 +79,17 @@ namespace Game_Demo
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
             //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+            _spriteBatch.Draw(NPC1.sprite, new Rectangle((int)NPC1.position.X, (int)NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+
             World.DrawAnim(_spriteBatch);
+
+            _spriteBatch.End();
+            //-------------------- //Must be a different spriteBatch for box to appear correctly
+            _spriteBatch.Begin();
+
+            if (talkToNPC1)
+                NPC1.DialogDraw(_spriteBatch);
+
 
             _spriteBatch.End();
         }

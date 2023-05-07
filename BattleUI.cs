@@ -445,7 +445,7 @@ namespace Game_Demo
         } //draw UI boxes
 
         public static void DrawText(SpriteBatch _spriteBatch)
-        {
+        { 
             //debug text
             _spriteBatch.DrawString(Game1.medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
             _spriteBatch.DrawString(Game1.medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);

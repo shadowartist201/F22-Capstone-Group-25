@@ -16,10 +16,12 @@ namespace Game_Demo
 
         public static string concatInventory(List<Item> item)
         {
+            Debug.WriteLine(item.Count + " | " + Game1.inventory.Count);
             string inventList = "";
             foreach (Item i in item)
             {
-                inventList = string.Concat(inventList, i.name);
+                inventList += i.name;
+                //Debug.WriteLine(inventList);
             }
             return inventList;
         }
@@ -238,7 +240,7 @@ namespace Game_Demo
             _pages = WordWrap(Text);
 
             Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
-            Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
+            //Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
         }
 
         /// <summary>
@@ -278,7 +280,7 @@ namespace Game_Demo
                         _currentPage++;
                         _stopwatch.Restart();
                         Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
-                        Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
+                       // Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
                     }
                 }
 
@@ -405,14 +407,37 @@ namespace Game_Demo
 
     public class DialogText //handles dialog text for the box
     {
-        public static string Demo = "Hello World! Press Enter to proceed.\n" +
-                      "I will be on the next pane! " +
-                      "And wordwrap will occur, especially if there are some longer words!\n" +
-                      "Monospace fonts work best but you might not want Courier New.\n" +
-                      "In this code sample, after this dialog box finishes, you can press the O key to open a new one.";
+        public static string Demo = "Hello! Welcome to our game!\n"+
+                                    "We hope you enjoy it!\n";
 
-        public static string Village1_NPC1 = "This is a test for NPC1. I am a square made in MS Paint and I like to eat cake.";
-        public static string Village1_NPC2 = "This is a test for NPC2. I am a friendly square, so please add me on Instagram :)";
+        public static string Village1_NPC1 = "Hey! You! You shouldn't go any further unless you know how to fight!\n" + 
+                                              "I can teach you if you want. It's pretty simple.\n"+
+                                              "You just need to decide whether you want to attack with your weapon, with your magic, or use an item.\n"+
+                                              "If you don't have a weapon now, that's ok. Just attack with your fists!\n";
+        public static string Village1_NPC2 = "Get out of my face, loser. You're Nobody.\n";
+        public static string City_NPC1 =     "Welcome to the city! Here you can buy items with the gold you've collected.\n"+
+                                             "You can also talk with everyone here!\n"+
+                                             "Make sure you talk with our leader. He said he wanted to talk to anyone suspicious that comes in.\n"+
+                                             "He's in the big castle to the north of here.\n";
+        public static string City_NPC2 = "Hey! What are you doing in this city?\n" +
+                                         "I heard a story of a traveller with great powers that would come here one day.\n"+
+                                         "You need to talk to our leader. He'll be in the castle in the North part of town.\n"+
+                                         "You'll need to go back to the South, then West, and then back up North.\n";
+        public static string Castle_NPC1 = "Hello traveller. I had heard of your arrival to our city.\n" +
+                                           "It's not often that we get travellers here.\n"+
+                                           "If you are who I think you are, we're all in grave danger.\n"+
+                                           "There exists a prophecy that foretells the end of the world!\n"+
+                                           "I believe that you are the one who will bring it.\n"+
+                                           "You must fight with me to prove your strength if you want to change my mind about you!\n";
+        public static string CityBar_NPC1 = "Welcome to the city bar!\n" +
+                                            "Unfortunately we don't have any refreshments to offer at this time.\n"+
+                                            "Come back soon!\n";
+        public static string EquipShop_NPC1 = "Welcome to the city's equipment shop!\n" +
+                                              "Unfortunately we don't have any items for sale right now.\n"+
+                                              "Come back soon!\n";
+        public static string Potion_NPC1 = "Welcome to the city's potion shop!\n" +
+                                           "Unfortunately we don't have any potions for sale right now.\n"+
+                                           "Come back soon!\n";
         public static string Village1_NPC3 = Dialog.concatInventory(Game1.inventory);
         public static string Home_NPC4 = Dialog.concatInventory(Game1.inventory);
     }

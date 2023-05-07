@@ -19,12 +19,16 @@ namespace Game_Demo
 
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
-        private EntityTest NPC1 = new(null, new Vector2(100, 100), false, false);
+        private EntityTest NPC1 = new(null, new Vector2(700, 300), false, false);
         private EntityTest NPC2 = new(null, new Vector2(300, 300), false, false);
         private EntityTest NPC3 = new(null, new Vector2(150, 550), false, false);
+
         private bool talkToNPC1 = false;
+        
         private bool talkToNPC2 = false;
+
         private bool talkToNPC3 = false;
+        private bool checkNPC3 = false;
 
         public override void LoadContent()
         {
@@ -56,6 +60,7 @@ namespace Game_Demo
                     talkToNPC1 = true; //set flag to true
                     NPC1.MakeDialogBox(DialogText.Village1_NPC1, GraphicsDevice); //make box
                 }
+
             if (talkToNPC1) //if flag is true
                 if (NPC1.DialogUpdate() == "hidden") //when box is closed
                     talkToNPC1 = false; //clear flag
@@ -67,6 +72,7 @@ namespace Game_Demo
                 {
                     talkToNPC2 = true; //set flag to true
                     NPC2.MakeDialogBox(DialogText.Village1_NPC2, GraphicsDevice); //make box
+                        
                 }
             if (talkToNPC2) //if flag is true
                 if (NPC2.DialogUpdate() == "hidden") //when box is closed
@@ -82,7 +88,12 @@ namespace Game_Demo
                     {
                         Game1.inventory.Add(i);
                     }
-                    NPC3.MakeDialogBox(DialogText.Village1_NPC3, GraphicsDevice); //make box
+                    
+                    if (checkNPC3 == false)
+                    {
+                        NPC3.MakeDialogBox(Dialog.concatInventory(Game1.inventory), GraphicsDevice); //make box
+                        checkNPC3 = true;
+                    }
                 }
 
             if (talkToNPC3) //if flag is true
