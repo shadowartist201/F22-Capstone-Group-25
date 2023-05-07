@@ -47,7 +47,7 @@ namespace Game_Demo
                 if (Input.SinglePress() == "enter")
                 {
                     talkToNPC1 = true; //set flag to true
-                    NPC1.MakeDialogBox(DialogText.Village1_NPC1, GraphicsDevice); //make box
+                    NPC1.MakeDialogBox(DialogText.EquipShop_NPC1, GraphicsDevice); //make box
                 }
 
             if (talkToNPC1) //if flag is true
