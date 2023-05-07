@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Animations;
@@ -17,7 +17,7 @@ namespace Game_Demo
 
         private SpriteBatch _spriteBatch;
         private OrthographicCamera _camera;
-        private EntityTest NPC1 = new(null, new Vector2(336, 384), false, false);
+        private EntityTest CityBar_NPC1 = new(null, new Vector2(125, 100), false, false);
 
         private bool talkToNPC1 = false;
 
@@ -30,7 +30,7 @@ namespace Game_Demo
             Transition.LoadTransition();
             _camera.LookAt(Tiled.startingPosition); //set starting position
 
-            NPC1.sprite = Content.Load<Texture2D>("World/Village1_NPC1"); //load sprite img
+            CityBar_NPC1.sprite = Content.Load<Texture2D>("World/npc5");
 
             World.LoadAnim(Content);
 
@@ -43,18 +43,17 @@ namespace Game_Demo
             Tiled.currentPosition = _camera.Center;
             Transition.TransitionCheck();
 
-            if (Collision.CollisionCheck_Entity(NPC1) == Color.Blue && talkToNPC1 == false) //if near NPC1 and not spoken to
+            if (Collision.CollisionCheck_Entity(CityBar_NPC1) == Color.Blue && talkToNPC1 == false) //if near NPC1 and not spoken to
                 if (Input.SinglePress() == "enter")
                 {
                     talkToNPC1 = true; //set flag to true
-                    NPC1.MakeDialogBox(DialogText.Village1_NPC1, GraphicsDevice); //make box
+                    CityBar_NPC1.MakeDialogBox(DialogText.CityBar_NPC1, GraphicsDevice); //make box
                 }
-
             if (talkToNPC1) //if flag is true
-                if (NPC1.DialogUpdate() == "hidden") //when box is closed
+                if (CityBar_NPC1.DialogUpdate() == "hidden") //when box is closed
                     talkToNPC1 = false; //clear flag
                 else
-                    NPC1.DialogUpdate(); //update box
+                    CityBar_NPC1.DialogUpdate(); //update box
 
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
@@ -79,7 +78,7 @@ namespace Game_Demo
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
             //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
-            _spriteBatch.Draw(NPC1.sprite, new Rectangle((int)NPC1.position.X, (int)NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+            _spriteBatch.Draw(CityBar_NPC1.sprite, new Rectangle((int)CityBar_NPC1.position.X, (int)CityBar_NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
 
             World.DrawAnim(_spriteBatch);
 
@@ -88,7 +87,7 @@ namespace Game_Demo
             _spriteBatch.Begin();
 
             if (talkToNPC1)
-                NPC1.DialogDraw(_spriteBatch);
+                CityBar_NPC1.DialogDraw(_spriteBatch);
 
 
             _spriteBatch.End();
