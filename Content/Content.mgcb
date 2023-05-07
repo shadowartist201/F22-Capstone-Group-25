@@ -12,9 +12,10 @@
 
 /reference:/Users/michaellaufer/.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
 /reference:..\..\..\..\..\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
-/reference:../../../.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
+/reference:../../../../.nuget/packages/monogame.extended.content.pipeline/3.9.0-alpha0084/tools/MonoGame.Extended.Content.Pipeline.dll
 /reference:\Users\thijm\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
 /reference:\Users\nikot\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
+
 #---------------------------------- Content ---------------------------------#
 
 #begin Battle/bar-fill.png
@@ -430,6 +431,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:World/monster.png
+
+#begin World/npc3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:World/npc3.png
+
+#begin World/npc5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:World/npc5.png
 
 #begin World/player.png
 /importer:TextureImporter

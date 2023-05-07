@@ -63,7 +63,10 @@ namespace Game_Demo
                 }
 
             if (talkToNPC3) //if flag is true
-                NPC3.DialogUpdate(); //update box
+                if (NPC3.DialogUpdate() == "hidden") //when box is closed
+                    talkToNPC3 = false; //clear flag
+                else
+                    NPC3.DialogUpdate(); //update box
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
                 return;
