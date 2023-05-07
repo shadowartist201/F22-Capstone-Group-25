@@ -58,7 +58,7 @@ namespace Game_Demo
 
             if (Collision.CollisionCheck() == Color.Green) //if collided
                 return;
-            if (Collision.CollisionCheck_Entity(NPC1) == Color.Green)
+            if (Collision.CollisionCheck_Entity(CityBar_NPC1) == Color.Green)
                 return;
 
             World.UpdateAnim(gameTime);
