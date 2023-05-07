@@ -33,8 +33,8 @@ namespace Game_Demo
             grass = _tiledMap.GetLayer<TiledMapTileLayer>("Grass");
 
             //mapEffect = new TiledMapEffect(content.Load<Effect>("MapEffect")); //load highlight effect (just in case)
-            byte[] bytecode = File.ReadAllBytes("Content/mapEffect2.mgfx");
-            mapEffect = new TiledMapEffect(new Effect(graphicsDevice, bytecode));
+            //byte[] bytecode = File.ReadAllBytes("Content/mapEffect2.mgfx");
+            //mapEffect = new TiledMapEffect(new Effect(graphicsDevice, bytecode));
 
             switch (tilemap) //switch based on map name
             {

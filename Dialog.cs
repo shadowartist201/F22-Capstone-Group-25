@@ -135,6 +135,11 @@ namespace Game_Demo
         private int _currentPage;
 
         /// <summary>
+        /// The index of the previously used page
+        /// </summary>
+        private int _prevPage = -1;
+
+        /// <summary>
         /// The stopwatch interval (used for blinking indicator)
         /// </summary>
         private int _interval;
@@ -237,7 +242,6 @@ namespace Game_Demo
 
             _pages = WordWrap(Text);
 
-            Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
             Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
         }
 
@@ -252,7 +256,6 @@ namespace Game_Demo
 
             _stopwatch = null;
 
-            Tolk.Silence();
         }
 
         /// <summary>
@@ -277,7 +280,6 @@ namespace Game_Demo
                     {
                         _currentPage++;
                         _stopwatch.Restart();
-                        Tolk.Speak(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""), true);
                         Debug.WriteLine(Regex.Replace(_pages[_currentPage], @"\t|\n|\r", ""));
                     }
                 }
@@ -311,6 +313,19 @@ namespace Game_Demo
 
                 // Draw the current page onto the dialog box
                 spriteBatch.DrawString(DialogFont, _pages[_currentPage], TextPosition, DialogColor);
+                ProcessStartInfo startInfo = new ProcessStartInfo()
+                {
+                    FileName = "/usr/bin/say",
+                    Arguments = "-v Alex " + _pages[_currentPage],
+                };
+                Process sayit = new Process() { StartInfo = startInfo};
+                
+                if (_currentPage != _prevPage)
+                {
+
+                    sayit.Start();
+                    _prevPage = _currentPage;
+                }
 
                 // Draw a blinking indicator to guide the player through to the next page
                 // This stops blinking on the last page
@@ -323,6 +338,8 @@ namespace Game_Demo
                     spriteBatch.DrawString(DialogFont, ">", indicatorPosition, Color.Red);
                 }
             }
+            else
+                _prevPage = -1;
         }
 
         /// <summary>

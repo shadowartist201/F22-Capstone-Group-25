@@ -37,8 +37,6 @@ namespace Game_Demo
             IsMouseVisible = true;
             _screenManager = new ScreenManager();
             Components.Add(_screenManager);
-            Tolk.Load();
-            Tolk.TrySAPI(false);
         }
 
         public void LoadBattle()
@@ -134,112 +132,96 @@ namespace Game_Demo
             if (state.IsKeyDown(Keys.A) || SwitchBattle)
             {
                 SwitchBattle = false;
-                Tolk.Silence();
                 LoadBattle();
             }
             else if (state.IsKeyDown(Keys.S) || SwitchHome)
             {
                 inBattle = false;
                 SwitchHome = false;
-                Tolk.Silence();
                 LoadHome();
             }
             else if (state.IsKeyDown(Keys.D) || SwitchVillage)
             {
                 inBattle = false;
                 SwitchVillage = false;
-                Tolk.Silence();
                 LoadVillage1();
             }
             else if (state.IsKeyDown(Keys.F) || SwitchForest)
             {
                 inBattle = false;
                 SwitchForest = false;
-                Tolk.Silence();
                 LoadForest();
             }
             else if (state.IsKeyDown(Keys.G) || SwitchCity)
             {
                 inBattle = false;
                 SwitchCity = false;
-                Tolk.Silence();
                 LoadCity();
             }
             else if (state.IsKeyDown(Keys.M) || SwitchForestPath1)
             {
                 inBattle = false;
                 SwitchForestPath1 = false;
-                Tolk.Silence();
                 LoadForestPath1();
             }
             else if (state.IsKeyDown(Keys.N) || SwitchForestPath2)
             {
                 inBattle = false;
                 SwitchForestPath2 = false;
-                Tolk.Silence();
                 LoadForestPath2();
             }
             else if (state.IsKeyDown(Keys.B) || SwitchMiddleVillage)
             {
                 inBattle = false;
                 SwitchMiddleVillage = false;
-                Tolk.Silence();
                 LoadMiddleVillage();
             }
             else if (state.IsKeyDown(Keys.T) || SwitchCityCastle)
             {
                 inBattle = false;
                 SwitchCityCastle = false;
-                Tolk.Silence();
                 LoadCityCastle();
             }
             else if (state.IsKeyDown(Keys.P) || SwitchCity_Bar)
             {
                 inBattle = false;
                 SwitchCity_Bar = false;
-                Tolk.Silence();
                 LoadCity_Bar();
             }
             else if (state.IsKeyDown(Keys.O) || SwitchCity_Bar_Inn)
             {
                 inBattle = false;
                 SwitchCity_Bar_Inn = false;
-                Tolk.Silence();
                 LoadCity_Bar_Inn();
             }
             else if (state.IsKeyDown(Keys.L) || SwitchCity_EquipShop)
             {
                 inBattle = false;
                 SwitchCity_EquipShop = false;
-                Tolk.Silence();
                 LoadCity_EquipShop();
             }
             else if (state.IsKeyDown(Keys.K) || SwitchCity_PotionShop)
             {
                 inBattle = false;
                 SwitchCity_PotionShop = false;
-                Tolk.Silence();
                 LoadCity_PotionShop();
             }
             else if (state.IsKeyDown(Keys.H) || SwitchMountianEntrance)
             {
                 inBattle = false;
                 SwitchMountianEntrance = false;
-                Tolk.Silence();
                 LoadMountianEntrance();
             }
             else if (state.IsKeyDown(Keys.Y) || SwitchVillage2_EquipShop)
             {
                 inBattle = false;
                 SwitchVillage2_EquipShop = false;
-                Tolk.Silence();
                 LoadVillage2_EquipShop();
             }
             else if (state.IsKeyDown(Keys.V) || SwitchVillage2_PotionsShop)
             {
                 inBattle = false;
                 SwitchVillage2_PotionsShop = false;
-                Tolk.Silence();
                 LoadVillage2_PotionsShop();
             }
             else if (Tiled.BattleReturn)
