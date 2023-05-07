@@ -80,7 +80,8 @@ namespace Game_Demo
 
         public static void Update_()
         {
-            Debug.WriteLine("Selection: " + selection_index + " | Battle: " + Battle.target);
+            Debug.WriteLine("Message: " + message_alpha + " | Item: " + item_message + " hi");
+            //Debug.WriteLine("Selection: " + selection_index + " | Battle: " + Battle.target);
             if (flee_message)  //if flee message activated
             {
                 if (Input.SinglePress() == "enter")  //check for enter
@@ -305,6 +306,7 @@ namespace Game_Demo
 
         public static void DrawBoxes(SpriteBatch _spriteBatch)
         {
+            
             _spriteBatch.Draw(enemy_box, new Rectangle(14, 336, 160, 128), Color.White); //enemy info box
             _spriteBatch.Draw(party_info, new Rectangle(488, 336, 301, 128), Color.White); //party info box
 
@@ -358,32 +360,6 @@ namespace Game_Demo
                     menu_alpha = 0f;
                     _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                 }
-                if (item_message)
-                {
-                    menu_alpha = 0f;
-                    switch (Game1.inventory[inventory_index].name)
-                    {
-                        case "Small potion":
-                            Battle.itemType = 1;
-                            break;
-                        case "Large potion":
-                            Battle.itemType = 2;
-                            break;
-                        case "Mana potion":
-                            Battle.itemType = 3;
-                            break;
-                        case "attack buff":
-                            Battle.itemType = 4;
-                            break;
-                        case "defense buff":
-                            Battle.itemType = 5;
-                            break;
-                        default:
-                            Battle.itemType = -1;
-                            break;
-                    }
-                    _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
-                }
                 if(item_message)
                 {
                     menu_alpha = 0f;
@@ -391,24 +367,36 @@ namespace Game_Demo
                     {
                         case "Small potion":
                             Battle.itemType = 1;
+                            _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " was healed for " + 20 + " HP!", new Vector2(205, 361), Color.Black);
                             break;
-                        case "Large potion":
+                        case "HP potion L":
                             Battle.itemType = 2;
+                            _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " was healed for " + 50 + " HP!", new Vector2(205, 361), Color.Black);
                             break;
                         case "Mana potion":
                             Battle.itemType = 3;
+                            _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " had " + 50 + " mana restored!", new Vector2(205, 361), Color.Black);
                             break;
-                        case "attack buff":
+                        case "Attack UP":
                             Battle.itemType = 4;
+                            BattleUI.menu_alpha = 0f; //hide menu
+                            _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " is feeling the effects \nof " + Game1.inventory[BattleUI.inventory_index].name, new Vector2(205, 361), Color.Black);
                             break;
-                        case "defense buff":
+                        case "Defense UP":
                             Battle.itemType = 5;
+                            BattleUI.menu_alpha = 0f; //hide menu
+                            _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                            _spriteBatch.DrawString(Game1.large_font, "*" + Game1.squad[BattleUI.current_character].name + " is feeling the effects \nof " + Game1.inventory[BattleUI.inventory_index].name, new Vector2(205, 361), Color.Black);
                             break;
                         default:
                             Battle.itemType = -1;
                             break;
                     }
-                    _spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
+                    //_spriteBatch.Draw(battle_message, new Rectangle(182, 336, 299, 128), Color.White);
                 }
             }
             if (Battle.selection)
@@ -447,10 +435,10 @@ namespace Game_Demo
         public static void DrawText(SpriteBatch _spriteBatch)
         { 
             //debug text
-            _spriteBatch.DrawString(Game1.medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
-            _spriteBatch.DrawString(Game1.medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);
-            _spriteBatch.DrawString(Game1.medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
-            _spriteBatch.DrawString(Game1.medium_font, "X - End Battle", new Vector2(310, 132), Color.White);
+            //_spriteBatch.DrawString(Game1.medium_font, "Enter - Select", new Vector2(310, 81), Color.White);
+            //_spriteBatch.DrawString(Game1.medium_font, "Backspace - Back", new Vector2(310, 98), Color.White);
+            //_spriteBatch.DrawString(Game1.medium_font, "Up/Down/Left/Right", new Vector2(310, 115), Color.White);
+            //_spriteBatch.DrawString(Game1.medium_font, "X - End Battle", new Vector2(310, 132), Color.White);
 
             //labels
             _spriteBatch.DrawString(Game1.large_font, "Dragon", new Vector2(41, 361), Color.Black);
@@ -572,7 +560,7 @@ namespace Game_Demo
                 if (item_message)
                 {
                     menu_alpha = 0f;
-                    _spriteBatch.DrawString(Game1.large_font, "Somehow this isnt working", new Vector2(205, 361), Color.Black);
+                    //_spriteBatch.DrawString(Game1.large_font, "Somehow this isnt working", new Vector2(205, 361), Color.Black);
                 }
 
             }
@@ -589,7 +577,7 @@ namespace Game_Demo
             int j = 0;
             foreach (Entity e in Game1.enemies)
             {
-                _spriteBatch.DrawString(Game1.medium_font, "Debug HP: " + e.health + " / " + e.mHealth, new Vector2(325, 217 + (j * 19)), Color.Cyan); //debug enemy HP
+                //_spriteBatch.DrawString(Game1.medium_font, "Debug HP: " + e.health + " / " + e.mHealth, new Vector2(325, 217 + (j * 19)), Color.Cyan); //debug enemy HP
                 j += 1;
             }
         } //draw text for boxes

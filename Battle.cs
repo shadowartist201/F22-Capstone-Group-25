@@ -92,7 +92,7 @@ namespace Game_Demo
             }
             if (BattleUI.output == "x")
             {
-                endBattle = true;
+                //endBattle = true;
             }
             if(tTotH<1)
             {

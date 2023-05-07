@@ -131,111 +131,111 @@ namespace Game_Demo
         {
             KeyboardState state = Keyboard.GetState();
 
-            if (state.IsKeyDown(Keys.A) || SwitchBattle)
+            if (SwitchBattle)
             {
                 SwitchBattle = false;
                 Tolk.Silence();
                 LoadBattle();
             }
-            else if (state.IsKeyDown(Keys.S) || SwitchHome)
+            else if (SwitchHome)
             {
                 inBattle = false;
                 SwitchHome = false;
                 Tolk.Silence();
                 LoadHome();
             }
-            else if (state.IsKeyDown(Keys.D) || SwitchVillage)
+            else if ( SwitchVillage)
             {
                 inBattle = false;
                 SwitchVillage = false;
                 Tolk.Silence();
                 LoadVillage1();
             }
-            else if (state.IsKeyDown(Keys.F) || SwitchForest)
+            else if (SwitchForest)
             {
                 inBattle = false;
                 SwitchForest = false;
                 Tolk.Silence();
                 LoadForest();
             }
-            else if (state.IsKeyDown(Keys.G) || SwitchCity)
+            else if ( SwitchCity)
             {
                 inBattle = false;
                 SwitchCity = false;
                 Tolk.Silence();
                 LoadCity();
             }
-            else if (state.IsKeyDown(Keys.M) || SwitchForestPath1)
+            else if ( SwitchForestPath1)
             {
                 inBattle = false;
                 SwitchForestPath1 = false;
                 Tolk.Silence();
                 LoadForestPath1();
             }
-            else if (state.IsKeyDown(Keys.N) || SwitchForestPath2)
+            else if ( SwitchForestPath2)
             {
                 inBattle = false;
                 SwitchForestPath2 = false;
                 Tolk.Silence();
                 LoadForestPath2();
             }
-            else if (state.IsKeyDown(Keys.B) || SwitchMiddleVillage)
+            else if ( SwitchMiddleVillage)
             {
                 inBattle = false;
                 SwitchMiddleVillage = false;
                 Tolk.Silence();
                 LoadMiddleVillage();
             }
-            else if (state.IsKeyDown(Keys.T) || SwitchCityCastle)
+            else if ( SwitchCityCastle)
             {
                 inBattle = false;
                 SwitchCityCastle = false;
                 Tolk.Silence();
                 LoadCityCastle();
             }
-            else if (state.IsKeyDown(Keys.P) || SwitchCity_Bar)
+            else if ( SwitchCity_Bar)
             {
                 inBattle = false;
                 SwitchCity_Bar = false;
                 Tolk.Silence();
                 LoadCity_Bar();
             }
-            else if (state.IsKeyDown(Keys.O) || SwitchCity_Bar_Inn)
+            else if ( SwitchCity_Bar_Inn)
             {
                 inBattle = false;
                 SwitchCity_Bar_Inn = false;
                 Tolk.Silence();
                 LoadCity_Bar_Inn();
             }
-            else if (state.IsKeyDown(Keys.L) || SwitchCity_EquipShop)
+            else if ( SwitchCity_EquipShop)
             {
                 inBattle = false;
                 SwitchCity_EquipShop = false;
                 Tolk.Silence();
                 LoadCity_EquipShop();
             }
-            else if (state.IsKeyDown(Keys.K) || SwitchCity_PotionShop)
+            else if  (SwitchCity_PotionShop)
             {
                 inBattle = false;
                 SwitchCity_PotionShop = false;
                 Tolk.Silence();
                 LoadCity_PotionShop();
             }
-            else if (state.IsKeyDown(Keys.H) || SwitchMountianEntrance)
+            else if ( SwitchMountianEntrance)
             {
                 inBattle = false;
                 SwitchMountianEntrance = false;
                 Tolk.Silence();
                 LoadMountianEntrance();
             }
-            else if (state.IsKeyDown(Keys.Y) || SwitchVillage2_EquipShop)
+            else if ( SwitchVillage2_EquipShop)
             {
                 inBattle = false;
                 SwitchVillage2_EquipShop = false;
                 Tolk.Silence();
                 LoadVillage2_EquipShop();
             }
-            else if (state.IsKeyDown(Keys.V) || SwitchVillage2_PotionsShop)
+            else if (SwitchVillage2_PotionsShop)
             {
                 inBattle = false;
                 SwitchVillage2_PotionsShop = false;
