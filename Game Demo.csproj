@@ -103,6 +103,12 @@
     <None Update="Content\player.sf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Content\World\npc3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\World\npc5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="DLLs\nvdaControllerClient64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
