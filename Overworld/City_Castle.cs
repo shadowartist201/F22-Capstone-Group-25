@@ -75,14 +75,12 @@ namespace Game_Demo
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
             _spriteBatch.Draw(Castle_NPC1.sprite, new Rectangle((int)Castle_NPC1.position.X, (int)Castle_NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
-
-            //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             World.DrawAnim(_spriteBatch);
 
             _spriteBatch.End();
 
             _spriteBatch.Begin();
-           // _spriteBatch.Draw(Castle_NPC1.sprite, new Rectangle((int)Castle_NPC1.position.X, (int)Castle_NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
+
             if (talkToNPC1)
                 Castle_NPC1.DialogDraw(_spriteBatch);
 

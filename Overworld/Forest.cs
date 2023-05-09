@@ -55,7 +55,6 @@ namespace Game_Demo
 
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
-            //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             World.DrawAnim(_spriteBatch);
 
             _spriteBatch.End();

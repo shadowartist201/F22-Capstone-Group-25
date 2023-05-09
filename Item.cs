@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 namespace Game_Demo
 {
 	public struct Item
@@ -10,12 +10,11 @@ namespace Game_Demo
 			name = "Name";
 			about = "About";
 		}
-		public Item(string n, string a)
+		public Item(string name_, string about_)
 		{
-			name = n;
-			about = a;
+			name = name_;
+			about = about_;
 		}
-
 	}
 }
 

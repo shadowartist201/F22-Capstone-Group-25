@@ -7,50 +7,49 @@ namespace Game_Demo
     public struct Entity
     {
         public string name; //entity name
-        public int health; //entity HP
-        public int mHealth; //max HP
-        public int mana; //entity MP
-        public int mMana; //max MP
+        public int HP; //entity HP
+        public int maxHP; //max HP
+        public int MP; //entity MP
+        public int maxMP; //max MP
         public int attack; //attack stat
-        public int spattack; //magic attack stat
-        public int def; //defense stat
-        public int spdef; //magic defense stat
+        public int spAttack; //magic attack stat
+        public int defense; //defense stat
+        public int spDefense; //magic defense stat
         public Entity()
         {
             name = "Something's wrong";
-            health = 1;
-            mHealth = 1;
-            mana = 0;
-            mMana = 0;
+            HP = 1;
+            maxHP = 1;
+            MP = 0;
+            maxMP = 0;
             attack = 0;
-            spattack = 0;
-            def = 0;
-            spdef = 0;
+            spAttack = 0;
+            defense = 0;
+            spDefense = 0;
         }
-        public Entity(string n, int h, int mh,int m, int mm, int a, int sa, int d, int sd)
-                  //string name, HP, max HP, MP, max MP, attack, magic attack, defense, magic defense, speed
+        public Entity(string name_, int HP_, int maxHP_,int MP_, int maxMP_, int attack_, int spAttack_, int defense_, int spDefense_)
         {
-            name = n;
-            health = h;
-            mHealth = mh;
-            mana = m;
-            mMana = mm;
-            attack = a;
-            spattack = sa;
-            def = d;
-            spdef = sd;
+            name = name_;
+            HP = HP_;
+            maxHP = maxHP_;
+            MP = MP_;
+            maxMP = maxMP_;
+            attack = attack_;
+            spAttack = spAttack_;
+            defense = defense_;
+            spDefense = spDefense_;
         }
-        public Entity(Entity e) //Entity entity
+        public Entity(Entity entity) //Entity entity
         {
-            name = e.name;
-            health = e.health;
-            mHealth = e.mHealth;
-            mana = e.mana;
-            mMana = e.mMana;
-            attack = e.attack;
-            spattack = e.spattack;
-            def = e.def;
-            spdef = e.spdef;
+            name = entity.name;
+            HP = entity.HP;
+            maxHP = entity.maxHP;
+            MP = entity.MP;
+            maxMP = entity.maxMP;
+            attack = entity.attack;
+            spAttack = entity.spAttack;
+            defense = entity.defense;
+            spDefense = entity.spDefense;
         }
     }
     public class EntityTest //for NPCs

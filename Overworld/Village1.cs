@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Animations;
 using MonoGame.Extended.Screens;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Sprites;
 using System.Collections.Generic;
+using System.Speech.Synthesis;
 
 namespace Game_Demo
 {
@@ -24,9 +21,7 @@ namespace Game_Demo
         private EntityTest NPC3 = new(null, new Vector2(150, 550), false, false);
 
         private bool talkToNPC1 = false;
-        
         private bool talkToNPC2 = false;
-
         private bool talkToNPC3 = false;
         private bool checkNPC3 = false;
 
@@ -58,6 +53,7 @@ namespace Game_Demo
                 if (Input.SinglePress() == "enter")
                 {
                     talkToNPC1 = true; //set flag to true
+                    Game1.speech.SelectVoiceByHints(VoiceGender.Male, VoiceAge.Adult);
                     NPC1.MakeDialogBox(DialogText.Village1_NPC1, GraphicsDevice); //make box
                 }
 
@@ -71,8 +67,9 @@ namespace Game_Demo
                 if (Input.SinglePress() == "enter")
                 {
                     talkToNPC2 = true; //set flag to true
+                    Game1.speech.SelectVoiceByHints(VoiceGender.Male, VoiceAge.Senior);
                     NPC2.MakeDialogBox(DialogText.Village1_NPC2, GraphicsDevice); //make box
-                        
+
                 }
             if (talkToNPC2) //if flag is true
                 if (NPC2.DialogUpdate() == "hidden") //when box is closed
@@ -91,6 +88,7 @@ namespace Game_Demo
                     
                     if (checkNPC3 == false)
                     {
+                        Game1.speech.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
                         NPC3.MakeDialogBox(Dialog.concatInventory(Game1.inventory), GraphicsDevice); //make box
                         checkNPC3 = true;
                     }
@@ -129,7 +127,6 @@ namespace Game_Demo
 
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
-            //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC1.sprite, new Rectangle((int)NPC1.position.X, (int)NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC2.sprite, new Rectangle((int)NPC2.position.X, (int)NPC2.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(NPC3.sprite, new Rectangle((int)NPC3.position.X, (int)NPC3.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
@@ -146,7 +143,6 @@ namespace Game_Demo
                 NPC2.DialogDraw(_spriteBatch);
             if (talkToNPC3)
                 NPC3.DialogDraw(_spriteBatch);
-
 
             _spriteBatch.End();
         }

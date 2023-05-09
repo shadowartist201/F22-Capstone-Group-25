@@ -6,10 +6,6 @@ using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using System.Collections.Generic;
-using SharpFont.MultipleMasters;
-using System.Reflection.Metadata;
-using MonoGame.Extended.Screens;
-using System.Diagnostics;
 
 namespace Game_Demo
 {
@@ -17,19 +13,19 @@ namespace Game_Demo
     {
         public static Texture2D player; //overworld player texture
         public static float movementSpeed = 200; //movement speed
+
         static SpriteSheet spriteSheet;
         static AnimatedSprite sprite;
         static AnimatedSprite _playerSprite;
+
         public static List<SoundEffect> soundEffects = new();
         public static SoundEffectInstance instance;
         public static SoundEffectInstance box_navi;
         public static SoundEffectInstance box_ok;
         public static SoundEffectInstance collided;
 
-
         public static Vector2 Movement() //convert keyboard input to Vector2 for camera move
         {
-            //Debug.WriteLine(instance.State);
             string result = Input.Hold();
             if (result != "up" && result != "down" && result != "left" && result != "right")
             {
@@ -53,20 +49,20 @@ namespace Game_Demo
         
         public static void LoadAnim(ContentManager Content)
         {
-            spriteSheet = Content.Load<SpriteSheet>("player.sf", new JsonContentLoader()); //load sprite anim info
+            spriteSheet = Content.Load<SpriteSheet>("World/player.sf", new JsonContentLoader()); //load sprite anim info
             sprite = new AnimatedSprite(spriteSheet);
             sprite.Play("idle");
             _playerSprite = sprite;
+
             instance = soundEffects[0].CreateInstance();
             box_navi = soundEffects[1].CreateInstance();
             box_ok = soundEffects[2].CreateInstance();
             collided = soundEffects[3].CreateInstance();
+
             box_navi.Volume = 0.45f;
             box_ok.Volume = 0.45f;
             instance.Volume = 0.45f;
             collided.Volume = 0.45f;
-            //collided.IsLooped = true;
-            //instance.IsLooped = true;
         }
 
         public static void UpdateAnim(GameTime gameTime)

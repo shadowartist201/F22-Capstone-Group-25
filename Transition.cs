@@ -23,7 +23,6 @@ namespace Game_Demo
         public static Rectangle middleVillageEquipTransition = new();
         public static Rectangle mountianEntranceTransition = new();
 
-
         public static List<Transition> transitions = new();
         public string Name;
         public RectangleF Bounds;

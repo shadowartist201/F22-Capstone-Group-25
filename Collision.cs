@@ -15,13 +15,9 @@ namespace Game_Demo
         private static bool OutOfBounds(Rectangle hitbox) //check if player is out of bounds
         {
             if (hitbox.Left < 0 || hitbox.Top < 0 || hitbox.Right > Tiled._tiledMap.WidthInPixels-1 || hitbox.Bottom > Tiled._tiledMap.HeightInPixels-1) 
-            {
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
 
         public static Color CollisionCheck() //player collision with tiles
@@ -58,8 +54,7 @@ namespace Game_Demo
             }
             else //not collided
             {
-                color = Color.White;
-                return color;
+                return Color.White;
             }
         }
 
@@ -83,8 +78,7 @@ namespace Game_Demo
             }
             else
             {
-                color = Color.White;
-                return color;
+                return Color.White;
             }
         }
 
@@ -100,13 +94,11 @@ namespace Game_Demo
                 if (!current_tile.Equals(previous_tile))
                 {
                     num = random.Next(1, 11); //between 1 and 10
-                    Debug.WriteLine("Random Battle Chance: " + num);
                     if (num < 3) //20% chance
                     {
                         Game1.SwitchBattle = true;
                     }
                 }
-
                 previous_tile = current_tile;
             }
         }

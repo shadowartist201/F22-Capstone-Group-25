@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using DavyKager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
+using System.Speech.Synthesis;
 
 namespace Game_Demo
 {
@@ -14,9 +13,8 @@ namespace Game_Demo
     {
         public static GraphicsDeviceManager _graphics;
         public static List<Entity> enemies = new List<Entity> {};
-        public static List<Entity> squad = new List<Entity> {};
+        public static List<Entity> party = new List<Entity> {};
         public static List<Item> inventory = new List<Item> { new Item("HP potion L", "Heals 50 HP") };
-
 
         public static SpriteFont small_font;
         public static SpriteFont medium_font;
@@ -26,6 +24,8 @@ namespace Game_Demo
         public static ScreenManager _screenManager = new();
 
         public static bool inBattle = false;
+
+        public static SpeechSynthesizer speech = new();
 
         public static bool SwitchBattle, SwitchHome, SwitchVillage, SwitchForest, SwitchCity, SwitchForestPath1, SwitchForestPath2, SwitchMiddleVillage,
             SwitchCityCastle, SwitchCity_Bar_Inn, SwitchCity_Bar, SwitchCity_PotionShop, SwitchCity_EquipShop, SwitchMountianEntrance, SwitchVillage2_EquipShop, SwitchVillage2_PotionsShop;
@@ -37,13 +37,13 @@ namespace Game_Demo
             IsMouseVisible = true;
             _screenManager = new ScreenManager();
             Components.Add(_screenManager);
-            Tolk.Load();
-            Tolk.TrySAPI(true);
+
+            speech.SetOutputToDefaultAudioDevice();
+            speech.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
         }
 
         public void LoadBattle()
         {
-            //no map change!
             Battle.endBattle = false;
             BattleUI.ResetScreen();
             inBattle = true;
@@ -52,7 +52,7 @@ namespace Game_Demo
 
         public void BattleReturn()
         {
-            if (Battle.tpk)
+            if (Battle.partyWipe)
             {
                 LoadHome();
                 Tiled.BattleReturn = false;
@@ -116,9 +116,9 @@ namespace Game_Demo
 
         protected override void LoadContent()
         {
-            small_font = Content.Load<SpriteFont>("Battle/small");
-            medium_font = Content.Load<SpriteFont>("Battle/medium");
-            large_font = Content.Load<SpriteFont>("Battle/large");
+            small_font = Content.Load<SpriteFont>("Fonts/small");
+            medium_font = Content.Load<SpriteFont>("Fonts/medium");
+            large_font = Content.Load<SpriteFont>("Fonts/large");
             DialogFont = Content.Load<SpriteFont>("Fonts/dialog");
             World.player = Content.Load<Texture2D>("World/player");
             World.soundEffects.Add(Content.Load<SoundEffect>("World/grass"));
@@ -134,112 +134,96 @@ namespace Game_Demo
             if (SwitchBattle)
             {
                 SwitchBattle = false;
-                Tolk.Silence();
                 LoadBattle();
             }
             else if (SwitchHome)
             {
                 inBattle = false;
                 SwitchHome = false;
-                Tolk.Silence();
                 LoadHome();
             }
             else if ( SwitchVillage)
             {
                 inBattle = false;
                 SwitchVillage = false;
-                Tolk.Silence();
                 LoadVillage1();
             }
             else if (SwitchForest)
             {
                 inBattle = false;
                 SwitchForest = false;
-                Tolk.Silence();
                 LoadForest();
             }
             else if ( SwitchCity)
             {
                 inBattle = false;
                 SwitchCity = false;
-                Tolk.Silence();
                 LoadCity();
             }
             else if ( SwitchForestPath1)
             {
                 inBattle = false;
                 SwitchForestPath1 = false;
-                Tolk.Silence();
                 LoadForestPath1();
             }
             else if ( SwitchForestPath2)
             {
                 inBattle = false;
                 SwitchForestPath2 = false;
-                Tolk.Silence();
                 LoadForestPath2();
             }
             else if ( SwitchMiddleVillage)
             {
                 inBattle = false;
                 SwitchMiddleVillage = false;
-                Tolk.Silence();
                 LoadMiddleVillage();
             }
             else if ( SwitchCityCastle)
             {
                 inBattle = false;
                 SwitchCityCastle = false;
-                Tolk.Silence();
                 LoadCityCastle();
             }
             else if ( SwitchCity_Bar)
             {
                 inBattle = false;
                 SwitchCity_Bar = false;
-                Tolk.Silence();
                 LoadCity_Bar();
             }
             else if ( SwitchCity_Bar_Inn)
             {
                 inBattle = false;
                 SwitchCity_Bar_Inn = false;
-                Tolk.Silence();
                 LoadCity_Bar_Inn();
             }
             else if ( SwitchCity_EquipShop)
             {
                 inBattle = false;
                 SwitchCity_EquipShop = false;
-                Tolk.Silence();
                 LoadCity_EquipShop();
             }
             else if  (SwitchCity_PotionShop)
             {
                 inBattle = false;
                 SwitchCity_PotionShop = false;
-                Tolk.Silence();
                 LoadCity_PotionShop();
             }
             else if ( SwitchMountianEntrance)
             {
                 inBattle = false;
                 SwitchMountianEntrance = false;
-                Tolk.Silence();
                 LoadMountianEntrance();
             }
             else if ( SwitchVillage2_EquipShop)
             {
                 inBattle = false;
                 SwitchVillage2_EquipShop = false;
-                Tolk.Silence();
                 LoadVillage2_EquipShop();
             }
             else if (SwitchVillage2_PotionsShop)
             {
                 inBattle = false;
                 SwitchVillage2_PotionsShop = false;
-                Tolk.Silence();
                 LoadVillage2_PotionsShop();
             }
             else if (Tiled.BattleReturn)

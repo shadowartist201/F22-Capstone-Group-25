@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-//using Microsoft.Xna.Framework.Audio;
 using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using System.Collections.Generic;
@@ -24,15 +23,8 @@ namespace Game_Demo
         private bool talkToNPC1 = false;
         private bool talkToNPC2 = false;
 
-
         private bool talkToNPCcityChest = false;
         private bool checkNPCcityChest = false;
-        /* 
-         * private SoundEffect soundEffect;
-         * private SoundEffectInstance instance;
-         * private AudioListener listener = new AudioListener();
-         * private AudioEmitter emitter = new AudioEmitter();
-         */
 
         public override void LoadContent()
         {
@@ -48,15 +40,6 @@ namespace Game_Demo
             City_NPC2.sprite = Content.Load<Texture2D>("World/npc3");
 
             World.LoadAnim(Content);
-            //_dialog.MakeBox(DialogText.Demo, Game1.DialogFont, GraphicsDevice, new OrthographicCamera(GraphicsDevice));
-
-
-            /* 
-             * soundEffect = Content.Load<SoundEffect>("thunk");
-             * instance = soundEffect.CreateInstance();
-             * instance.Apply3D(listener, emitter);
-             * listener.Position = new Vector3((float)position.X / 400 - 1, listener.Position.Y, (float)position.Y / 400 - 1);
-             */
 
             base.LoadContent();
         }
@@ -117,7 +100,6 @@ namespace Game_Demo
 
             if (Collision.CollisionCheck_Entity(NPCHcityChest) == Color.Green)
                 return;
-
             if (Collision.CollisionCheck_Entity(City_NPC1) == Color.Green)
                 return;
             if (Collision.CollisionCheck_Entity(City_NPC2) == Color.Green)
@@ -133,22 +115,7 @@ namespace Game_Demo
             Vector2 movementDirection = World.Movement(); //get movement direction
             _camera.Move(movementDirection * World.movementSpeed * gameTime.GetElapsedSeconds()); //move camera
 
-            //_dialog.Update();
-
             World.UpdateAnim(gameTime);
-
-            /*
-             * if (player_rec.Location.X > 720)
-             * {
-             *     position.X -= 5;
-             *     instance = soundEffect.CreateInstance();
-             *     emitter.Position = new Vector3(listener.Position.X + 0.1f, listener.Position.Y, listener.Position.Z); //play bump to the right
-             *      instance.Play();
-             *      instance.Apply3D(listener, emitter);
-             *  }
-             *  listener.Position = new Vector3((float)position.X / 400 - 1, (float)position.Y / 400 - 1, listener.Position.Z);
-             */
-
         }
 
         public override void Draw(GameTime gameTime)
@@ -157,8 +124,7 @@ namespace Game_Demo
 
             var transformMatrix = _camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
-            //_spriteBatch.Draw(World.player, new Rectangle((int)_camera.Center.X, (int)_camera.Center.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
-
+            
             _spriteBatch.Draw(NPCHcityChest.sprite, new Rectangle((int)NPCHcityChest.position.X, (int)NPCHcityChest.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(City_NPC1.sprite, new Rectangle((int)City_NPC1.position.X, (int)City_NPC1.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
             _spriteBatch.Draw(City_NPC2.sprite, new Rectangle((int)City_NPC2.position.X, (int)City_NPC2.position.Y, Tiled.tileWidth, Tiled.tileWidth), Color.White);
@@ -166,10 +132,7 @@ namespace Game_Demo
             World.DrawAnim(_spriteBatch);
             _spriteBatch.End();
 
-
-
             _spriteBatch.Begin();
-            //_dialog.Draw(_spriteBatch);
 
             if (talkToNPCcityChest)
                 NPCHcityChest.DialogDraw(_spriteBatch);

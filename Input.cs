@@ -10,45 +10,25 @@ namespace Game_Demo
             KeyboardState state = Keyboard.GetState();
 
             if (state.IsKeyDown(Keys.Up))
-            {
                 return "up";
-            }
-            if (state.IsKeyDown(Keys.Down))
-            {
+            else if (state.IsKeyDown(Keys.Down))
                 return "down";
-            }
-            if (state.IsKeyDown(Keys.Left))
-            {
+            else if (state.IsKeyDown(Keys.Left))
                 return "left";
-            }
-            if (state.IsKeyDown(Keys.Right))
-            {
+            else if (state.IsKeyDown(Keys.Right))
                 return "right";
-            }
-            if (state.IsKeyDown(Keys.Enter))
-            {
+            else if (state.IsKeyDown(Keys.Enter))
                 return "enter";
-            }
-            if (state.IsKeyDown(Keys.Back))
-            {
+            else if (state.IsKeyDown(Keys.Back))
                 return "backspace";
-            }
-            if (state.IsKeyDown(Keys.O))
-            {
+            else if (state.IsKeyDown(Keys.O))
                 return "o";
-            }
-            if (state.IsKeyDown(Keys.X))
-            {
+            else if (state.IsKeyDown(Keys.X))
                 return "x";
-            }
-            if (state.IsKeyDown(Keys.Tab))
-            {
+            else if (state.IsKeyDown(Keys.Tab))
                 return "tab";
-            }
             else
-            {
                 return "none";
-            }
         }
 
         public static string SinglePress() //only one press
